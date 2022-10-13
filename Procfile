@@ -1,1 +1,1 @@
-web: java -jar target/devpath-0.0.1-SNAPSHOT.jar
+web: java -jar devpath-0.0.1-SNAPSHOT.jar
