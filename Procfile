@@ -1,1 +1,1 @@
-web: java -jar devpath-0.0.1-SNAPSHOT.jar
+web: java -jar build/libs/devpath-0.0.1-SNAPSHOT.jar
