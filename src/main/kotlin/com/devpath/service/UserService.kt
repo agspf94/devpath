@@ -8,7 +8,7 @@ import com.devpath.dto.user.request.CreateUserRequest
 import com.devpath.dto.user.request.UpdateUserRequest
 import com.devpath.dto.user.response.DeleteUserResponse
 import com.devpath.entity.User
-import com.devpath.exception.UserAlreadyExistsException
+import com.devpath.exception.exceptions.UserAlreadyExistsException
 import com.devpath.repository.UserRepository
 import org.springframework.stereotype.Service
 
@@ -19,7 +19,7 @@ class UserService(
     fun createUser(createUserRequest: CreateUserRequest): User {
         userRepository.findByEmail(createUserRequest.email)
             .ifPresent { throw UserAlreadyExistsException(USER_ALREADY_EXISTS + createUserRequest.email) }
-        return userRepository.save(createUserRequest.toUser())
+        return userRepository.saveAndFlush(createUserRequest.toUser())
     }
 
     fun getUser(email: String): User {
@@ -31,7 +31,7 @@ class UserService(
     fun updateUser(updateUserRequest: UpdateUserRequest): User {
         return userRepository.findById(updateUserRequest.id)
             .map {
-                userRepository.save(
+                userRepository.saveAndFlush(
                     User(
                         id = it.id,
                         name = updateUserRequest.name ?: it.name,
