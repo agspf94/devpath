@@ -12,6 +12,11 @@ data class Trail(
     @GeneratedValue
     var id: Int? = null,
     val name: String,
+    val duration: Int,
+    val description: String,
+    val averageSalary: String,
+    @OneToMany(cascade = [ALL])
+    val jobs: Set<Job>,
     @OneToMany(cascade = [ALL])
     val topics: Set<Topic>
 )
