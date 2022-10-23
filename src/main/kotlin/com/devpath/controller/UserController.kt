@@ -25,8 +25,8 @@ class UserController(
     }
 
     @GetMapping("/{email}")
-    fun getUser(@PathVariable email: String): User {
-        return userService.getUser(email)
+    fun readUser(@PathVariable email: String): User {
+        return userService.readUser(email)
     }
 
     @PatchMapping("/update")

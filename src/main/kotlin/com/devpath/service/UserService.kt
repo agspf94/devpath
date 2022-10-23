@@ -22,7 +22,7 @@ class UserService(
         return userRepository.saveAndFlush(createUserRequest.toUser())
     }
 
-    fun getUser(email: String): User {
+    fun readUser(email: String): User {
         return userRepository.findByEmail(email)
             .map { it }
             .orElseThrow { NoSuchElementException(USER_NOT_FOUND_EMAIL + email) }
