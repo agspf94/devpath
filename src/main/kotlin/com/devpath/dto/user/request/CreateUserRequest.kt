@@ -13,7 +13,8 @@ data class CreateUserRequest(
             name = name,
             email = email,
             password = password,
-            isMentor = isMentor
+            isMentor = isMentor,
+            trails = mutableSetOf()
         )
     }
 }

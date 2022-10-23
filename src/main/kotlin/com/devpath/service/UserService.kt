@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserService(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val trailService: TrailService
 ) {
     fun createUser(createUserRequest: CreateUserRequest): User {
         userRepository.findByEmail(createUserRequest.email)
@@ -37,7 +38,8 @@ class UserService(
                         name = updateUserRequest.name ?: it.name,
                         email = updateUserRequest.email ?: it.email,
                         password = updateUserRequest.password ?: it.password,
-                        isMentor = updateUserRequest.isMentor ?: it.isMentor
+                        isMentor = updateUserRequest.isMentor ?: it.isMentor,
+                        trails = it.trails
                     )
                 )
             }
@@ -51,5 +53,13 @@ class UserService(
                 DeleteUserResponse(it, USER_DELETED)
             }
             .orElseThrow { NoSuchElementException(USER_NOT_FOUND_EMAIL + email) }
+    }
+
+    fun addTrail(userEmail: String, trailId: Int): User {
+        val user = readUser(userEmail)
+        val trail = trailService.readTrail(trailId)
+        user.trails.add(trail)
+        userRepository.saveAndFlush(user)
+        return user
     }
 }

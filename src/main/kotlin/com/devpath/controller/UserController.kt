@@ -38,4 +38,12 @@ class UserController(
     fun deleteUser(@PathVariable email: String): DeleteUserResponse {
         return userService.deleteUser(email)
     }
+
+    @PostMapping("{userEmail}/add-trail/{trailId}")
+    fun addTrail(
+        @PathVariable userEmail: String,
+        @PathVariable trailId: Int
+    ): User {
+        return userService.addTrail(userEmail, trailId)
+    }
 }
