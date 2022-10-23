@@ -10,15 +10,10 @@ class Constants {
         const val USER_NOT_FOUND_ID = "No user was found with the given id: "
         const val USER_DELETED = "User deleted successfully"
 
-        const val TRAIL_ALREADY_EXISTS = "This trail already exists: "
-        const val TOPIC_ALREADY_EXISTS = "This topic already exists: "
-        const val SUB_TOPIC_ALREADY_EXISTS = "This sub topic already exists: "
-
-        const val TRAIL_NOT_FOUND = "This trail was not found: "
-        const val TOPIC_NOT_FOUND = "This topic was not found: "
-        const val SUB_TOPIC_NOT_FOUND = "This sub topic was not found: "
-
-        const val DELETE_MESSAGE = "Trail deleted successfully"
-        const val EMPTY_LIST = "No trails have been created yet"
+        // Trail
+        const val TRAIL_ALREADY_EXISTS = "There is already a trail with the given name: "
+        const val TRAIL_NOT_FOUND = "No trail was found with the given id: "
+        const val TRAIL_LIST_IS_EMPTY = "No trails have been created yet"
+        const val TRAIL_DELETED = "Trail deleted successfully"
     }
 }
