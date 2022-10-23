@@ -3,10 +3,10 @@ package com.devpath.dto.user.request
 import com.devpath.entity.User
 
 data class CreateUserRequest(
-    var name: String,
-    var email: String,
-    var password: String,
-    var isMentor: Boolean
+    val name: String,
+    val email: String,
+    val password: String,
+    val isMentor: Boolean
 ) {
     fun toUser(): User {
         return User(
