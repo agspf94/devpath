@@ -1,5 +1,9 @@
 package com.devpath.exception
 
+import com.devpath.exception.exceptions.EmptyTrailListException
+import com.devpath.exception.exceptions.TrailAlreadyExistsException
+import com.devpath.exception.exceptions.UserAlreadyExistsException
+import org.springframework.http.HttpStatus.NO_CONTENT
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.ResponseEntity
@@ -8,23 +12,25 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
 class ExceptionControllerAdvice {
-    @ExceptionHandler
-    fun handleUserAlreadyExistsException(e: UserAlreadyExistsException): ResponseEntity<ErrorMessage> {
+    @ExceptionHandler(
+        UserAlreadyExistsException::class,
+        TrailAlreadyExistsException::class
+    )
+    fun handleBadRequest(e: Exception): ResponseEntity<ErrorMessage> {
         return ResponseEntity(ErrorMessage(e.message), BAD_REQUEST)
     }
 
-    @ExceptionHandler
-    fun handleNotSuchElementException(e: NoSuchElementException): ResponseEntity<ErrorMessage> {
+    @ExceptionHandler(
+        NoSuchElementException::class
+    )
+    fun handleNotFound(e: Exception): ResponseEntity<ErrorMessage> {
         return ResponseEntity(ErrorMessage(e.message), NOT_FOUND)
     }
 
-//    @ExceptionHandler(
-//        EmptyListException::class,
-//        TrailAlreadyExists::class,
-//        TopicAlreadyExists::class,
-//        SubTopicAlreadyExists::class
-//    )
-//    fun handleEmptyListException(e: Exception): ResponseEntity<ErrorMessage> {
-//        return ResponseEntity(ErrorMessage(e.message), OK)
-//    }
+    @ExceptionHandler(
+        EmptyTrailListException::class
+    )
+    fun handleNoContent(e: Exception): ResponseEntity<ErrorMessage> {
+        return ResponseEntity(ErrorMessage(e.message), NO_CONTENT)
+    }
 }
