@@ -3,7 +3,7 @@ package com.devpath.exception
 import com.devpath.exception.exceptions.EmptyTrailListException
 import com.devpath.exception.exceptions.TrailAlreadyExistsException
 import com.devpath.exception.exceptions.UserAlreadyExistsException
-import org.springframework.http.HttpStatus.NO_CONTENT
+import org.springframework.http.HttpStatus.OK
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.ResponseEntity
@@ -31,6 +31,6 @@ class ExceptionControllerAdvice {
         EmptyTrailListException::class
     )
     fun handleNoContent(e: Exception): ResponseEntity<ErrorMessage> {
-        return ResponseEntity(ErrorMessage(e.message), NO_CONTENT)
+        return ResponseEntity(ErrorMessage(e.message), OK)
     }
 }

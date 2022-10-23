@@ -1,6 +1,7 @@
 package com.devpath.controller
 
 import com.devpath.dto.user.request.CreateUserRequest
+import com.devpath.dto.user.request.UpdateTrailStatusRequest
 import com.devpath.dto.user.request.UpdateUserRequest
 import com.devpath.dto.user.response.DeleteUserResponse
 import com.devpath.entity.User
@@ -45,5 +46,10 @@ class UserController(
         @PathVariable trailId: Int
     ): User {
         return userService.addTrail(userEmail, trailId)
+    }
+
+    @PatchMapping("update-trail")
+    fun updateTrail(@RequestBody updateTrailStatusRequest: UpdateTrailStatusRequest): User {
+        return userService.updateTrailStatus(updateTrailStatusRequest)
     }
 }

@@ -5,7 +5,6 @@ import com.devpath.constants.Constants.Companion.TRAIL_DELETED
 import com.devpath.constants.Constants.Companion.TRAIL_LIST_IS_EMPTY
 import com.devpath.constants.Constants.Companion.TRAIL_NOT_FOUND
 import com.devpath.dto.trail.request.CreateTrailRequest
-import com.devpath.dto.trail.request.UpdateTrailRequest
 import com.devpath.dto.trail.response.DeleteTrailResponse
 import com.devpath.entity.Trail
 import com.devpath.exception.exceptions.EmptyTrailListException
@@ -35,19 +34,6 @@ class TrailService(
             .stream()
             .collect(Collectors.toList())
             .ifEmpty { throw EmptyTrailListException(TRAIL_LIST_IS_EMPTY) }
-    }
-
-    fun updateTrail(updateTrailRequest: UpdateTrailRequest): Trail {
-        return trailRepository.findById(updateTrailRequest.id)
-            .map {
-                trailRepository.saveAndFlush(
-                    Trail(
-                        id = it.id,
-                        name = updateTrailRequest.name ?: it.name
-                    )
-                )
-            }
-            .orElseThrow { NoSuchElementException(TRAIL_NOT_FOUND + updateTrailRequest.id) }
     }
 
     fun deleteTrail(id: Int): DeleteTrailResponse {

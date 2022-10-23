@@ -5,6 +5,7 @@ import com.devpath.constants.Constants.Companion.USER_DELETED
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_EMAIL
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_ID
 import com.devpath.dto.user.request.CreateUserRequest
+import com.devpath.dto.user.request.UpdateTrailStatusRequest
 import com.devpath.dto.user.request.UpdateUserRequest
 import com.devpath.dto.user.response.DeleteUserResponse
 import com.devpath.entity.User
@@ -59,6 +60,16 @@ class UserService(
         val user = readUser(userEmail)
         val trail = trailService.readTrail(trailId)
         user.trails.add(trail)
+        userRepository.saveAndFlush(user)
+        return user
+    }
+
+    fun updateTrailStatus(updateTrailStatusRequest: UpdateTrailStatusRequest): User {
+        val user = readUser(updateTrailStatusRequest.userEmail)
+        user.trails.first { it.id == updateTrailStatusRequest.trailId }
+            .topics.first { it.id == updateTrailStatusRequest.topicId }
+            .subTopics.first { it.id == updateTrailStatusRequest.subTopicId }
+            .active = updateTrailStatusRequest.active
         userRepository.saveAndFlush(user)
         return user
     }

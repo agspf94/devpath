@@ -1,5 +1,6 @@
 package com.devpath.entity
 
+import javax.persistence.CascadeType.ALL
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -16,6 +17,6 @@ data class User(
     val email: String,
     val password: String,
     val isMentor: Boolean,
-    @OneToMany
+    @OneToMany(cascade = [ALL])
     val trails: MutableSet<Trail>
 )
