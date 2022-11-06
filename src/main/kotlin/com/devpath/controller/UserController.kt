@@ -21,26 +21,26 @@ class UserController(
     private val userService: UserService
 ) {
     @PostMapping("/create")
-    fun createUser(@RequestBody createUserRequest: CreateUserRequest): User {
-        return userService.createUser(createUserRequest)
+    fun create(@RequestBody createUserRequest: CreateUserRequest): User {
+        return userService.create(createUserRequest)
     }
 
     @GetMapping("/{email}")
-    fun readUser(@PathVariable email: String): User {
-        return userService.readUser(email)
+    fun read(@PathVariable email: String): User {
+        return userService.read(email)
     }
 
     @PatchMapping("/update")
-    fun updateUser(@RequestBody updateUserRequest: UpdateUserRequest): User {
-        return userService.updateUser(updateUserRequest)
+    fun update(@RequestBody updateUserRequest: UpdateUserRequest): User {
+        return userService.update(updateUserRequest)
     }
 
     @DeleteMapping("/delete/{email}")
-    fun deleteUser(@PathVariable email: String): DeleteUserResponse {
-        return userService.deleteUser(email)
+    fun delete(@PathVariable email: String): DeleteUserResponse {
+        return userService.delete(email)
     }
 
-    @PostMapping("{userEmail}/add-trail/{trailId}")
+    @PostMapping("/{userEmail}/add-trail/{trailId}")
     fun addTrail(
         @PathVariable userEmail: String,
         @PathVariable trailId: Int
@@ -48,8 +48,8 @@ class UserController(
         return userService.addTrail(userEmail, trailId)
     }
 
-    @PatchMapping("update-trail")
-    fun updateTrail(@RequestBody updateTrailStatusRequest: UpdateTrailStatusRequest): User {
+    @PatchMapping("/update-trail")
+    fun updateTrailStatus(@RequestBody updateTrailStatusRequest: UpdateTrailStatusRequest): User {
         return userService.updateTrailStatus(updateTrailStatusRequest)
     }
 }
