@@ -16,21 +16,23 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val trailService: TrailService
+    private val trailService: TrailService,
+    private val topicService: TopicService,
+    private val subTopicService: SubTopicService
 ) {
-    fun createUser(createUserRequest: CreateUserRequest): User {
+    fun create(createUserRequest: CreateUserRequest): User {
         userRepository.findByEmail(createUserRequest.email)
             .ifPresent { throw UserAlreadyExistsException(USER_ALREADY_EXISTS + createUserRequest.email) }
         return userRepository.saveAndFlush(createUserRequest.toUser())
     }
 
-    fun readUser(email: String): User {
+    fun read(email: String): User {
         return userRepository.findByEmail(email)
             .map { it }
             .orElseThrow { NoSuchElementException(USER_NOT_FOUND_EMAIL + email) }
     }
 
-    fun updateUser(updateUserRequest: UpdateUserRequest): User {
+    fun update(updateUserRequest: UpdateUserRequest): User {
         return userRepository.findById(updateUserRequest.id)
             .map {
                 userRepository.saveAndFlush(
@@ -47,7 +49,7 @@ class UserService(
             .orElseThrow { NoSuchElementException(USER_NOT_FOUND_ID + updateUserRequest.id) }
     }
 
-    fun deleteUser(email: String): DeleteUserResponse {
+    fun delete(email: String): DeleteUserResponse {
         return userRepository.findByEmail(email)
             .map {
                 userRepository.deleteById(it.id!!)
@@ -57,20 +59,27 @@ class UserService(
     }
 
     fun addTrail(userEmail: String, trailId: Int): User {
-        val user = readUser(userEmail)
-        val trail = trailService.readTrail(trailId)
+        val user = read(userEmail)
+        val trail = trailService.read(trailId)
         user.trails.add(trail)
         userRepository.saveAndFlush(user)
         return user
     }
 
     fun updateTrailStatus(updateTrailStatusRequest: UpdateTrailStatusRequest): User {
-        val user = readUser(updateTrailStatusRequest.userEmail)
+        val user = read(updateTrailStatusRequest.userEmail)
+        validateUpdateTrailStatusRequest(updateTrailStatusRequest)
         user.trails.first { it.id == updateTrailStatusRequest.trailId }
             .topics.first { it.id == updateTrailStatusRequest.topicId }
             .subTopics.first { it.id == updateTrailStatusRequest.subTopicId }
             .active = updateTrailStatusRequest.active
         userRepository.saveAndFlush(user)
         return user
+    }
+
+    private fun validateUpdateTrailStatusRequest(updateTrailStatusRequest: UpdateTrailStatusRequest) {
+        trailService.read(updateTrailStatusRequest.trailId)
+        topicService.read(updateTrailStatusRequest.topicId)
+        subTopicService.read(updateTrailStatusRequest.subTopicId)
     }
 }
