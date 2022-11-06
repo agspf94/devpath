@@ -199,7 +199,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Backend Java\",\n    \"topics\": [\n        {\n            \"name\": \"Topic 1\",\n            \"subTopics\": [\n                {\n                    \"name\": \"Sub Topic 1\",\n                    \"content\": \"content\",\n                    \"active\": \"false\"\n                },\n                {\n                    \"name\": \"Sub Topic 2\",\n                    \"content\": \"content\",\n                    \"active\": \"false\"\n                }\n            ]\n        },\n        {\n            \"name\": \"Topic 2\",\n            \"subTopics\": [\n                {\n                    \"name\": \"Sub Topic 3\",\n                    \"content\": \"content\",\n                    \"active\": \"false\"\n                },\n                {\n                    \"name\": \"Sub Topic 4\",\n                    \"content\": \"content\",\n                    \"active\": \"false\"\n                }\n            ]\n        }\n    ]\n}",
+							"raw": "{\n    \"name\": \"Backend Java\",\n    \"duration\": 20,\n    \"description\": \"Java backend trilha foda\",\n    \"averageSalary\": \"R$3500 - R$15000\",\n    \"jobs\": [\n        {\n            \"title\": \"Java Engineer Nubank\",\n            \"location\": \"Sao Paulo\",\n            \"period\": \"Tempo Integral\",\n            \"role\": \"Sênior\",\n            \"link\": \"www.google.com.br\"\n        },\n        {\n            \"title\": \"Backend Engineer C6 Bank\",\n            \"location\": \"Sao Paulo\",\n            \"period\": \"Tempo Integral\",\n            \"role\": \"Pleno\",\n            \"link\": \"www.google.com.br\"\n        }\n    ],\n    \"topics\": [\n        {\n            \"name\": \"Topic 1\",\n            \"subTopics\": [\n                {\n                    \"name\": \"Sub Topic 1\",\n                    \"content\": \"content\",\n                    \"active\": \"false\"\n                },\n                {\n                    \"name\": \"Sub Topic 2\",\n                    \"content\": \"content\",\n                    \"active\": \"false\"\n                }\n            ]\n        },\n        {\n            \"name\": \"Topic 2\",\n            \"subTopics\": [\n                {\n                    \"name\": \"Sub Topic 3\",\n                    \"content\": \"content\",\n                    \"active\": \"false\"\n                },\n                {\n                    \"name\": \"Sub Topic 4\",\n                    \"content\": \"content\",\n                    \"active\": \"false\"\n                }\n            ]\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -279,6 +279,130 @@
 							"variable": [
 								{
 									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mentor Controller",
+			"item": [
+				{
+					"name": "Read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/all",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Become Mentor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/become-mentor/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"become-mentor",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1,\n    \"description\": \"I am Anderson, a java backend engineer\",\n    \"hourCost\": \"100\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/mentor/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/delete/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"delete",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
 									"value": "1"
 								}
 							]
