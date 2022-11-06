@@ -16,26 +16,26 @@ import java.util.stream.Collectors
 class TrailService(
     private val trailRepository: TrailRepository
 ) {
-    fun createTrail(trail: Trail): Trail {
+    fun create(trail: Trail): Trail {
         trailRepository.findByName(trail.name)
             .ifPresent { throw TrailAlreadyExistsException(TRAIL_ALREADY_EXISTS + trail.name) }
         return trailRepository.saveAndFlush(trail)
     }
 
-    fun readTrail(id: Int): Trail {
+    fun read(id: Int): Trail {
         return trailRepository.findById(id)
             .map { it }
             .orElseThrow { NoSuchElementException(TRAIL_NOT_FOUND + id) }
     }
 
-    fun readAllTrails(): List<Trail> {
+    fun readAll(): List<Trail> {
         return trailRepository.findAll()
             .stream()
             .collect(Collectors.toList())
             .ifEmpty { throw EmptyTrailListException(TRAIL_LIST_IS_EMPTY) }
     }
 
-    fun deleteTrail(id: Int): DeleteTrailResponse {
+    fun delete(id: Int): DeleteTrailResponse {
         return trailRepository.findById(id)
             .map {
                 trailRepository.deleteById(it.id!!)

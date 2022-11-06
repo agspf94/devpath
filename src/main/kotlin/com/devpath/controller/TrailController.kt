@@ -17,22 +17,22 @@ class TrailController(
     private val trailService: TrailService
 ) {
     @PostMapping("/create")
-    fun createTrail(@RequestBody trail: Trail): Trail {
-        return trailService.createTrail(trail)
+    fun create(@RequestBody trail: Trail): Trail {
+        return trailService.create(trail)
     }
 
     @GetMapping("/{id}")
-    fun readTrail(@PathVariable id: Int): Trail {
-        return trailService.readTrail(id)
+    fun read(@PathVariable id: Int): Trail {
+        return trailService.read(id)
     }
 
     @GetMapping("/all")
-    fun readAllTrails(): List<Trail> {
-        return trailService.readAllTrails()
+    fun readAll(): List<Trail> {
+        return trailService.readAll()
     }
 
     @DeleteMapping("/delete/{id}")
-    fun deleteTrail(@PathVariable id: Int): DeleteTrailResponse {
-        return trailService.deleteTrail(id)
+    fun delete(@PathVariable id: Int): DeleteTrailResponse {
+        return trailService.delete(id)
     }
 }
