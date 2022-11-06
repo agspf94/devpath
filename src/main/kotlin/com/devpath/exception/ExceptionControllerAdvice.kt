@@ -1,8 +1,10 @@
 package com.devpath.exception
 
+import com.devpath.exception.exceptions.EmptyMentorListException
 import com.devpath.exception.exceptions.EmptyTrailListException
 import com.devpath.exception.exceptions.TrailAlreadyExistsException
 import com.devpath.exception.exceptions.UserAlreadyExistsException
+import com.devpath.exception.exceptions.UserIsNotAMentorException
 import org.springframework.http.HttpStatus.OK
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.NOT_FOUND
@@ -14,7 +16,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 class ExceptionControllerAdvice {
     @ExceptionHandler(
         UserAlreadyExistsException::class,
-        TrailAlreadyExistsException::class
+        TrailAlreadyExistsException::class,
+        UserIsNotAMentorException::class
     )
     fun handleBadRequest(e: Exception): ResponseEntity<ErrorMessage> {
         return ResponseEntity(ErrorMessage(e.message), BAD_REQUEST)
@@ -28,7 +31,8 @@ class ExceptionControllerAdvice {
     }
 
     @ExceptionHandler(
-        EmptyTrailListException::class
+        EmptyTrailListException::class,
+        EmptyMentorListException::class
     )
     fun handleNoContent(e: Exception): ResponseEntity<ErrorMessage> {
         return ResponseEntity(ErrorMessage(e.message), OK)
