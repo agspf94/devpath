@@ -2,8 +2,6 @@ package com.devpath.constants
 
 class Constants {
     companion object {
-        const val WELCOME = "Welcome to DevPath"
-
         // User
         const val USER_ALREADY_EXISTS = "There is already an user with the given email: "
         const val USER_NOT_FOUND_EMAIL = "No user was found with the given email: "

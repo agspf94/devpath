@@ -1,17 +1,15 @@
 package com.devpath.controller
 
-import com.devpath.service.HomeService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpServletResponse
 
 @RestController
 @RequestMapping("/")
-class HomeController(
-    private val homeService: HomeService
-) {
+class HomeController {
     @GetMapping
-    fun welcome(): String {
-        return homeService.welcome()
+    fun welcome(httpServletResponse: HttpServletResponse) {
+        return httpServletResponse.sendRedirect("/swagger-ui.html")
     }
 }
