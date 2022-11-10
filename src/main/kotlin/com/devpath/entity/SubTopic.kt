@@ -10,6 +10,5 @@ data class SubTopic(
     @GeneratedValue
     var id: Int? = null,
     val name: String,
-    val content: String,
-    var active: Boolean
+    val content: String
 )

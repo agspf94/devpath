@@ -7,11 +7,11 @@ import javax.persistence.Id
 import javax.persistence.OneToMany
 
 @Entity
-data class Topic(
+data class UserTrail(
     @Id
     @GeneratedValue
     var id: Int? = null,
-    val name: String,
+    val trailId: Int,
     @OneToMany(cascade = [ALL])
-    val subTopics: Set<SubTopic>
+    var userTopics: MutableSet<UserTopic>
 )

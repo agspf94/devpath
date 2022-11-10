@@ -8,7 +8,11 @@ import com.devpath.dto.user.request.CreateUserRequest
 import com.devpath.dto.user.request.UpdateTrailStatusRequest
 import com.devpath.dto.user.request.UpdateUserRequest
 import com.devpath.dto.user.response.DeleteUserResponse
+import com.devpath.entity.Trail
 import com.devpath.entity.User
+import com.devpath.entity.UserSubTopic
+import com.devpath.entity.UserTopic
+import com.devpath.entity.UserTrail
 import com.devpath.exception.exceptions.UserAlreadyExistsException
 import com.devpath.repository.UserRepository
 import org.springframework.stereotype.Service
@@ -23,12 +27,12 @@ class UserService(
     fun create(createUserRequest: CreateUserRequest): User {
         userRepository.findByEmail(createUserRequest.email)
             .ifPresent { throw UserAlreadyExistsException(USER_ALREADY_EXISTS + createUserRequest.email) }
-        return userRepository.saveAndFlush(createUserRequest.toUser())
+        return userRepository.saveAndFlush(createUserRequest.toUser()).formatResponse()
     }
 
     fun read(email: String): User {
         return userRepository.findByEmail(email)
-            .map { it }
+            .map { it.formatResponse() }
             .orElseThrow { NoSuchElementException(USER_NOT_FOUND_EMAIL + email) }
     }
 
@@ -42,8 +46,8 @@ class UserService(
                         email = updateUserRequest.email ?: it.email,
                         password = updateUserRequest.password ?: it.password,
                         isMentor = updateUserRequest.isMentor ?: it.isMentor,
-                        trails = it.trails
-                    )
+                        userTrails = it.userTrails
+                    ).formatResponse()
                 )
             }
             .orElseThrow { NoSuchElementException(USER_NOT_FOUND_ID + updateUserRequest.id) }
@@ -61,25 +65,54 @@ class UserService(
     fun addTrail(userEmail: String, trailId: Int): User {
         val user = read(userEmail)
         val trail = trailService.read(trailId)
-        user.trails.add(trail)
+        user.userTrails.add(createUserTrail(trail))
         userRepository.saveAndFlush(user)
-        return user
+        return user.formatResponse()
+    }
+
+    private fun createUserTrail(trail: Trail): UserTrail {
+        return UserTrail(
+            trailId = trail.id!!,
+            userTopics = trail.topics.map { topic ->
+                UserTopic(
+                    topicId = topic.id!!,
+                    userSubTopics = topic.subTopics.map { subTopic ->
+                        UserSubTopic(
+                            subTopicId = subTopic.id!!,
+                            active = false
+                        )
+                    }.toMutableSet()
+                )
+            }.toMutableSet()
+        )
     }
 
     fun updateTrailStatus(updateTrailStatusRequest: UpdateTrailStatusRequest): User {
         val user = read(updateTrailStatusRequest.userEmail)
         validateUpdateTrailStatusRequest(updateTrailStatusRequest)
-        user.trails.first { it.id == updateTrailStatusRequest.trailId }
-            .topics.first { it.id == updateTrailStatusRequest.topicId }
-            .subTopics.first { it.id == updateTrailStatusRequest.subTopicId }
+        user.userTrails.first { it.trailId == updateTrailStatusRequest.trailId }
+            .userTopics.first { it.topicId == updateTrailStatusRequest.topicId }
+            .userSubTopics.first { it.subTopicId == updateTrailStatusRequest.subTopicId }
             .active = updateTrailStatusRequest.active
         userRepository.saveAndFlush(user)
-        return user
+        return user.formatResponse()
     }
 
     private fun validateUpdateTrailStatusRequest(updateTrailStatusRequest: UpdateTrailStatusRequest) {
         trailService.read(updateTrailStatusRequest.trailId)
         topicService.read(updateTrailStatusRequest.topicId)
         subTopicService.read(updateTrailStatusRequest.subTopicId)
+    }
+
+    private fun User.formatResponse(): User {
+        this.userTrails = this.userTrails.sortedBy { it.trailId }.toMutableSet()
+        this.userTrails.map { userTrail ->
+            userTrail.userTopics = userTrail.userTopics.sortedBy { userTopic -> userTopic.topicId }.toMutableSet()
+            userTrail.userTopics.map { userTopic ->
+                userTopic.userSubTopics = userTopic.userSubTopics.sortedBy { userSubTopic -> userSubTopic.subTopicId }.toMutableSet()
+            }
+        }
+        print(this)
+        return this
     }
 }

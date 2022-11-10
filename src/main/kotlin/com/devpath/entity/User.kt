@@ -18,5 +18,5 @@ data class User(
     val password: String,
     var isMentor: Boolean,
     @OneToMany(cascade = [ALL])
-    val trails: MutableSet<Trail>
+    var userTrails: MutableSet<UserTrail>
 )
