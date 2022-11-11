@@ -7,7 +7,7 @@ import javax.persistence.Id
 @Entity
 data class Job(
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "job_generator")
     val id: Int? = null,
     val title: String,
     val location: String,

@@ -7,7 +7,7 @@ import javax.persistence.Id
 @Entity
 data class SubTopic(
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "sub_topic_generator")
     val id: Int? = null,
     val name: String,
     val content: String

@@ -7,7 +7,7 @@ import javax.persistence.Id
 @Entity
 data class Schedule(
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "schedule_generator")
     val id: Int? = null,
     val weekDay: String,
     val period: String

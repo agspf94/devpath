@@ -9,7 +9,7 @@ import javax.persistence.OneToMany
 @Entity
 data class UserTrail(
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "user_trail_generator")
     val id: Int? = null,
     val trailId: Int,
     @OneToMany(cascade = [ALL])

@@ -9,7 +9,7 @@ import javax.persistence.OneToMany
 @Entity
 data class Topic(
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "topic_generator")
     val id: Int? = null,
     val name: String,
     @OneToMany(cascade = [ALL])

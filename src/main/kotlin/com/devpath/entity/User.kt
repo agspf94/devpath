@@ -11,7 +11,7 @@ import javax.persistence.Table
 @Table(name = "\"user\"")
 data class User(
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "user_generator")
     val id: Int? = null,
     val name: String,
     val email: String,

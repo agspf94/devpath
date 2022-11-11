@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne
 @Entity
 data class Payment(
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "payment_generator")
     val id: Int? = null,
     @ManyToOne
     val mentor: Mentor,

@@ -9,7 +9,7 @@ import javax.persistence.OneToMany
 @Entity
 data class Trail(
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "trail_generator")
     val id: Int? = null,
     val name: String,
     val duration: Int,
