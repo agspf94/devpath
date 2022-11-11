@@ -1,4 +1,4 @@
-package com.devpath.dto.trail.request
+package com.devpath.dto.job.request
 
 data class UpdateJobRequest(
     val id: Int,

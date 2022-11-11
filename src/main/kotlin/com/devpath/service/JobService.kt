@@ -6,7 +6,7 @@ import com.devpath.constants.Constants.Companion.JOB_LIST_IS_EMPTY
 import com.devpath.constants.Constants.Companion.JOB_NOT_FOUND
 import com.devpath.dto.job.request.CreateJobRequest
 import com.devpath.dto.job.response.DeleteJobResponse
-import com.devpath.dto.trail.request.UpdateJobRequest
+import com.devpath.dto.job.request.UpdateJobRequest
 import com.devpath.entity.Job
 import com.devpath.exception.exceptions.EmptyJobListException
 import com.devpath.exception.exceptions.JobAlreadyExistsException
