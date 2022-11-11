@@ -3,7 +3,8 @@ package com.devpath.service
 import com.devpath.constants.Constants.Companion.TOPIC_ALREADY_EXISTS
 import com.devpath.constants.Constants.Companion.TOPIC_DELETED
 import com.devpath.constants.Constants.Companion.TOPIC_LIST_IS_EMPTY
-import com.devpath.constants.Constants.Companion.TOPIC_NOT_FOUND
+import com.devpath.constants.Constants.Companion.TOPIC_NOT_FOUND_ID
+import com.devpath.constants.Constants.Companion.TOPIC_NOT_FOUND_NAME
 import com.devpath.dto.topic.request.CreateTopicRequest
 import com.devpath.dto.topic.request.UpdateTopicRequest
 import com.devpath.dto.topic.response.DeleteTopicResponse
@@ -29,7 +30,7 @@ class TopicService(
     fun read(id: Int): Topic {
         return topicRepository.findById(id)
             .map { it }
-            .orElseThrow { NoSuchElementException(TOPIC_NOT_FOUND + id) }
+            .orElseThrow { NoSuchElementException(TOPIC_NOT_FOUND_ID + id) }
     }
 
     fun readAll(): List<Topic> {
@@ -50,7 +51,7 @@ class TopicService(
                     )
                 )
             }
-            .orElseThrow { NoSuchElementException(TOPIC_NOT_FOUND + updateTopicRequest.name) }
+            .orElseThrow { NoSuchElementException(TOPIC_NOT_FOUND_NAME + updateTopicRequest.name) }
     }
 
     fun delete(id: Int): DeleteTopicResponse {
@@ -59,7 +60,7 @@ class TopicService(
                 topicRepository.deleteById(it.id!!)
                 DeleteTopicResponse(it, TOPIC_DELETED)
             }
-            .orElseThrow { NoSuchElementException(TOPIC_NOT_FOUND + id) }
+            .orElseThrow { NoSuchElementException(TOPIC_NOT_FOUND_ID + id) }
     }
 
     private fun updateSubTopics(topic: Topic, updateTopicRequest: UpdateTopicRequest): MutableSet<SubTopic> {
