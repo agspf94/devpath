@@ -1,5 +1,6 @@
 package com.devpath.controller
 
+import com.devpath.dto.trail.request.CreateTrailRequest
 import com.devpath.dto.trail.request.UpdateTrailRequest
 import com.devpath.dto.trail.response.DeleteTrailResponse
 import com.devpath.entity.Trail
@@ -19,8 +20,8 @@ class TrailController(
     private val trailService: TrailService
 ) {
     @PostMapping("/create")
-    fun create(@RequestBody trail: Trail): Trail {
-        return trailService.create(trail)
+    fun create(@RequestBody createTrailRequest: CreateTrailRequest): Trail {
+        return trailService.create(createTrailRequest)
     }
 
     @GetMapping("/{id}")

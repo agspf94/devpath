@@ -4,6 +4,7 @@ import com.devpath.constants.Constants.Companion.TRAIL_ALREADY_EXISTS
 import com.devpath.constants.Constants.Companion.TRAIL_DELETED
 import com.devpath.constants.Constants.Companion.TRAIL_LIST_IS_EMPTY
 import com.devpath.constants.Constants.Companion.TRAIL_NOT_FOUND
+import com.devpath.dto.trail.request.CreateTrailRequest
 import com.devpath.dto.trail.request.UpdateTrailRequest
 import com.devpath.dto.trail.response.DeleteTrailResponse
 import com.devpath.entity.Job
@@ -21,10 +22,10 @@ class TrailService(
     private val jobService: JobService,
     private val topicService: TopicService
 ) {
-    fun create(trail: Trail): Trail {
-        trailRepository.findByName(trail.name)
-            .ifPresent { throw TrailAlreadyExistsException(TRAIL_ALREADY_EXISTS + trail.name) }
-        return trailRepository.saveAndFlush(trail)
+    fun create(createTrailRequest: CreateTrailRequest): Trail {
+        trailRepository.findByName(createTrailRequest.name)
+            .ifPresent { throw TrailAlreadyExistsException(TRAIL_ALREADY_EXISTS + createTrailRequest.name) }
+        return trailRepository.saveAndFlush(createTrailRequest.toTrail())
     }
 
     fun read(id: Int): Trail {
