@@ -75,9 +75,7 @@ class UserService(
     fun deleteTrail(userEmail: String, trailId: Int): DeleteUserTrailResponse {
         val user = read(userEmail)
         val trail = trailService.read(trailId)
-        user.userTrails.removeIf {
-            it.trail.id == trail.id
-        }
+        user.userTrails.removeIf { it.trail.id == trail.id }
         userRepository.saveAndFlush(user)
         return DeleteUserTrailResponse(
             user.formatResponse(),
@@ -90,10 +88,10 @@ class UserService(
             trail = trail,
             userTopics = trail.topics.map { topic ->
                 UserTopic(
-                    topicId = topic.id!!,
+                    topic = topic,
                     userSubTopics = topic.subTopics.map { subTopic ->
                         UserSubTopic(
-                            subTopicId = subTopic.id!!,
+                            subTopic = subTopic,
                             active = false
                         )
                     }.toMutableSet()
@@ -106,8 +104,8 @@ class UserService(
         val user = read(updateTrailStatusRequest.userEmail)
         validateUpdateTrailStatusRequest(updateTrailStatusRequest)
         user.userTrails.first { it.trail.id == updateTrailStatusRequest.trailId }
-            .userTopics.first { it.topicId == updateTrailStatusRequest.topicId }
-            .userSubTopics.first { it.subTopicId == updateTrailStatusRequest.subTopicId }
+            .userTopics.first { it.topic.id == updateTrailStatusRequest.topicId }
+            .userSubTopics.first { it.subTopic.id == updateTrailStatusRequest.subTopicId }
             .active = updateTrailStatusRequest.active
         userRepository.saveAndFlush(user)
         return user.formatResponse()
@@ -122,9 +120,9 @@ class UserService(
     private fun User.formatResponse(): User {
         this.userTrails = this.userTrails.sortedBy { it.trail.id }.toMutableSet()
         this.userTrails.map { userTrail ->
-            userTrail.userTopics = userTrail.userTopics.sortedBy { userTopic -> userTopic.topicId }.toMutableSet()
+            userTrail.userTopics = userTrail.userTopics.sortedBy { userTopic -> userTopic.topic.id }.toMutableSet()
             userTrail.userTopics.map { userTopic ->
-                userTopic.userSubTopics = userTopic.userSubTopics.sortedBy { userSubTopic -> userSubTopic.subTopicId }.toMutableSet()
+                userTopic.userSubTopics = userTopic.userSubTopics.sortedBy { userSubTopic -> userSubTopic.subTopic.id }.toMutableSet()
             }
         }
         return this
