@@ -1,6 +1,5 @@
 package com.devpath.entity
 
-import org.hibernate.type.OrderedSetType
 import javax.persistence.CascadeType.ALL
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -11,7 +10,7 @@ import javax.persistence.OneToMany
 data class Trail(
     @Id
     @GeneratedValue
-    var id: Int? = null,
+    val id: Int? = null,
     val name: String,
     val duration: Int,
     val description: String,

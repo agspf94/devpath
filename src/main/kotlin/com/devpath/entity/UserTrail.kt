@@ -10,7 +10,7 @@ import javax.persistence.OneToMany
 data class UserTrail(
     @Id
     @GeneratedValue
-    var id: Int? = null,
+    val id: Int? = null,
     val trailId: Int,
     @OneToMany(cascade = [ALL])
     var userTopics: MutableSet<UserTopic>

@@ -10,7 +10,7 @@ import javax.persistence.OneToMany
 data class UserTopic(
     @Id
     @GeneratedValue
-    var id: Int? = null,
+    val id: Int? = null,
     val topicId: Int,
     @OneToMany(cascade = [ALL])
     var userSubTopics: MutableSet<UserSubTopic>

@@ -8,7 +8,7 @@ import javax.persistence.Id
 data class UserSubTopic(
     @Id
     @GeneratedValue
-    var id: Int? = null,
+    val id: Int? = null,
     val subTopicId: Int,
     var active: Boolean
 )
