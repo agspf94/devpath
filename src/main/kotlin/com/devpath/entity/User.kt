@@ -1,5 +1,6 @@
 package com.devpath.entity
 
+import com.devpath.dto.user.UserDTO
 import javax.persistence.CascadeType.ALL
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -19,4 +20,15 @@ data class User(
     var isMentor: Boolean,
     @OneToMany(cascade = [ALL])
     var userTrails: MutableSet<UserTrail>
-)
+) {
+    fun toUserDTO(): UserDTO {
+        return UserDTO(
+            id = id!!,
+            name = name,
+            email = email,
+            password = password,
+            isMentor = isMentor,
+            trails = userTrails.map { it.toTrailDTO() }.toMutableSet()
+        )
+    }
+}

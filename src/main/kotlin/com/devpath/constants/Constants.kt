@@ -7,6 +7,7 @@ class Constants {
         const val USER_NOT_FOUND_EMAIL = "No user was found with the given email: "
         const val USER_NOT_FOUND_ID = "No user was found with the given id: "
         const val USER_DELETED = "User deleted successfully"
+        const val USER_TRAIL_DELETED = "User trail deleted successfully"
 
         // Mentor
         const val MENTOR_DEFAULT_DESCRIPTION = "I am a new Dev Path mentor!"

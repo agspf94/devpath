@@ -1,5 +1,6 @@
 package com.devpath.entity
 
+import com.devpath.dto.trail.TrailDTO
 import javax.persistence.CascadeType.ALL
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -16,4 +17,16 @@ data class UserTrail(
     val trail: Trail,
     @OneToMany(cascade = [ALL])
     var userTopics: MutableSet<UserTopic>
-)
+) {
+    fun toTrailDTO(): TrailDTO {
+        return TrailDTO(
+            id = trail.id!!,
+            name = trail.name,
+            duration = trail.duration,
+            description = trail.description,
+            averageSalary = trail.averageSalary,
+            jobs = trail.jobs.map { it.toJobDTO() }.toMutableSet(),
+            topics = userTopics.map { it.toTopicDTO(trail) }.toMutableSet()
+        )
+    }
+}

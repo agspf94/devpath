@@ -4,10 +4,12 @@ import com.devpath.constants.Constants.Companion.USER_ALREADY_EXISTS
 import com.devpath.constants.Constants.Companion.USER_DELETED
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_EMAIL
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_ID
+import com.devpath.constants.Constants.Companion.USER_TRAIL_DELETED
 import com.devpath.dto.user.request.CreateUserRequest
 import com.devpath.dto.user.request.UpdateTrailStatusRequest
 import com.devpath.dto.user.request.UpdateUserRequest
 import com.devpath.dto.user.response.DeleteUserResponse
+import com.devpath.dto.user.response.DeleteUserTrailResponse
 import com.devpath.entity.Trail
 import com.devpath.entity.User
 import com.devpath.entity.UserSubTopic
@@ -70,6 +72,19 @@ class UserService(
         return user.formatResponse()
     }
 
+    fun deleteTrail(userEmail: String, trailId: Int): DeleteUserTrailResponse {
+        val user = read(userEmail)
+        val trail = trailService.read(trailId)
+        user.userTrails.removeIf {
+            it.trail.id == trail.id
+        }
+        userRepository.saveAndFlush(user)
+        return DeleteUserTrailResponse(
+            user.formatResponse(),
+            USER_TRAIL_DELETED
+        )
+    }
+
     private fun createUserTrail(trail: Trail): UserTrail {
         return UserTrail(
             trail = trail,
@@ -112,7 +127,6 @@ class UserService(
                 userTopic.userSubTopics = userTopic.userSubTopics.sortedBy { userSubTopic -> userSubTopic.subTopicId }.toMutableSet()
             }
         }
-        print(this)
         return this
     }
 }

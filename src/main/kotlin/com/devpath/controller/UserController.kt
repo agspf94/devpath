@@ -1,10 +1,11 @@
 package com.devpath.controller
 
+import com.devpath.dto.user.UserDTO
 import com.devpath.dto.user.request.CreateUserRequest
 import com.devpath.dto.user.request.UpdateTrailStatusRequest
 import com.devpath.dto.user.request.UpdateUserRequest
 import com.devpath.dto.user.response.DeleteUserResponse
-import com.devpath.entity.User
+import com.devpath.dto.user.response.DeleteUserTrailResponse
 import com.devpath.service.UserService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -21,18 +22,18 @@ class UserController(
     private val userService: UserService
 ) {
     @PostMapping("/create")
-    fun create(@RequestBody createUserRequest: CreateUserRequest): User {
-        return userService.create(createUserRequest)
+    fun create(@RequestBody createUserRequest: CreateUserRequest): UserDTO {
+        return userService.create(createUserRequest).toUserDTO()
     }
 
     @GetMapping("/{email}")
-    fun read(@PathVariable email: String): User {
-        return userService.read(email)
+    fun read(@PathVariable email: String): UserDTO {
+        return userService.read(email).toUserDTO()
     }
 
     @PatchMapping("/update")
-    fun update(@RequestBody updateUserRequest: UpdateUserRequest): User {
-        return userService.update(updateUserRequest)
+    fun update(@RequestBody updateUserRequest: UpdateUserRequest): UserDTO {
+        return userService.update(updateUserRequest).toUserDTO()
     }
 
     @DeleteMapping("/delete/{email}")
@@ -44,12 +45,20 @@ class UserController(
     fun addTrail(
         @PathVariable userEmail: String,
         @PathVariable trailId: Int
-    ): User {
-        return userService.addTrail(userEmail, trailId)
+    ): UserDTO {
+        return userService.addTrail(userEmail, trailId).toUserDTO()
     }
 
     @PatchMapping("/update-trail")
-    fun updateTrailStatus(@RequestBody updateTrailStatusRequest: UpdateTrailStatusRequest): User {
-        return userService.updateTrailStatus(updateTrailStatusRequest)
+    fun updateTrailStatus(@RequestBody updateTrailStatusRequest: UpdateTrailStatusRequest): UserDTO {
+        return userService.updateTrailStatus(updateTrailStatusRequest).toUserDTO()
+    }
+
+    @DeleteMapping("/{userEmail}/delete-trail/{trailId}")
+    fun deleteTrail(
+        @PathVariable userEmail: String,
+        @PathVariable trailId: Int
+    ): DeleteUserTrailResponse {
+        return userService.deleteTrail(userEmail, trailId)
     }
 }

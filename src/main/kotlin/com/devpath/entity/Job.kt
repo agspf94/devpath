@@ -1,5 +1,6 @@
 package com.devpath.entity
 
+import com.devpath.dto.job.JobDTO
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -14,4 +15,15 @@ data class Job(
     val period: String,
     val role: String,
     val link: String
-)
+) {
+    fun toJobDTO(): JobDTO {
+        return JobDTO(
+            id = id!!,
+            title = title,
+            location = location,
+            period = period,
+            role = role,
+            link = link
+        )
+    }
+}
