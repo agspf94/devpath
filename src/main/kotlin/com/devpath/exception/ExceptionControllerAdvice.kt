@@ -2,8 +2,12 @@ package com.devpath.exception
 
 import com.devpath.exception.exceptions.EmptyJobListException
 import com.devpath.exception.exceptions.EmptyMentorListException
+import com.devpath.exception.exceptions.EmptySubTopicListException
+import com.devpath.exception.exceptions.EmptyTopicListException
 import com.devpath.exception.exceptions.EmptyTrailListException
 import com.devpath.exception.exceptions.JobAlreadyExistsException
+import com.devpath.exception.exceptions.SubTopicAlreadyExistsException
+import com.devpath.exception.exceptions.TopicAlreadyExistsException
 import com.devpath.exception.exceptions.TrailAlreadyExistsException
 import com.devpath.exception.exceptions.UserAlreadyExistsException
 import com.devpath.exception.exceptions.UserIsNotAMentorException
@@ -20,7 +24,9 @@ class ExceptionControllerAdvice {
         UserAlreadyExistsException::class,
         TrailAlreadyExistsException::class,
         UserIsNotAMentorException::class,
-        JobAlreadyExistsException::class
+        JobAlreadyExistsException::class,
+        TopicAlreadyExistsException::class,
+        SubTopicAlreadyExistsException::class
     )
     fun handleBadRequest(e: Exception): ResponseEntity<ErrorMessage> {
         return ResponseEntity(ErrorMessage(e.message), BAD_REQUEST)
@@ -36,7 +42,9 @@ class ExceptionControllerAdvice {
     @ExceptionHandler(
         EmptyTrailListException::class,
         EmptyMentorListException::class,
-        EmptyJobListException::class
+        EmptyJobListException::class,
+        EmptyTopicListException::class,
+        EmptySubTopicListException::class
     )
     fun handleNoContent(e: Exception): ResponseEntity<ErrorMessage> {
         return ResponseEntity(ErrorMessage(e.message), OK)

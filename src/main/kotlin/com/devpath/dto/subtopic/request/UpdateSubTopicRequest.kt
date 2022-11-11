@@ -1,4 +1,4 @@
-package com.devpath.dto.trail.request
+package com.devpath.dto.subtopic.request
 
 data class UpdateSubTopicRequest(
     val id: Int,

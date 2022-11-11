@@ -43,16 +43,16 @@ class TrailService(
 
     fun update(updateTrailRequest: UpdateTrailRequest): Trail {
         return trailRepository.findById(updateTrailRequest.id)
-            .map { trail ->
+            .map {
                 trailRepository.saveAndFlush(
                     Trail(
-                        id = trail.id,
-                        name = updateTrailRequest.name ?: trail.name,
-                        duration = updateTrailRequest.duration ?: trail.duration,
-                        description = updateTrailRequest.description ?: trail.description,
-                        averageSalary = updateTrailRequest.averageSalary ?: trail.averageSalary,
-                        jobs = updateJobs(trail, updateTrailRequest),
-                        topics = updateTopics(trail, updateTrailRequest)
+                        id = it.id,
+                        name = updateTrailRequest.name ?: it.name,
+                        duration = updateTrailRequest.duration ?: it.duration,
+                        description = updateTrailRequest.description ?: it.description,
+                        averageSalary = updateTrailRequest.averageSalary ?: it.averageSalary,
+                        jobs = updateJobs(it, updateTrailRequest),
+                        topics = updateTopics(it, updateTrailRequest)
                     )
                 )
             }

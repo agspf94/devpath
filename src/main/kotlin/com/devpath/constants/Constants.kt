@@ -16,10 +16,16 @@ class Constants {
         const val TRAIL_DELETED = "Trail deleted successfully"
 
         // Topic
+        const val TOPIC_ALREADY_EXISTS = "There is already a topic with the given name: "
         const val TOPIC_NOT_FOUND = "No topic was found with the given id: "
+        const val TOPIC_LIST_IS_EMPTY = "No topics have been created yet"
+        const val TOPIC_DELETED = "Topic deleted successfully"
 
         // Sub Topic
         const val SUB_TOPIC_NOT_FOUND = "No sub topic was found with the given id: "
+        const val SUB_TOPIC_ALREADY_EXISTS = "There is already a sub topic with the given name: "
+        const val SUB_TOPIC_LIST_IS_EMPTY = "No sub topics have been created yet"
+        const val SUB_TOPIC_DELETED = "Sub Topic deleted successfully"
 
         // Mentor
         const val MENTOR_DEFAULT_DESCRIPTION = "I am a new Dev Path mentor!"
