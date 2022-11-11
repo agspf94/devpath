@@ -26,5 +26,11 @@ class Constants {
         const val MENTOR_DEFAULT_HOUR_COST = 0
         const val MENTOR_DELETED = "This user is no longer a mentor"
         const val MENTOR_LIST_IS_EMPTY = "There are no mentors yet"
+
+        // Job
+        const val JOB_ALREADY_EXISTS = "There is already a job with the given title: "
+        const val JOB_NOT_FOUND = "No job was found with the given id: "
+        const val JOB_LIST_IS_EMPTY = "No jobs have been created yet"
+        const val JOB_DELETED = "Job deleted successfully"
     }
 }

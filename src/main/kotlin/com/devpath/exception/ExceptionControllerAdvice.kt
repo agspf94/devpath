@@ -1,7 +1,9 @@
 package com.devpath.exception
 
+import com.devpath.exception.exceptions.EmptyJobListException
 import com.devpath.exception.exceptions.EmptyMentorListException
 import com.devpath.exception.exceptions.EmptyTrailListException
+import com.devpath.exception.exceptions.JobAlreadyExistsException
 import com.devpath.exception.exceptions.TrailAlreadyExistsException
 import com.devpath.exception.exceptions.UserAlreadyExistsException
 import com.devpath.exception.exceptions.UserIsNotAMentorException
@@ -17,7 +19,8 @@ class ExceptionControllerAdvice {
     @ExceptionHandler(
         UserAlreadyExistsException::class,
         TrailAlreadyExistsException::class,
-        UserIsNotAMentorException::class
+        UserIsNotAMentorException::class,
+        JobAlreadyExistsException::class
     )
     fun handleBadRequest(e: Exception): ResponseEntity<ErrorMessage> {
         return ResponseEntity(ErrorMessage(e.message), BAD_REQUEST)
@@ -32,7 +35,8 @@ class ExceptionControllerAdvice {
 
     @ExceptionHandler(
         EmptyTrailListException::class,
-        EmptyMentorListException::class
+        EmptyMentorListException::class,
+        EmptyJobListException::class
     )
     fun handleNoContent(e: Exception): ResponseEntity<ErrorMessage> {
         return ResponseEntity(ErrorMessage(e.message), OK)
