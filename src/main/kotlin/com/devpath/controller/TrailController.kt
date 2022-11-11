@@ -33,10 +33,10 @@ class TrailController(
         return trailService.readAll()
     }
 
-//    @PatchMapping("/update")
-//    fun update(@RequestBody updateTrailRequest: UpdateTrailRequest): Trail {
-//        return trailService.update(updateTrailRequest)
-//    }
+    @PatchMapping("/update")
+    fun update(@RequestBody updateTrailRequest: UpdateTrailRequest): Trail {
+        return trailService.update(updateTrailRequest)
+    }
 
     @DeleteMapping("/delete/{id}")
     fun delete(@PathVariable id: Int): DeleteTrailResponse {

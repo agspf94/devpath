@@ -1,7 +1,5 @@
 package com.devpath.service
 
-import com.devpath.constants.Constants
-import com.devpath.constants.Constants.Companion
 import com.devpath.constants.Constants.Companion.TRAIL_ALREADY_EXISTS
 import com.devpath.constants.Constants.Companion.TRAIL_DELETED
 import com.devpath.constants.Constants.Companion.TRAIL_LIST_IS_EMPTY
@@ -9,18 +7,19 @@ import com.devpath.constants.Constants.Companion.TRAIL_NOT_FOUND
 import com.devpath.dto.trail.request.UpdateTrailRequest
 import com.devpath.dto.trail.response.DeleteTrailResponse
 import com.devpath.entity.Job
+import com.devpath.entity.Topic
 import com.devpath.entity.Trail
-import com.devpath.entity.User
 import com.devpath.exception.exceptions.EmptyTrailListException
 import com.devpath.exception.exceptions.TrailAlreadyExistsException
 import com.devpath.repository.TrailRepository
-import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.stereotype.Service
 import java.util.stream.Collectors
 
 @Service
 class TrailService(
-    private val trailRepository: TrailRepository
+    private val trailRepository: TrailRepository,
+    private val jobService: JobService,
+    private val topicService: TopicService
 ) {
     fun create(trail: Trail): Trail {
         trailRepository.findByName(trail.name)
@@ -41,32 +40,23 @@ class TrailService(
             .ifEmpty { throw EmptyTrailListException(TRAIL_LIST_IS_EMPTY) }
     }
 
-//    fun update(updateTrailRequest: UpdateTrailRequest): Trail {
-//        return trailRepository.findById(updateTrailRequest.id)
-//            .map { trail ->
-//                trailRepository.saveAndFlush(
-//                    Trail(
-//                        id = trail.id,
-//                        name = updateTrailRequest.name ?: trail.name,
-//                        duration = updateTrailRequest.duration ?: trail.duration,
-//                        description = updateTrailRequest.description ?: trail.description,
-//                        averageSalary = updateTrailRequest.averageSalary ?: trail.averageSalary,
-//                        jobs = updateTrailRequest.jobs?.mapIndexed { i, job ->
-//                            Job(
-//                                id = job.id,
-//                                title = job.title ?: trail.jobs.
-//                                location = ,
-//                                period = ,
-//                                role = ,
-//                                link =
-//                            )
-//                        }.toMutableSet() ?: trail.jobs,
-//                        topics = trail.topics
-//                    )
-//                )
-//            }
-//            .orElseThrow { NoSuchElementException(TRAIL_NOT_FOUND + updateTrailRequest.id) }
-//    }
+    fun update(updateTrailRequest: UpdateTrailRequest): Trail {
+        return trailRepository.findById(updateTrailRequest.id)
+            .map { trail ->
+                trailRepository.saveAndFlush(
+                    Trail(
+                        id = trail.id,
+                        name = updateTrailRequest.name ?: trail.name,
+                        duration = updateTrailRequest.duration ?: trail.duration,
+                        description = updateTrailRequest.description ?: trail.description,
+                        averageSalary = updateTrailRequest.averageSalary ?: trail.averageSalary,
+                        jobs = updateJobs(trail, updateTrailRequest),
+                        topics = updateTopics(trail, updateTrailRequest)
+                    )
+                )
+            }
+            .orElseThrow { NoSuchElementException(TRAIL_NOT_FOUND + updateTrailRequest.id) }
+    }
 
     fun delete(id: Int): DeleteTrailResponse {
         return trailRepository.findById(id)
@@ -75,5 +65,31 @@ class TrailService(
                 DeleteTrailResponse(it, TRAIL_DELETED)
             }
             .orElseThrow { NoSuchElementException(TRAIL_NOT_FOUND + id) }
+    }
+
+    private fun updateJobs(trail: Trail, updateTrailRequest: UpdateTrailRequest): MutableSet<Job> {
+        return if (updateTrailRequest.jobsIds == null)
+            trail.jobs
+        else {
+            val jobs = mutableSetOf<Job>()
+            updateTrailRequest.jobsIds?.map {
+                val job = jobService.read(it)
+                jobs.add(job)
+            }
+            jobs
+        }
+    }
+
+    private fun updateTopics(trail: Trail, updateTrailRequest: UpdateTrailRequest): MutableSet<Topic> {
+        return if (updateTrailRequest.topicsIds == null)
+            trail.topics
+        else {
+            val topics = mutableSetOf<Topic>()
+            updateTrailRequest.topicsIds?.map {
+                val topic = topicService.read(it)
+                topics.add(topic)
+            }
+            topics
+        }
     }
 }
