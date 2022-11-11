@@ -1,5 +1,6 @@
 package com.devpath.entity
 
+import org.hibernate.type.OrderedSetType
 import javax.persistence.CascadeType.ALL
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -16,7 +17,7 @@ data class Trail(
     val description: String,
     val averageSalary: String,
     @OneToMany(cascade = [ALL])
-    val jobs: Set<Job>,
+    val jobs: MutableSet<Job>,
     @OneToMany(cascade = [ALL])
-    val topics: Set<Topic>
+    val topics: MutableSet<Topic>
 )

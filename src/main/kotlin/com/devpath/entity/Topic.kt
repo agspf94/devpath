@@ -13,5 +13,5 @@ data class Topic(
     var id: Int? = null,
     val name: String,
     @OneToMany(cascade = [ALL])
-    val subTopics: Set<SubTopic>
+    val subTopics: MutableSet<SubTopic>
 )
