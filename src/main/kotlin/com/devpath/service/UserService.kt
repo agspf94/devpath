@@ -72,7 +72,7 @@ class UserService(
 
     private fun createUserTrail(trail: Trail): UserTrail {
         return UserTrail(
-            trailId = trail.id!!,
+            trail = trail,
             userTopics = trail.topics.map { topic ->
                 UserTopic(
                     topicId = topic.id!!,
@@ -90,7 +90,7 @@ class UserService(
     fun updateTrailStatus(updateTrailStatusRequest: UpdateTrailStatusRequest): User {
         val user = read(updateTrailStatusRequest.userEmail)
         validateUpdateTrailStatusRequest(updateTrailStatusRequest)
-        user.userTrails.first { it.trailId == updateTrailStatusRequest.trailId }
+        user.userTrails.first { it.trail.id == updateTrailStatusRequest.trailId }
             .userTopics.first { it.topicId == updateTrailStatusRequest.topicId }
             .userSubTopics.first { it.subTopicId == updateTrailStatusRequest.subTopicId }
             .active = updateTrailStatusRequest.active
@@ -105,7 +105,7 @@ class UserService(
     }
 
     private fun User.formatResponse(): User {
-        this.userTrails = this.userTrails.sortedBy { it.trailId }.toMutableSet()
+        this.userTrails = this.userTrails.sortedBy { it.trail.id }.toMutableSet()
         this.userTrails.map { userTrail ->
             userTrail.userTopics = userTrail.userTopics.sortedBy { userTopic -> userTopic.topicId }.toMutableSet()
             userTrail.userTopics.map { userTopic ->
