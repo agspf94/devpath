@@ -17,6 +17,7 @@ import com.devpath.entity.UserTopic
 import com.devpath.entity.UserTrail
 import com.devpath.exception.exceptions.UserAlreadyExistsException
 import com.devpath.repository.UserRepository
+import com.devpath.repository.UserTrailRepository
 import org.springframework.stereotype.Service
 
 @Service
@@ -24,7 +25,8 @@ class UserService(
     private val userRepository: UserRepository,
     private val trailService: TrailService,
     private val topicService: TopicService,
-    private val subTopicService: SubTopicService
+    private val subTopicService: SubTopicService,
+    private val userTrailRepository: UserTrailRepository
 ) {
     fun create(createUserRequest: CreateUserRequest): User {
         userRepository.findByEmail(createUserRequest.email)
@@ -75,8 +77,10 @@ class UserService(
     fun deleteTrail(userEmail: String, trailId: Int): DeleteUserTrailResponse {
         val user = read(userEmail)
         val trail = trailService.read(trailId)
+        val userTrail = user.userTrails.first { it.trail.id == trail.id }
         user.userTrails.removeIf { it.trail.id == trail.id }
         userRepository.saveAndFlush(user)
+        userTrailRepository.delete(userTrail)
         return DeleteUserTrailResponse(
             user.formatResponse(),
             USER_TRAIL_DELETED
