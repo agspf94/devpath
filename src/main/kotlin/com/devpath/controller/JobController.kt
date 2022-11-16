@@ -31,7 +31,7 @@ class JobController(
 
     @GetMapping("/all")
     fun readAll(): List<Job> {
-        return jobService.readALl()
+        return jobService.readAll()
     }
 
     @PatchMapping("/update")

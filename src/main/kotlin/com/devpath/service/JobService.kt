@@ -30,7 +30,7 @@ class JobService(
             .orElseThrow { NoSuchElementException(JOB_NOT_FOUND + id) }
     }
 
-    fun readALl(): List<Job> {
+    fun readAll(): List<Job> {
         return jobRepository.findAll()
             .stream()
             .collect(Collectors.toList())
