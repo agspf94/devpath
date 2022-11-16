@@ -10,7 +10,8 @@ class Constants {
         const val USER_TRAIL_DELETED = "User trail deleted successfully"
 
         // Mentor
-        const val MENTOR_DEFAULT_DESCRIPTION = "I am a new Dev Path mentor!"
+        const val MENTOR_DEFAULT_ROLE = "I am a new Dev Path mentor!"
+        const val MENTOR_DEFAULT_YEARS_OF_EXPERIENCE = 0
         const val MENTOR_DEFAULT_HOUR_COST = 0
         const val USER_IS_NOT_A_MENTOR = "This user is not a mentor"
         const val MENTOR_LIST_IS_EMPTY = "There are no mentors yet"

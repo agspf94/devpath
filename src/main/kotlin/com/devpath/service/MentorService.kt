@@ -1,7 +1,8 @@
 package com.devpath.service
 
-import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_DESCRIPTION
 import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_HOUR_COST
+import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_ROLE
+import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_YEARS_OF_EXPERIENCE
 import com.devpath.constants.Constants.Companion.MENTOR_DELETED
 import com.devpath.constants.Constants.Companion.MENTOR_LIST_IS_EMPTY
 import com.devpath.constants.Constants.Companion.USER_IS_NOT_A_MENTOR
@@ -49,7 +50,8 @@ class MentorService(
                     Mentor(
                         id = it.id,
                         user = it,
-                        description = MENTOR_DEFAULT_DESCRIPTION,
+                        role = MENTOR_DEFAULT_ROLE,
+                        yearsOfExperience = MENTOR_DEFAULT_YEARS_OF_EXPERIENCE,
                         hourCost = MENTOR_DEFAULT_HOUR_COST,
                         payments = mutableSetOf(),
                         schedules = mutableSetOf()
@@ -68,7 +70,8 @@ class MentorService(
                         Mentor(
                             id = it.id,
                             user = it,
-                            description = updateMentorRequest.description ?: mentor.description,
+                            role = updateMentorRequest.role ?: mentor.role,
+                            yearsOfExperience = updateMentorRequest.yearsOfExperience ?: mentor.yearsOfExperience,
                             hourCost = updateMentorRequest.hourCost ?: mentor.hourCost,
                             payments = mentor.payments,
                             schedules = mentor.schedules

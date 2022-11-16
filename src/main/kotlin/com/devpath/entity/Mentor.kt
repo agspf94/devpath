@@ -11,7 +11,8 @@ data class Mentor(
     val id: Int? = null,
     @OneToOne
     val user: User,
-    val description: String,
+    val role: String,
+    val yearsOfExperience: Int,
     val hourCost: Int,
     @OneToMany
     val payments: MutableSet<Payment>,
