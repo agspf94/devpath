@@ -2,39 +2,32 @@ package com.devpath.controller
 
 import com.devpath.mocks.job.JobMockProvider.Companion.getJobRequest
 import com.devpath.service.JobService
-import io.mockk.MockKAnnotations
-import io.mockk.every
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
-import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertEquals
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.server.LocalServerPort
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.http.MediaType.APPLICATION_JSON
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+@WebMvcTest(JobController::class)
 class JobControllerTest {
-    @MockK
+    @MockBean
     private lateinit var jobService: JobService
 
-    @InjectMockKs
+    @Autowired
     private lateinit var jobController: JobController
 
     @Autowired
-    private lateinit var testRestTemplate: TestRestTemplate
-
-    @LocalServerPort
-    private val port = 0
-
-    @BeforeEach
-    fun setUp() {
-        MockKAnnotations.init(this)
-    }
+    private lateinit var mockMvc: MockMvc
 
     @Test
     fun `Job controller should not be null`() {
@@ -42,16 +35,20 @@ class JobControllerTest {
     }
 
     @Test
-    fun `create should create a job successfully`() {
+    fun `Should create a job successfully`() {
         val createJobRequest = getJobRequest()
         val job = createJobRequest.toJob()
 
-        every { jobService.create(createJobRequest) } returns job
+        `when`(jobService.create(createJobRequest)).thenReturn(job)
 
-        val result = jobController.create(createJobRequest)
-        print(result)
+        mockMvc.perform(post("/job/create")
+            .accept(APPLICATION_JSON)
+            .content(jacksonObjectMapper().writeValueAsString(createJobRequest))
+            .contentType(APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk)
+            .andExpect(content().json(jacksonObjectMapper().writeValueAsString(job)))
 
-        assertEquals(job, result)
-        verify(exactly = 1) { jobService.create(createJobRequest) }
+        verify(jobService, times(1)).create(createJobRequest)
     }
 }

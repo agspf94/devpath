@@ -40,7 +40,6 @@ dependencies {
 
 	// Testing
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("io.mockk:mockk:1.13.2")
 	testImplementation("com.h2database:h2")
 }
 
