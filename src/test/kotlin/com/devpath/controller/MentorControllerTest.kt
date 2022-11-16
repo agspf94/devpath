@@ -8,9 +8,9 @@ import com.devpath.dto.mentor.response.DeleteMentorResponse
 import com.devpath.exception.ErrorMessage
 import com.devpath.exception.exceptions.EmptyMentorListException
 import com.devpath.exception.exceptions.UserIsNotAMentorException
-import com.devpath.mocks.job.MentorMockProvider.Companion.getMentor
-import com.devpath.mocks.job.MentorMockProvider.Companion.getUpdateMentorRequest
-import com.devpath.mocks.job.UserMockProvider.Companion.getUser
+import com.devpath.mocks.MentorMockProvider.Companion.getMentor
+import com.devpath.mocks.MentorMockProvider.Companion.getUpdateMentorRequest
+import com.devpath.mocks.UserMockProvider.Companion.getUser
 import com.devpath.service.MentorService
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Assertions.assertNotNull
