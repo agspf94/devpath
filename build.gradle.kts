@@ -33,9 +33,6 @@ dependencies {
 	// Postgres
 	runtimeOnly("org.postgresql:postgresql")
 
-	// H2
-	testImplementation("com.h2database:h2")
-
 	// Swagger
 	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.12")
 	implementation("org.springdoc:springdoc-openapi-ui:1.6.12")
@@ -44,6 +41,7 @@ dependencies {
 	// Testing
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.13.2")
+	testImplementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {
