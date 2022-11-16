@@ -22,25 +22,6 @@ class MentorService(
     private val mentorRepository: MentorRepository,
     private val userRepository: UserRepository
 ) {
-    fun read(userId: Int): Mentor {
-        return userRepository.findById(userId)
-            .map {
-                if (it.isMentor) {
-                    mentorRepository.findById(it.id!!).get()
-                } else {
-                    throw UserIsNotAMentorException(USER_IS_NOT_A_MENTOR, it)
-                }
-            }
-            .orElseThrow { NoSuchElementException(USER_NOT_FOUND_ID + userId) }
-    }
-
-    fun readAll(): List<Mentor> {
-        return mentorRepository.findAll()
-            .stream()
-            .collect(Collectors.toList())
-            .ifEmpty { throw EmptyMentorListException(MENTOR_LIST_IS_EMPTY) }
-    }
-
     fun becomeMentor(userId: Int): Mentor {
         return userRepository.findById(userId)
             .map {
@@ -59,6 +40,25 @@ class MentorService(
                 )
             }
             .orElseThrow { NoSuchElementException(USER_NOT_FOUND_ID + userId) }
+    }
+
+    fun read(userId: Int): Mentor {
+        return userRepository.findById(userId)
+            .map {
+                if (it.isMentor) {
+                    mentorRepository.findById(it.id!!).get()
+                } else {
+                    throw UserIsNotAMentorException(USER_IS_NOT_A_MENTOR, it)
+                }
+            }
+            .orElseThrow { NoSuchElementException(USER_NOT_FOUND_ID + userId) }
+    }
+
+    fun readAll(): List<Mentor> {
+        return mentorRepository.findAll()
+            .stream()
+            .collect(Collectors.toList())
+            .ifEmpty { throw EmptyMentorListException(MENTOR_LIST_IS_EMPTY) }
     }
 
     fun update(updateMentorRequest: UpdateMentorRequest): Mentor {

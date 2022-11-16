@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.RestController
 class MentorController(
     private val mentorService: MentorService
 ) {
+    @PostMapping("/become-mentor/{userId}")
+    fun becomeMentor(@PathVariable userId: Int): Mentor {
+        return mentorService.becomeMentor(userId)
+    }
+
     @GetMapping("/{userId}")
     fun read(@PathVariable userId: Int): Mentor {
         return mentorService.read(userId)
@@ -26,11 +31,6 @@ class MentorController(
     @GetMapping("/all")
     fun readAll(): List<Mentor> {
         return mentorService.readAll()
-    }
-
-    @PostMapping("/become-mentor/{userId}")
-    fun becomeMentor(@PathVariable userId: Int): Mentor {
-        return mentorService.becomeMentor(userId)
     }
 
     @PatchMapping("/update")
