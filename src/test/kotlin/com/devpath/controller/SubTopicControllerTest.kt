@@ -66,7 +66,7 @@ class SubTopicControllerTest {
     }
 
     @Test
-    fun `Should fails while creating a sub topic with a name that already exists`() {
+    fun `Should fail while creating a sub topic with a name that already exists`() {
         val createSubTopicRequest = getCreateSubTopicRequest()
         val errorMessage = Constants.SUB_TOPIC_ALREADY_EXISTS + createSubTopicRequest.name
 
@@ -102,7 +102,7 @@ class SubTopicControllerTest {
     }
 
     @Test
-    fun `Should fails while reading a sub topic that doesn't exist`() {
+    fun `Should fail while reading a sub topic that doesn't exist`() {
         val subTopic = getSubTopic(id = 1)
         val errorMessage = SUB_TOPIC_NOT_FOUND + subTopic.id
 
@@ -137,7 +137,7 @@ class SubTopicControllerTest {
     }
 
     @Test
-    fun `Should fails while reading all sub topics list because there aren't any`() {
+    fun `Should fail while reading all sub topics list because there aren't any`() {
         val errorMessage = Constants.SUB_TOPIC_LIST_IS_EMPTY
 
         `when`(subTopicService.readAll()).thenAnswer { throw EmptySubTopicListException(errorMessage) }
@@ -173,7 +173,7 @@ class SubTopicControllerTest {
     }
 
     @Test
-    fun `Should fails while updating a sub topic that doesn't exist`() {
+    fun `Should fail while updating a sub topic that doesn't exist`() {
         val updateSubTopicRequest = getUpdateSubTopicRequest(id = 1)
         val errorMessage = SUB_TOPIC_NOT_FOUND + updateSubTopicRequest.id
 
@@ -210,7 +210,7 @@ class SubTopicControllerTest {
     }
 
     @Test
-    fun `Should fails while deleting a sub topic that doesn't exist`() {
+    fun `Should fail while deleting a sub topic that doesn't exist`() {
         val subTopic = getSubTopic(id = 1)
         val errorMessage = SUB_TOPIC_NOT_FOUND + subTopic.id!!
 

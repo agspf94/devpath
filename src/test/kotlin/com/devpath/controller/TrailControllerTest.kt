@@ -67,7 +67,7 @@ class TrailControllerTest {
     }
 
     @Test
-    fun `Should fails while creating a trail with a name that already exists`() {
+    fun `Should fail while creating a trail with a name that already exists`() {
         val createTrailRequest = getCreateTrailRequest()
         val errorMessage = TRAIL_ALREADY_EXISTS + createTrailRequest.name
 
@@ -103,7 +103,7 @@ class TrailControllerTest {
     }
 
     @Test
-    fun `Should fails while reading a trail that doesn't exist`() {
+    fun `Should fail while reading a trail that doesn't exist`() {
         val trail = getTrail(id = 1)
         val errorMessage = TRAIL_NOT_FOUND + trail.id
 
@@ -138,7 +138,7 @@ class TrailControllerTest {
     }
 
     @Test
-    fun `Should fails while reading all trails list because there aren't any`() {
+    fun `Should fail while reading all trails list because there aren't any`() {
         val errorMessage = Constants.TRAIL_LIST_IS_EMPTY
 
         `when`(trailService.readAll()).thenAnswer { throw EmptyTrailListException(errorMessage) }
@@ -174,7 +174,7 @@ class TrailControllerTest {
     }
 
     @Test
-    fun `Should fails while updating a trail that doesn't exist`() {
+    fun `Should fail while updating a trail that doesn't exist`() {
         val updateTrailRequest = getUpdateTrailRequest(id = 1)
         val errorMessage = TRAIL_NOT_FOUND + updateTrailRequest.name
 
@@ -211,7 +211,7 @@ class TrailControllerTest {
     }
 
     @Test
-    fun `Should fails while deleting a trail that doesn't exist`() {
+    fun `Should fail while deleting a trail that doesn't exist`() {
         val trail = getTrail(id = 1)
         val errorMessage = TRAIL_NOT_FOUND + trail.id!!
 

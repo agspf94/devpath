@@ -66,7 +66,7 @@ class MentorControllerTest {
     }
 
     @Test
-    fun `Should fails while becoming a mentor when the user doesn't exist`() {
+    fun `Should fail while becoming a mentor when the user doesn't exist`() {
         val userId = 1
         val errorMessage = USER_NOT_FOUND_ID + userId
 
@@ -102,7 +102,7 @@ class MentorControllerTest {
     }
 
     @Test
-    fun `Should fails while reading a mentor when the user is not a mentor`() {
+    fun `Should fail while reading a mentor when the user is not a mentor`() {
         val user = getUser(id = 1)
         val errorMessage = USER_IS_NOT_A_MENTOR + user.id
 
@@ -120,7 +120,7 @@ class MentorControllerTest {
     }
 
     @Test
-    fun `Should fails while reading a mentor when the user doesn't exist`() {
+    fun `Should fail while reading a mentor when the user doesn't exist`() {
         val user = getUser(id = 1)
         val errorMessage = USER_NOT_FOUND_ID + user.id
 
@@ -157,7 +157,7 @@ class MentorControllerTest {
     }
 
     @Test
-    fun `Should fails while reading all mentors list because there aren't any`() {
+    fun `Should fail while reading all mentors list because there aren't any`() {
         val errorMessage = MENTOR_LIST_IS_EMPTY
 
         `when`(mentorService.readAll()).thenAnswer { throw EmptyMentorListException(errorMessage) }
@@ -194,7 +194,7 @@ class MentorControllerTest {
     }
 
     @Test
-    fun `Should fails while updating a mentor when the user is not a mentor`() {
+    fun `Should fail while updating a mentor when the user is not a mentor`() {
         val user = getUser(id = 1)
         val updateMentorRequest = getUpdateMentorRequest(userId = user.id!!)
         val errorMessage = USER_IS_NOT_A_MENTOR + user.id!!
@@ -214,7 +214,7 @@ class MentorControllerTest {
     }
 
     @Test
-    fun `Should fails while updating a mentor when the user doesn't exist`() {
+    fun `Should fail while updating a mentor when the user doesn't exist`() {
         val user = getUser(id = 1)
         val updateMentorRequest = getUpdateMentorRequest(userId = user.id!!)
         val errorMessage = USER_NOT_FOUND_ID + user.id!!
@@ -252,7 +252,7 @@ class MentorControllerTest {
     }
 
     @Test
-    fun `Should fails while deleting a mentor when the user that doesn't exist`() {
+    fun `Should fail while deleting a mentor when the user that doesn't exist`() {
         val user = getUser(id = 1)
         val errorMessage = USER_NOT_FOUND_ID + user.id!!
 

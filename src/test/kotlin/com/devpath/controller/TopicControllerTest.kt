@@ -68,7 +68,7 @@ class TopicControllerTest {
     }
 
     @Test
-    fun `Should fails while creating a topic with a name that already exists`() {
+    fun `Should fail while creating a topic with a name that already exists`() {
         val createTopicRequest = getCreateTopicRequest()
         val errorMessage = TOPIC_ALREADY_EXISTS + createTopicRequest.name
 
@@ -104,7 +104,7 @@ class TopicControllerTest {
     }
 
     @Test
-    fun `Should fails while reading a topic that doesn't exist`() {
+    fun `Should fail while reading a topic that doesn't exist`() {
         val topic = getTopic(id = 1)
         val errorMessage = TOPIC_NOT_FOUND_ID + topic.id
 
@@ -139,7 +139,7 @@ class TopicControllerTest {
     }
 
     @Test
-    fun `Should fails while reading all topics list because there aren't any`() {
+    fun `Should fail while reading all topics list because there aren't any`() {
         val errorMessage = TOPIC_LIST_IS_EMPTY
 
         `when`(topicService.readAll()).thenAnswer { throw EmptyTopicListException(errorMessage) }
@@ -175,7 +175,7 @@ class TopicControllerTest {
     }
 
     @Test
-    fun `Should fails while updating a topic that doesn't exist`() {
+    fun `Should fail while updating a topic that doesn't exist`() {
         val updateTopicRequest = getUpdateTopicRequest(id = 1)
         val errorMessage = TOPIC_NOT_FOUND_NAME + updateTopicRequest.name
 
@@ -212,7 +212,7 @@ class TopicControllerTest {
     }
 
     @Test
-    fun `Should fails while deleting a topic that doesn't exist`() {
+    fun `Should fail while deleting a topic that doesn't exist`() {
         val topic = getTopic(id = 1)
         val errorMessage = TOPIC_NOT_FOUND_ID + topic.id!!
 

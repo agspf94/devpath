@@ -66,7 +66,7 @@ class JobControllerTest {
     }
 
     @Test
-    fun `Should fails while creating a job with a title that already exists`() {
+    fun `Should fail while creating a job with a title that already exists`() {
         val createJobRequest = getCreateJobRequest()
         val errorMessage = JOB_ALREADY_EXISTS + createJobRequest.title
 
@@ -102,7 +102,7 @@ class JobControllerTest {
     }
 
     @Test
-    fun `Should fails while reading a job that doesn't exist`() {
+    fun `Should fail while reading a job that doesn't exist`() {
         val jobId = 1
         val errorMessage = JOB_ALREADY_EXISTS + jobId
 
@@ -137,7 +137,7 @@ class JobControllerTest {
     }
 
     @Test
-    fun `Should fails while reading all jobs list because there aren't any`() {
+    fun `Should fail while reading all jobs list because there aren't any`() {
         val errorMessage = JOB_LIST_IS_EMPTY
 
         `when`(jobService.readAll()).thenAnswer { throw EmptyJobListException(errorMessage) }
@@ -173,7 +173,7 @@ class JobControllerTest {
     }
 
     @Test
-    fun `Should fails while updating a job that doesn't exist`() {
+    fun `Should fail while updating a job that doesn't exist`() {
         val updateJobRequest = getUpdateJobRequest(id = 1)
         val errorMessage = JOB_NOT_FOUND + updateJobRequest.id
 
@@ -210,7 +210,7 @@ class JobControllerTest {
     }
 
     @Test
-    fun `Should fails while deleting a job that doesn't exist`() {
+    fun `Should fail while deleting a job that doesn't exist`() {
         val jobId = 1
         val errorMessage = JOB_NOT_FOUND + jobId
 
