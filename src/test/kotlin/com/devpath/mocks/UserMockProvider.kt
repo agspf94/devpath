@@ -1,5 +1,8 @@
 package com.devpath.mocks
 
+import com.devpath.dto.user.request.CreateUserRequest
+import com.devpath.dto.user.request.UpdateTrailStatusRequest
+import com.devpath.dto.user.request.UpdateUserRequest
 import com.devpath.entity.User
 
 class UserMockProvider {
@@ -12,6 +15,35 @@ class UserMockProvider {
                 password = "password",
                 isMentor = false,
                 userTrails = mutableSetOf()
+            )
+        }
+
+        fun getCreateUserRequest(): CreateUserRequest {
+            return CreateUserRequest(
+                name = "name",
+                email = "email",
+                password = "password",
+                isMentor = false
+            )
+        }
+
+        fun getUpdateUserRequest(id: Int): UpdateUserRequest {
+            return UpdateUserRequest(
+                id = id,
+                name = "name",
+                email = "email",
+                password = "password",
+                isMentor = false
+            )
+        }
+
+        fun getUpdateTrailStatusRequest(): UpdateTrailStatusRequest {
+            return UpdateTrailStatusRequest(
+                userEmail = "userEmail",
+                trailId = 1,
+                topicId = 1,
+                subTopicId = 1,
+                active = true
             )
         }
     }
