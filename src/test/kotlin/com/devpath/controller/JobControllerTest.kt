@@ -7,9 +7,9 @@ import com.devpath.dto.job.response.DeleteJobResponse
 import com.devpath.exception.ErrorMessage
 import com.devpath.exception.exceptions.EmptyJobListException
 import com.devpath.exception.exceptions.JobAlreadyExistsException
-import com.devpath.mocks.JobMockProvider.Companion.getJob
-import com.devpath.mocks.JobMockProvider.Companion.getCreateJobRequest
-import com.devpath.mocks.JobMockProvider.Companion.getUpdateJobRequest
+import com.devpath.mock.JobMockProvider.Companion.getJob
+import com.devpath.mock.JobMockProvider.Companion.getCreateJobRequest
+import com.devpath.mock.JobMockProvider.Companion.getUpdateJobRequest
 import com.devpath.service.JobService
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Assertions.assertNotNull

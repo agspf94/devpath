@@ -9,9 +9,9 @@ import com.devpath.dto.topic.response.DeleteTopicResponse
 import com.devpath.exception.ErrorMessage
 import com.devpath.exception.exceptions.EmptyTopicListException
 import com.devpath.exception.exceptions.TopicAlreadyExistsException
-import com.devpath.mocks.TopicMockProvider.Companion.getCreateTopicRequest
-import com.devpath.mocks.TopicMockProvider.Companion.getTopic
-import com.devpath.mocks.TopicMockProvider.Companion.getUpdateTopicRequest
+import com.devpath.mock.TopicMockProvider.Companion.getCreateTopicRequest
+import com.devpath.mock.TopicMockProvider.Companion.getTopic
+import com.devpath.mock.TopicMockProvider.Companion.getUpdateTopicRequest
 import com.devpath.service.TopicService
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Assertions.assertNotNull

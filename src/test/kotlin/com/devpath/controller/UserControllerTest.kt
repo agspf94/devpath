@@ -13,11 +13,11 @@ import com.devpath.dto.user.response.DeleteUserTrailResponse
 import com.devpath.entity.UserTrail
 import com.devpath.exception.ErrorMessage
 import com.devpath.exception.exceptions.UserAlreadyExistsException
-import com.devpath.mocks.TrailMockProvider.Companion.getTrail
-import com.devpath.mocks.UserMockProvider.Companion.getCreateUserRequest
-import com.devpath.mocks.UserMockProvider.Companion.getUpdateTrailStatusRequest
-import com.devpath.mocks.UserMockProvider.Companion.getUser
-import com.devpath.mocks.UserMockProvider.Companion.getUpdateUserRequest
+import com.devpath.mock.TrailMockProvider.Companion.getTrail
+import com.devpath.mock.UserMockProvider.Companion.getCreateUserRequest
+import com.devpath.mock.UserMockProvider.Companion.getUpdateTrailStatusRequest
+import com.devpath.mock.UserMockProvider.Companion.getUser
+import com.devpath.mock.UserMockProvider.Companion.getUpdateUserRequest
 import com.devpath.service.UserService
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Assertions.assertNotNull

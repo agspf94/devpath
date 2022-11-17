@@ -7,9 +7,9 @@ import com.devpath.dto.subtopic.response.DeleteSubTopicResponse
 import com.devpath.exception.ErrorMessage
 import com.devpath.exception.exceptions.EmptySubTopicListException
 import com.devpath.exception.exceptions.SubTopicAlreadyExistsException
-import com.devpath.mocks.SubTopicMockProvider.Companion.getCreateSubTopicRequest
-import com.devpath.mocks.SubTopicMockProvider.Companion.getSubTopic
-import com.devpath.mocks.SubTopicMockProvider.Companion.getUpdateSubTopicRequest
+import com.devpath.mock.SubTopicMockProvider.Companion.getCreateSubTopicRequest
+import com.devpath.mock.SubTopicMockProvider.Companion.getSubTopic
+import com.devpath.mock.SubTopicMockProvider.Companion.getUpdateSubTopicRequest
 import com.devpath.service.SubTopicService
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Assertions.assertNotNull

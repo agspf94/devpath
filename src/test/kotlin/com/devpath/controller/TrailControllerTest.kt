@@ -8,9 +8,9 @@ import com.devpath.dto.trail.response.DeleteTrailResponse
 import com.devpath.exception.ErrorMessage
 import com.devpath.exception.exceptions.EmptyTrailListException
 import com.devpath.exception.exceptions.TrailAlreadyExistsException
-import com.devpath.mocks.TrailMockProvider.Companion.getCreateTrailRequest
-import com.devpath.mocks.TrailMockProvider.Companion.getTrail
-import com.devpath.mocks.TrailMockProvider.Companion.getUpdateTrailRequest
+import com.devpath.mock.TrailMockProvider.Companion.getCreateTrailRequest
+import com.devpath.mock.TrailMockProvider.Companion.getTrail
+import com.devpath.mock.TrailMockProvider.Companion.getUpdateTrailRequest
 import com.devpath.service.TrailService
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Assertions.assertNotNull
