@@ -2,12 +2,13 @@ package com.devpath.entity
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity
 data class SubTopic(
     @Id
-    @GeneratedValue(generator = "sub_topic_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int? = null,
     val name: String,
     val content: String

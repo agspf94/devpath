@@ -3,13 +3,14 @@ package com.devpath.entity
 import com.devpath.dto.subtopic.SubTopicDTO
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.OneToOne
 
 @Entity
 data class UserSubTopic(
     @Id
-    @GeneratedValue(generator = "user_sub_topic_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int? = null,
     @OneToOne
     val subTopic: SubTopic,

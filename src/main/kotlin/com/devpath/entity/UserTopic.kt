@@ -4,6 +4,7 @@ import com.devpath.dto.topic.TopicDTO
 import javax.persistence.CascadeType.ALL
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.OneToMany
 import javax.persistence.OneToOne
@@ -11,7 +12,7 @@ import javax.persistence.OneToOne
 @Entity
 data class UserTopic(
     @Id
-    @GeneratedValue(generator = "user_topic_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int? = null,
     @OneToOne
     val topic: Topic,

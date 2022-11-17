@@ -3,13 +3,14 @@ package com.devpath.entity
 import javax.persistence.CascadeType.ALL
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.OneToMany
 
 @Entity
 data class Trail(
     @Id
-    @GeneratedValue(generator = "trail_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int? = null,
     val name: String,
     val duration: Int,
