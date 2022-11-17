@@ -1,0 +1,16 @@
+package com.devpath.mock
+
+import com.devpath.entity.UserTopic
+import com.devpath.mock.TopicMockProvider.Companion.getTopic
+
+class UserTopicMockProvider {
+    companion object {
+        fun getUserTopic(id: Int): UserTopic {
+            return UserTopic(
+                id = id,
+                topic = getTopic(id = 1),
+                userSubTopics = mutableSetOf()
+            )
+        }
+    }
+}
