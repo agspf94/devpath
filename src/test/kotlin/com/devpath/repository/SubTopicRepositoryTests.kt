@@ -9,8 +9,11 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
+import org.springframework.test.annotation.DirtiesContext
+import org.springframework.test.annotation.DirtiesContext.ClassMode
 
 @DataJpaTest
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 class SubTopicRepositoryTests {
     @Autowired
     private lateinit var entityManager: TestEntityManager
