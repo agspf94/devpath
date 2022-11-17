@@ -1,4 +1,4 @@
-package com.devpath.mocks
+package com.devpath.mock
 
 import com.devpath.dto.subtopic.request.CreateSubTopicRequest
 import com.devpath.dto.subtopic.request.UpdateSubTopicRequest

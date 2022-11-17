@@ -1,4 +1,4 @@
-package com.devpath.mocks
+package com.devpath.mock
 
 import com.devpath.dto.job.request.CreateJobRequest
 import com.devpath.dto.job.request.UpdateJobRequest

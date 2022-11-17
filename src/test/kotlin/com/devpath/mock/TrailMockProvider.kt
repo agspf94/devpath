@@ -1,4 +1,4 @@
-package com.devpath.mocks
+package com.devpath.mock
 
 import com.devpath.dto.trail.request.CreateTrailRequest
 import com.devpath.dto.trail.request.UpdateTrailRequest

@@ -1,4 +1,4 @@
-package com.devpath.mocks
+package com.devpath.mock
 
 import com.devpath.dto.mentor.request.UpdateMentorRequest
 import com.devpath.entity.Mentor
