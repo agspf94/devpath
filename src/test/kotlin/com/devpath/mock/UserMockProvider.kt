@@ -46,5 +46,15 @@ class UserMockProvider {
                 active = true
             )
         }
+
+        fun getUserWithoutId(): User {
+            return User(
+                name = "name",
+                email = "email",
+                password = "password",
+                isMentor = false,
+                userTrails = mutableSetOf()
+            )
+        }
     }
 }

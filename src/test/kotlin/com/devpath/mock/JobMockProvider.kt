@@ -37,5 +37,15 @@ class JobMockProvider {
                 link = "link"
             )
         }
+
+        fun getJobWithoutId(): Job {
+            return Job(
+                title = "title",
+                location = "location",
+                period = "period",
+                role = "role",
+                link = "link"
+            )
+        }
     }
 }

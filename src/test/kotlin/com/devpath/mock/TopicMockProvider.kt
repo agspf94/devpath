@@ -28,5 +28,12 @@ class TopicMockProvider {
                 subTopicsIds = mutableSetOf()
             )
         }
+
+        fun getTopicWithoutId(): Topic {
+            return Topic(
+                name = "name",
+                subTopics = mutableSetOf()
+            )
+        }
     }
 }

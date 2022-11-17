@@ -40,5 +40,16 @@ class TrailMockProvider {
                 topicsIds = mutableSetOf()
             )
         }
+
+        fun getTrailWithoutId(): Trail {
+            return Trail(
+                name = "name",
+                duration = 0,
+                description = "description",
+                averageSalary = "averageSalary",
+                jobs = mutableSetOf(),
+                topics = mutableSetOf()
+            )
+        }
     }
 }

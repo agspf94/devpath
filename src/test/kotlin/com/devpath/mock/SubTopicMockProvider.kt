@@ -28,5 +28,12 @@ class SubTopicMockProvider {
                 content = "content"
             )
         }
+
+        fun getSubTopicWithoutId(): SubTopic {
+            return SubTopic(
+                name = "name",
+                content = "content"
+            )
+        }
     }
 }

@@ -12,5 +12,12 @@ class UserTrailMockProvider {
                 userTopics = mutableSetOf()
             )
         }
+
+        fun getUserTrailWithoutId(): UserTrail {
+            return UserTrail(
+                trail = getTrail(id = 1),
+                userTopics = mutableSetOf()
+            )
+        }
     }
 }
