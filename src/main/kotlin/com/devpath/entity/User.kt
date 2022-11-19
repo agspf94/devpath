@@ -2,6 +2,7 @@ package com.devpath.entity
 
 import com.devpath.dto.user.UserDTO
 import javax.persistence.CascadeType.ALL
+import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -15,8 +16,11 @@ data class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int? = null,
+    @Column(length = 2048)
     val name: String,
+    @Column(length = 2048)
     val email: String,
+    @Column(length = 2048)
     val password: String,
     var isMentor: Boolean,
     @OneToMany(cascade = [ALL])

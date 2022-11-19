@@ -1,5 +1,6 @@
 package com.devpath.entity
 
+import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.OneToMany
@@ -11,6 +12,7 @@ data class Mentor(
     val id: Int? = null,
     @OneToOne
     val user: User,
+    @Column(length = 2048)
     val role: String,
     val yearsOfExperience: Int,
     val hourCost: Int,
