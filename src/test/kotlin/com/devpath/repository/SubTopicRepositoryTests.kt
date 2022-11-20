@@ -77,9 +77,9 @@ class SubTopicRepositoryTests {
         val subTopic = getSubTopicWithoutId()
         entityManager.persistAndFlush(subTopic)
 
-        subTopicRepository.deleteById(1)
+        subTopicRepository.deleteById(subTopic.id!!)
 
-        assertThat(subTopicRepository.findById(1).isEmpty)
+        assertThat(subTopicRepository.findById(subTopic.id!!).isEmpty)
     }
 
     private fun assertAttributes(expectedSubTopic: SubTopic, actualSubTopic: SubTopic) {

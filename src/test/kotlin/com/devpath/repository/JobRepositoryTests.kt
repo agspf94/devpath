@@ -77,9 +77,9 @@ class JobRepositoryTests {
         val job = getJobWithoutId()
         entityManager.persistAndFlush(job)
 
-        jobRepository.deleteById(1)
+        jobRepository.deleteById(job.id!!)
 
-        assertThat(jobRepository.findById(1).isEmpty)
+        assertThat(jobRepository.findById(job.id!!).isEmpty)
     }
 
     private fun assertAttributes(expectedJob: Job, actualJob: Job) {

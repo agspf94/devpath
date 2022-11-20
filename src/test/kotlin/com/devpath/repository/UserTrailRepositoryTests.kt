@@ -28,6 +28,6 @@ class UserTrailRepositoryTests {
 
         userTrailRepository.delete(savedUserTrail)
 
-        assertThat(userTrailRepository.findById(1).isEmpty)
+        assertThat(userTrailRepository.findById(savedUserTrail.id!!).isEmpty)
     }
 }

@@ -77,9 +77,9 @@ class TrailRepositoryTests {
         val trail = getTrailWithoutId()
         entityManager.persistAndFlush(trail)
 
-        trailRepository.deleteById(1)
+        trailRepository.deleteById(trail.id!!)
 
-        assertThat(trailRepository.findById(1).isEmpty)
+        assertThat(trailRepository.findById(trail.id!!).isEmpty)
     }
 
     private fun assertAttributes(expectedTrail: Trail, actualTrail: Trail) {

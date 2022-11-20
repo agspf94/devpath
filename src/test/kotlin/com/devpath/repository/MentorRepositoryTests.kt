@@ -72,6 +72,30 @@ class MentorRepositoryTests {
         assertThat(mentorsList.isEmpty())
     }
 
+    @Test
+    fun `Mentor repository should be able to find a mentor by user`() {
+        val user = getUserWithoutId()
+        entityManager.persistAndFlush(user)
+        val mentor = getMentor(id = 1, user = user)
+        entityManager.persistAndFlush(mentor)
+
+        val foundedMentor = mentorRepository.findByUser(user).get()
+
+        assertAttributes(mentor, foundedMentor)
+    }
+
+    @Test
+    fun `Mentor repository should be able to delete a mentor by id`() {
+        val user = getUserWithoutId()
+        entityManager.persistAndFlush(user)
+        val mentor = getMentor(id = 1, user = user)
+        entityManager.persistAndFlush(mentor)
+
+        mentorRepository.deleteById(mentor.id!!)
+
+        assertThat(mentorRepository.findById(mentor.id!!).isEmpty)
+    }
+
     private fun assertAttributes(expectedMentor: Mentor, actualMentor: Mentor) {
         assertNotNull(actualMentor.id)
         assertEquals(expectedMentor.user, actualMentor.user)

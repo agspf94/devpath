@@ -77,9 +77,9 @@ class TopicRepositoryTests {
         val topic = getTopicWithoutId()
         entityManager.persistAndFlush(topic)
 
-        topicRepository.deleteById(1)
+        topicRepository.deleteById(topic.id!!)
 
-        assertThat(topicRepository.findById(1).isEmpty)
+        assertThat(topicRepository.findById(topic.id!!).isEmpty)
     }
 
     private fun assertAttributes(expectedTopic: Topic, actualTopic: Topic) {

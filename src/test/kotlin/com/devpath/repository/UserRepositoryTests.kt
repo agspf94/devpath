@@ -57,9 +57,9 @@ class UserRepositoryTests {
         val user = getUserWithoutId()
         entityManager.persistAndFlush(user)
 
-        userRepository.deleteById(1)
+        userRepository.deleteById(user.id!!)
 
-        assertThat(userRepository.findById(1).isEmpty)
+        assertThat(userRepository.findById(user.id!!).isEmpty)
     }
 
     private fun assertAttributes(expectedUser: User, actualUser: User) {
