@@ -87,11 +87,15 @@ class MentorService(
     fun delete(userId: Int): DeleteMentorResponse {
         return userRepository.findById(userId)
             .map {
-                val mentor = mentorRepository.findByUser(it).get()
-                mentorRepository.deleteById(mentor.id!!)
-                it.isMentor = false
-                userRepository.saveAndFlush(it)
-                DeleteMentorResponse(it, MENTOR_DELETED)
+                if (it.isMentor) {
+                    val mentor = mentorRepository.findByUser(it).get()
+                    mentorRepository.deleteById(mentor.id!!)
+                    it.isMentor = false
+                    userRepository.saveAndFlush(it)
+                    DeleteMentorResponse(it, MENTOR_DELETED)
+                } else {
+                    throw UserIsNotAMentorException(USER_IS_NOT_A_MENTOR, it)
+                }
             }
             .orElseThrow { NoSuchElementException(USER_NOT_FOUND_ID + userId) }
     }
