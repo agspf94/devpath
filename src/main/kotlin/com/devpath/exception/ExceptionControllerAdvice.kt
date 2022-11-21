@@ -11,6 +11,7 @@ import com.devpath.exception.exceptions.TopicAlreadyExistsException
 import com.devpath.exception.exceptions.TrailAlreadyExistsException
 import com.devpath.exception.exceptions.UserAlreadyExistsException
 import com.devpath.exception.exceptions.UserIsNotAMentorException
+import com.devpath.exception.exceptions.WrongPasswordException
 import org.springframework.http.HttpStatus.OK
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.NOT_FOUND
@@ -26,7 +27,8 @@ class ExceptionControllerAdvice {
         UserIsNotAMentorException::class,
         JobAlreadyExistsException::class,
         TopicAlreadyExistsException::class,
-        SubTopicAlreadyExistsException::class
+        SubTopicAlreadyExistsException::class,
+        WrongPasswordException::class
     )
     fun handleBadRequest(e: Exception): ResponseEntity<ErrorMessage> {
         return ResponseEntity(ErrorMessage(e.message), BAD_REQUEST)

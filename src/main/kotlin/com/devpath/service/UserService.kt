@@ -5,6 +5,7 @@ import com.devpath.constants.Constants.Companion.USER_DELETED
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_EMAIL
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_ID
 import com.devpath.constants.Constants.Companion.USER_TRAIL_DELETED
+import com.devpath.constants.Constants.Companion.USER_WRONG_PASSWORD
 import com.devpath.dto.user.request.CreateUserRequest
 import com.devpath.dto.user.request.UpdateTrailStatusRequest
 import com.devpath.dto.user.request.UpdateUserRequest
@@ -16,6 +17,7 @@ import com.devpath.entity.UserSubTopic
 import com.devpath.entity.UserTopic
 import com.devpath.entity.UserTrail
 import com.devpath.exception.exceptions.UserAlreadyExistsException
+import com.devpath.exception.exceptions.WrongPasswordException
 import com.devpath.repository.UserRepository
 import com.devpath.repository.UserTrailRepository
 import org.springframework.stereotype.Service
@@ -32,6 +34,18 @@ class UserService(
         userRepository.findByEmail(createUserRequest.email)
             .ifPresent { throw UserAlreadyExistsException(USER_ALREADY_EXISTS + createUserRequest.email) }
         return userRepository.saveAndFlush(createUserRequest.toUser()).formatResponse()
+    }
+
+    fun login(email: String, password: String): User {
+        return userRepository.findByEmail(email)
+            .map {
+                if (it.password == password) {
+                    it.formatResponse()
+                } else {
+                    throw WrongPasswordException(USER_WRONG_PASSWORD)
+                }
+            }
+            .orElseThrow { NoSuchElementException(USER_NOT_FOUND_EMAIL + email) }
     }
 
     fun read(email: String): User {

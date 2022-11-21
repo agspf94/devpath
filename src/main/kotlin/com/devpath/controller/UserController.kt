@@ -26,6 +26,14 @@ class UserController(
         return userService.create(createUserRequest).toUserDTO()
     }
 
+    @GetMapping("/{email}/{password}")
+    fun login(
+        @PathVariable email: String,
+        @PathVariable password: String,
+    ): UserDTO {
+        return userService.login(email, password).toUserDTO()
+    }
+
     @GetMapping("/{email}")
     fun read(@PathVariable email: String): UserDTO {
         return userService.read(email).toUserDTO()

@@ -4,6 +4,7 @@ class Constants {
     companion object {
         // User
         const val USER_ALREADY_EXISTS = "There is already an user with the given email: "
+        const val USER_WRONG_PASSWORD = "The given password is wrong"
         const val USER_NOT_FOUND_EMAIL = "No user was found with the given email: "
         const val USER_NOT_FOUND_ID = "No user was found with the given id: "
         const val USER_DELETED = "User deleted successfully"
