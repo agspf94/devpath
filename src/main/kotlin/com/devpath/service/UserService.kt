@@ -120,7 +120,7 @@ class UserService(
 
     fun updateTrailStatus(updateTrailStatusRequest: UpdateTrailStatusRequest): User {
         val user = read(updateTrailStatusRequest.userEmail)
-        validateUpdateTrailStatusRequest(updateTrailStatusRequest)
+        validateUpdateTrailStatusRequest(user, updateTrailStatusRequest)
         user.userTrails.first { it.trail.id == updateTrailStatusRequest.trailId }
             .userTopics.first { it.topic.id == updateTrailStatusRequest.topicId }
             .userSubTopics.first { it.subTopic.id == updateTrailStatusRequest.subTopicId }
@@ -129,10 +129,13 @@ class UserService(
         return user.formatResponse()
     }
 
-    private fun validateUpdateTrailStatusRequest(updateTrailStatusRequest: UpdateTrailStatusRequest) {
-        trailService.read(updateTrailStatusRequest.trailId)
-        topicService.read(updateTrailStatusRequest.topicId)
-        subTopicService.read(updateTrailStatusRequest.subTopicId)
+    private fun validateUpdateTrailStatusRequest(user: User, updateTrailStatusRequest: UpdateTrailStatusRequest) {
+        val userTrail = user.userTrails.first { it.trail.id == updateTrailStatusRequest.trailId }
+        trailService.read(userTrail.trail.id!!)
+        val userTopic = userTrail.userTopics.first { it.topic.id == updateTrailStatusRequest.topicId }
+        topicService.read(userTopic.topic.id!!)
+        val userSubTopic = userTopic.userSubTopics.first { it.subTopic.id == updateTrailStatusRequest.subTopicId }
+        subTopicService.read(userSubTopic.subTopic.id!!)
     }
 
     private fun User.formatResponse(): User {
