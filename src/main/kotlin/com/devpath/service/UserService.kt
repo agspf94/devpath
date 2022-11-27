@@ -1,5 +1,6 @@
 package com.devpath.service
 
+import com.devpath.constants.Constants.Companion.TRAIL_ALREADY_EXISTS
 import com.devpath.constants.Constants.Companion.USER_ALREADY_EXISTS
 import com.devpath.constants.Constants.Companion.USER_DELETED
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_EMAIL
@@ -16,6 +17,7 @@ import com.devpath.entity.User
 import com.devpath.entity.UserSubTopic
 import com.devpath.entity.UserTopic
 import com.devpath.entity.UserTrail
+import com.devpath.exception.exceptions.TrailAlreadyExistsException
 import com.devpath.exception.exceptions.UserAlreadyExistsException
 import com.devpath.exception.exceptions.WrongPasswordException
 import com.devpath.repository.UserRepository
@@ -83,8 +85,12 @@ class UserService(
     fun addTrail(userEmail: String, trailId: Int): User {
         val user = read(userEmail)
         val trail = trailService.read(trailId)
-        user.userTrails.add(createUserTrail(trail))
-        userRepository.saveAndFlush(user)
+        if (user.userTrails.firstOrNull { it.trail.id == trailId } == null) {
+            user.userTrails.add(createUserTrail(trail))
+            userRepository.saveAndFlush(user)
+        } else {
+            throw TrailAlreadyExistsException(TRAIL_ALREADY_EXISTS + trail.name)
+        }
         return user.formatResponse()
     }
 
