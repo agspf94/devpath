@@ -1,6 +1,9 @@
 package com.devpath.service
 
+import com.devpath.constants.Constants.Companion.SUB_TOPIC_NOT_FOUND
+import com.devpath.constants.Constants.Companion.TOPIC_NOT_FOUND_ID
 import com.devpath.constants.Constants.Companion.TRAIL_ALREADY_EXISTS
+import com.devpath.constants.Constants.Companion.TRAIL_NOT_FOUND
 import com.devpath.constants.Constants.Companion.USER_ALREADY_EXISTS
 import com.devpath.constants.Constants.Companion.USER_DELETED
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_EMAIL
@@ -94,6 +97,17 @@ class UserService(
         return user.formatResponse()
     }
 
+    fun updateTrailStatus(updateTrailStatusRequest: UpdateTrailStatusRequest): User {
+        val user = read(updateTrailStatusRequest.userEmail)
+        validateUpdateTrailStatusRequest(user, updateTrailStatusRequest)
+        user.userTrails.first { it.trail.id == updateTrailStatusRequest.trailId }
+            .userTopics.first { it.topic.id == updateTrailStatusRequest.topicId }
+            .userSubTopics.first { it.subTopic.id == updateTrailStatusRequest.subTopicId }
+            .active = updateTrailStatusRequest.active
+        userRepository.saveAndFlush(user)
+        return user.formatResponse()
+    }
+
     fun deleteTrail(userEmail: String, trailId: Int): DeleteUserTrailResponse {
         val user = read(userEmail)
         val trail = trailService.read(trailId)
@@ -124,23 +138,12 @@ class UserService(
         )
     }
 
-    fun updateTrailStatus(updateTrailStatusRequest: UpdateTrailStatusRequest): User {
-        val user = read(updateTrailStatusRequest.userEmail)
-        validateUpdateTrailStatusRequest(user, updateTrailStatusRequest)
-        user.userTrails.first { it.trail.id == updateTrailStatusRequest.trailId }
-            .userTopics.first { it.topic.id == updateTrailStatusRequest.topicId }
-            .userSubTopics.first { it.subTopic.id == updateTrailStatusRequest.subTopicId }
-            .active = updateTrailStatusRequest.active
-        userRepository.saveAndFlush(user)
-        return user.formatResponse()
-    }
-
     private fun validateUpdateTrailStatusRequest(user: User, updateTrailStatusRequest: UpdateTrailStatusRequest) {
-        val userTrail = user.userTrails.first { it.trail.id == updateTrailStatusRequest.trailId }
+        val userTrail = user.userTrails.firstOrNull { it.trail.id == updateTrailStatusRequest.trailId } ?: throw NoSuchElementException(TRAIL_NOT_FOUND + updateTrailStatusRequest.trailId)
         trailService.read(userTrail.trail.id!!)
-        val userTopic = userTrail.userTopics.first { it.topic.id == updateTrailStatusRequest.topicId }
+        val userTopic = userTrail.userTopics.firstOrNull { it.topic.id == updateTrailStatusRequest.topicId } ?: throw NoSuchElementException(TOPIC_NOT_FOUND_ID + updateTrailStatusRequest.topicId)
         topicService.read(userTopic.topic.id!!)
-        val userSubTopic = userTopic.userSubTopics.first { it.subTopic.id == updateTrailStatusRequest.subTopicId }
+        val userSubTopic = userTopic.userSubTopics.firstOrNull { it.subTopic.id == updateTrailStatusRequest.subTopicId } ?: throw NoSuchElementException(SUB_TOPIC_NOT_FOUND + updateTrailStatusRequest.subTopicId)
         subTopicService.read(userSubTopic.subTopic.id!!)
     }
 

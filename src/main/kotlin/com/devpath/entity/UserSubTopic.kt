@@ -19,7 +19,7 @@ data class UserSubTopic(
     fun toSubTopicDTO(topic: Topic): SubTopicDTO {
         val subTopic = topic.subTopics.first { it.id == subTopic.id }
         return SubTopicDTO(
-            id = id!!,
+            id = subTopic.id!!,
             name = subTopic.name,
             content = subTopic.content,
             active = active

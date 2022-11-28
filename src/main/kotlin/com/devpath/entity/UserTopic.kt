@@ -22,7 +22,7 @@ data class UserTopic(
     fun toTopicDTO(trail: Trail): TopicDTO {
         val topic = trail.topics.first { it.id == topic.id }
         return TopicDTO(
-            id = id!!,
+            id = topic.id!!,
             name = topic.name,
             subTopics = userSubTopics.map { it.toSubTopicDTO(topic) }.toMutableSet()
         )
