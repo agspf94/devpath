@@ -43,13 +43,13 @@ class TopicService(
     fun update(updateTopicRequest: UpdateTopicRequest): Topic {
         return topicRepository.findById(updateTopicRequest.id)
             .map {
-                topicRepository.saveAndFlush(
-                    Topic(
-                        id = it.id,
-                        name = updateTopicRequest.name ?: it.name,
-                        subTopics = updateSubTopics(it, updateTopicRequest)
-                    )
+                val updatedTopic = Topic(
+                    id = it.id,
+                    name = updateTopicRequest.name ?: it.name,
+                    subTopics = updateSubTopics(it, updateTopicRequest)
                 )
+                topicRepository.saveAndFlush(updatedTopic)
+                updatedTopic
             }
             .orElseThrow { NoSuchElementException(TOPIC_NOT_FOUND_NAME + updateTopicRequest.name) }
     }
