@@ -36,6 +36,35 @@
 					"response": []
 				},
 				{
+					"name": "Login",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/:email/:password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								":email",
+								":password"
+							],
+							"variable": [
+								{
+									"key": "email",
+									"value": "anderson@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "password"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Read",
 					"request": {
 						"method": "GET",
@@ -66,7 +95,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 1,\n    \"name\": \"Backend Java 2\",\n    \"topicsIds\": [4]\n}",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"Anderson 2\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -74,12 +103,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/trail/update",
+							"raw": "{{url}}/user/update",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"trail",
+								"user",
 								"update"
 							]
 						}
@@ -92,24 +121,19 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/user/:userEmail/delete-trail/:trailId",
+							"raw": "{{url}}/user/delete/:email",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"user",
-								":userEmail",
-								"delete-trail",
-								":trailId"
+								"delete",
+								":email"
 							],
 							"variable": [
 								{
-									"key": "userEmail",
+									"key": "email",
 									"value": "anderson@gmail.com"
-								},
-								{
-									"key": "trailId",
-									"value": "1"
 								}
 							]
 						}
@@ -153,7 +177,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userEmail\": \"anderson@gmail.com\",\n    \"trailId\": 1,\n    \"topicId\": 1,\n    \"subTopicId\": 2,\n    \"active\": true\n}",
+							"raw": "{\n    \"userEmail\": \"anderson@gmail.com\",\n    \"trailId\": 1,\n    \"topicId\": 1,\n    \"subTopicId\": 1,\n    \"active\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -215,7 +239,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Backend Java\",\n    \"duration\": 20,\n    \"description\": \"Java backend trilha foda\",\n    \"averageSalary\": \"R$3500 - R$15000\",\n    \"jobs\": [\n        {\n            \"title\": \"Java Engineer Nubank\",\n            \"location\": \"Sao Paulo\",\n            \"period\": \"Tempo Integral\",\n            \"role\": \"Sênior\",\n            \"link\": \"www.google.com.br\"\n        },\n        {\n            \"title\": \"Backend Engineer C6 Bank\",\n            \"location\": \"Sao Paulo\",\n            \"period\": \"Tempo Integral\",\n            \"role\": \"Pleno\",\n            \"link\": \"www.google.com.br\"\n        }\n    ],\n    \"topics\": [\n        {\n            \"name\": \"Topic 1\",\n            \"subTopics\": [\n                {\n                    \"name\": \"Sub Topic 1\",\n                    \"content\": \"content\",\n                    \"active\": \"false\"\n                },\n                {\n                    \"name\": \"Sub Topic 2\",\n                    \"content\": \"content\",\n                    \"active\": \"false\"\n                }\n            ]\n        },\n        {\n            \"name\": \"Topic 2\",\n            \"subTopics\": [\n                {\n                    \"name\": \"Sub Topic 3\",\n                    \"content\": \"content\",\n                    \"active\": \"false\"\n                },\n                {\n                    \"name\": \"Sub Topic 4\",\n                    \"content\": \"content\",\n                    \"active\": \"false\"\n                }\n            ]\n        }\n    ]\n}",
+							"raw": "{\n    \"name\": \"Backend Java 3\",\n    \"duration\": 20,\n    \"description\": \"Java backend trilha foda\",\n    \"averageSalary\": \"R$3500 - R$15000\",\n    \"jobs\": [\n        {\n            \"title\": \"Java Engineer Nubank\",\n            \"location\": \"Sao Paulo\",\n            \"period\": \"Tempo Integral\",\n            \"role\": \"Sênior\",\n            \"link\": \"www.google.com.br\"\n        },\n        {\n            \"title\": \"Backend Engineer C6 Bank\",\n            \"location\": \"Sao Paulo\",\n            \"period\": \"Tempo Integral\",\n            \"role\": \"Pleno\",\n            \"link\": \"www.google.com.br\"\n        }\n    ],\n    \"topics\": [\n        {\n            \"name\": \"Topic 1\",\n            \"subTopics\": [\n                {\n                    \"name\": \"Sub Topic 1\",\n                    \"content\": \"content\"\n                },\n                {\n                    \"name\": \"Sub Topic 2\",\n                    \"content\": \"content\"\n                }\n            ]\n        },\n        {\n            \"name\": \"Topic 2\",\n            \"subTopics\": [\n                {\n                    \"name\": \"Sub Topic 3\",\n                    \"content\": \"content\"\n                },\n                {\n                    \"name\": \"Sub Topic 4\",\n                    \"content\": \"content\"\n                }\n            ]\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -292,12 +316,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/user/update",
+							"raw": "{{url}}/trail/update",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"user",
+								"trail",
 								"update"
 							]
 						}
@@ -713,6 +737,31 @@
 			"name": "Mentor Controller",
 			"item": [
 				{
+					"name": "Become Mentor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/become-mentor/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"become-mentor",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Read",
 					"request": {
 						"method": "GET",
@@ -749,31 +798,6 @@
 							"path": [
 								"mentor",
 								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Become Mentor",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/mentor/become-mentor/:userId",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"mentor",
-								"become-mentor",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": "1"
-								}
 							]
 						}
 					},

@@ -6,6 +6,7 @@ import com.devpath.constants.Constants.Companion.TRAIL_ALREADY_EXISTS
 import com.devpath.constants.Constants.Companion.TRAIL_NOT_FOUND
 import com.devpath.constants.Constants.Companion.USER_ALREADY_EXISTS
 import com.devpath.constants.Constants.Companion.USER_DELETED
+import com.devpath.constants.Constants.Companion.USER_DOES_NOT_HAVE_TRAIL
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_EMAIL
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_ID
 import com.devpath.constants.Constants.Companion.USER_TRAIL_DELETED
@@ -111,7 +112,7 @@ class UserService(
     fun deleteTrail(userEmail: String, trailId: Int): DeleteUserTrailResponse {
         val user = read(userEmail)
         val trail = trailService.read(trailId)
-        val userTrail = user.userTrails.first { it.trail.id == trail.id }
+        val userTrail = user.userTrails.firstOrNull { it.trail.id == trail.id } ?: throw NoSuchElementException(USER_DOES_NOT_HAVE_TRAIL + trailId)
         user.userTrails.removeIf { it.trail.id == trail.id }
         userRepository.saveAndFlush(user)
         userTrailRepository.delete(userTrail)
