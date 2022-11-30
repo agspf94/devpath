@@ -48,12 +48,12 @@ class UserMockProvider {
             )
         }
 
-        fun getUpdateTrailStatusRequest(): UpdateTrailStatusRequest {
+        fun getUpdateTrailStatusRequest(trailId: Int = 1, topicId: Int = 1, subTopicId: Int = 1): UpdateTrailStatusRequest {
             return UpdateTrailStatusRequest(
                 userEmail = "userEmail",
-                trailId = 1,
-                topicId = 1,
-                subTopicId = 1,
+                trailId = trailId,
+                topicId = topicId,
+                subTopicId = subTopicId,
                 active = true
             )
         }

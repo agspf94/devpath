@@ -62,16 +62,16 @@ class UserService(
     fun update(updateUserRequest: UpdateUserRequest): User {
         return userRepository.findById(updateUserRequest.id)
             .map {
-                userRepository.saveAndFlush(
-                    User(
-                        id = it.id,
-                        name = updateUserRequest.name ?: it.name,
-                        email = updateUserRequest.email ?: it.email,
-                        password = updateUserRequest.password ?: it.password,
-                        isMentor = updateUserRequest.isMentor ?: it.isMentor,
-                        userTrails = it.userTrails
-                    ).formatResponse()
+                val updatedUser = User(
+                    id = it.id,
+                    name = updateUserRequest.name ?: it.name,
+                    email = updateUserRequest.email ?: it.email,
+                    password = updateUserRequest.password ?: it.password,
+                    isMentor = updateUserRequest.isMentor ?: it.isMentor,
+                    userTrails = it.userTrails
                 )
+                userRepository.saveAndFlush(updatedUser)
+                updatedUser.formatResponse()
             }
             .orElseThrow { NoSuchElementException(USER_NOT_FOUND_ID + updateUserRequest.id) }
     }
