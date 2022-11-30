@@ -44,17 +44,17 @@ class TrailService(
     fun update(updateTrailRequest: UpdateTrailRequest): Trail {
         return trailRepository.findById(updateTrailRequest.id)
             .map {
-                trailRepository.saveAndFlush(
-                    Trail(
-                        id = it.id,
-                        name = updateTrailRequest.name ?: it.name,
-                        duration = updateTrailRequest.duration ?: it.duration,
-                        description = updateTrailRequest.description ?: it.description,
-                        averageSalary = updateTrailRequest.averageSalary ?: it.averageSalary,
-                        jobs = updateJobs(it, updateTrailRequest),
-                        topics = updateTopics(it, updateTrailRequest)
-                    )
+                val updatedTrail = Trail(
+                    id = it.id,
+                    name = updateTrailRequest.name ?: it.name,
+                    duration = updateTrailRequest.duration ?: it.duration,
+                    description = updateTrailRequest.description ?: it.description,
+                    averageSalary = updateTrailRequest.averageSalary ?: it.averageSalary,
+                    jobs = updateJobs(it, updateTrailRequest),
+                    topics = updateTopics(it, updateTrailRequest)
                 )
+                trailRepository.saveAndFlush(updatedTrail)
+                updatedTrail
             }
             .orElseThrow { NoSuchElementException(TRAIL_NOT_FOUND + updateTrailRequest.id) }
     }
