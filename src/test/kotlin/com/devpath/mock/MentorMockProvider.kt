@@ -1,5 +1,8 @@
 package com.devpath.mock
 
+import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_HOUR_COST
+import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_ROLE
+import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_YEARS_OF_EXPERIENCE
 import com.devpath.dto.mentor.request.UpdateMentorRequest
 import com.devpath.entity.Mentor
 import com.devpath.entity.User
@@ -11,9 +14,9 @@ class MentorMockProvider {
             return Mentor(
                 id = id,
                 user = user,
-                role = "role",
-                yearsOfExperience = 0,
-                hourCost = 0,
+                role = MENTOR_DEFAULT_ROLE,
+                yearsOfExperience = MENTOR_DEFAULT_YEARS_OF_EXPERIENCE,
+                hourCost = MENTOR_DEFAULT_HOUR_COST,
                 payments = mutableSetOf(),
                 schedules = mutableSetOf()
             )

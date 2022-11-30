@@ -66,17 +66,17 @@ class MentorService(
             .map {
                 if (it.isMentor) {
                     val mentor = mentorRepository.findById(it.id!!).get()
-                    mentorRepository.saveAndFlush(
-                        Mentor(
-                            id = it.id,
-                            user = it,
-                            role = updateMentorRequest.role ?: mentor.role,
-                            yearsOfExperience = updateMentorRequest.yearsOfExperience ?: mentor.yearsOfExperience,
-                            hourCost = updateMentorRequest.hourCost ?: mentor.hourCost,
-                            payments = mentor.payments,
-                            schedules = mentor.schedules
-                        )
+                    val updatedMentor = Mentor(
+                        id = it.id,
+                        user = it,
+                        role = updateMentorRequest.role ?: mentor.role,
+                        yearsOfExperience = updateMentorRequest.yearsOfExperience ?: mentor.yearsOfExperience,
+                        hourCost = updateMentorRequest.hourCost ?: mentor.hourCost,
+                        payments = mentor.payments,
+                        schedules = mentor.schedules
                     )
+                    mentorRepository.saveAndFlush(updatedMentor)
+                    updatedMentor
                 } else {
                     throw UserIsNotAMentorException(USER_IS_NOT_A_MENTOR, it)
                 }

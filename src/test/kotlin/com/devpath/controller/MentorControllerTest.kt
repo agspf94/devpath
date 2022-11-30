@@ -23,10 +23,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -55,9 +55,10 @@ class MentorControllerTest {
         `when`(mentorService.becomeMentor(user.id!!)).thenReturn(mentor)
 
         mockMvc.perform(
-                post("/mentor/become-mentor/${user.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            post("/mentor/become-mentor/${user.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(mentor)))
@@ -73,9 +74,10 @@ class MentorControllerTest {
         `when`(mentorService.becomeMentor(userId)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                post("/mentor/become-mentor/$userId")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            post("/mentor/become-mentor/$userId")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -91,9 +93,10 @@ class MentorControllerTest {
         `when`(mentorService.read(user.id!!)).thenReturn(mentor)
 
         mockMvc.perform(
-                get("/mentor/${mentor.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/mentor/${mentor.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(mentor)))
@@ -111,7 +114,8 @@ class MentorControllerTest {
         mockMvc.perform(
             get("/mentor/${user.id!!}")
                 .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -129,7 +133,8 @@ class MentorControllerTest {
         mockMvc.perform(
             get("/mentor/${user.id!!}")
                 .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -146,9 +151,10 @@ class MentorControllerTest {
         `when`(mentorService.readAll()).thenReturn(mentorsList)
 
         mockMvc.perform(
-                get("/mentor/all")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/mentor/all")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(mentorsList)))
@@ -163,9 +169,10 @@ class MentorControllerTest {
         `when`(mentorService.readAll()).thenAnswer { throw EmptyMentorListException(errorMessage) }
 
         mockMvc.perform(
-                get("/mentor/all")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/mentor/all")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -182,10 +189,11 @@ class MentorControllerTest {
         `when`(mentorService.update(updateMentorRequest)).thenReturn(mentor)
 
         mockMvc.perform(
-                patch("/mentor/update")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(updateMentorRequest))
-                    .contentType(APPLICATION_JSON))
+            patch("/mentor/update")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(updateMentorRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(mentor)))
@@ -202,10 +210,11 @@ class MentorControllerTest {
         `when`(mentorService.update(updateMentorRequest)).thenAnswer { throw UserIsNotAMentorException(errorMessage, user) }
 
         mockMvc.perform(
-                patch("/mentor/update")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(updateMentorRequest))
-                    .contentType(APPLICATION_JSON))
+            patch("/mentor/update")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(updateMentorRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -225,7 +234,8 @@ class MentorControllerTest {
             patch("/mentor/update")
                 .accept(APPLICATION_JSON)
                 .content(jacksonObjectMapper().writeValueAsString(updateMentorRequest))
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -241,9 +251,10 @@ class MentorControllerTest {
         `when`(mentorService.delete(user.id!!)).thenReturn(deleteMentorResponse)
 
         mockMvc.perform(
-                delete("/mentor/delete/${user.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            delete("/mentor/delete/${user.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(deleteMentorResponse)))
@@ -259,9 +270,10 @@ class MentorControllerTest {
         `when`(mentorService.delete(user.id!!)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                delete("/mentor/delete/${user.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            delete("/mentor/delete/${user.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
