@@ -8,11 +8,13 @@ import com.devpath.constants.Constants.Companion.USER_DELETED
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_EMAIL
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_ID
 import com.devpath.constants.Constants.Companion.USER_TRAIL_DELETED
+import com.devpath.constants.Constants.Companion.USER_WRONG_PASSWORD
 import com.devpath.dto.user.response.DeleteUserResponse
 import com.devpath.dto.user.response.DeleteUserTrailResponse
 import com.devpath.entity.UserTrail
 import com.devpath.exception.ErrorMessage
 import com.devpath.exception.exceptions.UserAlreadyExistsException
+import com.devpath.exception.exceptions.WrongPasswordException
 import com.devpath.mock.TrailMockProvider.Companion.getTrail
 import com.devpath.mock.UserMockProvider.Companion.getCreateUserRequest
 import com.devpath.mock.UserMockProvider.Companion.getUpdateTrailStatusRequest
@@ -92,6 +94,62 @@ class UserControllerTest {
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
 
         verify(userService, times(1)).create(createUserRequest)
+    }
+
+    @Test
+    fun `An user should login successfully`() {
+        val user = getUser(id = 1)
+
+        `when`(userService.login(user.email, user.password)).thenReturn(user)
+
+        mockMvc.perform(
+            get("/user/${user.email}/${user.password}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
+            .andDo(print())
+            .andExpect(status().isOk)
+            .andExpect(content().json(jacksonObjectMapper().writeValueAsString(user.toUserDTO())))
+
+        verify(userService, times(1)).login(user.email, user.password)
+    }
+
+    @Test
+    fun `An user should not login if the email doesn't exist`() {
+        val user = getUser(id = 1)
+        val errorMessage = USER_NOT_FOUND_EMAIL + user.email
+
+        `when`(userService.login(user.email, user.password)).thenAnswer { throw NoSuchElementException(errorMessage) }
+
+        mockMvc.perform(
+            get("/user/${user.email}/${user.password}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
+            .andDo(print())
+            .andExpect(status().is4xxClientError)
+            .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
+
+        verify(userService, times(1)).login(user.email, user.password)
+    }
+
+    @Test
+    fun `An user should not login if the password is wrong`() {
+        val user = getUser(id = 1)
+        val errorMessage = USER_WRONG_PASSWORD
+
+        `when`(userService.login(user.email, user.password)).thenAnswer { throw WrongPasswordException(errorMessage) }
+
+        mockMvc.perform(
+            get("/user/${user.email}/${user.password}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
+            .andDo(print())
+            .andExpect(status().is4xxClientError)
+            .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
+
+        verify(userService, times(1)).login(user.email, user.password)
     }
 
     @Test
