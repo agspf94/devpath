@@ -57,3 +57,7 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks.ktlintMainSourceSetCheck {
+    dependsOn(tasks.ktlintFormat)
+}
