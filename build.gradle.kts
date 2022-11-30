@@ -1,13 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.7.5"
-	id("io.spring.dependency-management") version "1.0.15.RELEASE"
-	kotlin("jvm") version "1.6.21"
-	kotlin("plugin.spring") version "1.6.21"
+	id("org.springframework.boot") version "3.0.0"
+	id("io.spring.dependency-management") version "1.1.0"
+	kotlin("jvm") version "1.7.21"
+	kotlin("plugin.spring") version "1.7.21"
 
 	// Spring Data JPA
-	kotlin("plugin.jpa") version "1.6.21"
+	kotlin("plugin.jpa") version "1.7.21"
 }
 
 group = "com"
@@ -27,16 +27,17 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-	// Spring JPA
+	// Spring Data JPA
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+	// Spring Validation
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 
 	// Postgres
 	runtimeOnly("org.postgresql:postgresql")
 
 	// Swagger
-	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.12")
-	implementation("org.springdoc:springdoc-openapi-ui:1.6.12")
-	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.12")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0")
 
 	// Testing
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

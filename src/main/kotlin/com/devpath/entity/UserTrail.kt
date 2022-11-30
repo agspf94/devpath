@@ -1,13 +1,13 @@
 package com.devpath.entity
 
 import com.devpath.dto.trail.TrailDTO
-import javax.persistence.CascadeType.ALL
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.OneToMany
-import javax.persistence.OneToOne
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
+import jakarta.persistence.OneToOne
 
 @Entity
 data class UserTrail(
@@ -16,7 +16,7 @@ data class UserTrail(
     val id: Int? = null,
     @OneToOne
     val trail: Trail,
-    @OneToMany(cascade = [ALL])
+    @OneToMany(cascade = [CascadeType.ALL])
     var userTopics: MutableSet<UserTopic>
 ) {
     fun toTrailDTO(): TrailDTO {

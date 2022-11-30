@@ -1,14 +1,14 @@
 package com.devpath.entity
 
 import com.devpath.dto.user.UserDTO
-import javax.persistence.CascadeType.ALL
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.OneToMany
-import javax.persistence.Table
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
+import jakarta.persistence.Table
 
 @Entity
 @Table(name = "\"user\"")
@@ -23,7 +23,7 @@ data class User(
     @Column(length = 2048)
     val password: String,
     var isMentor: Boolean,
-    @OneToMany(cascade = [ALL])
+    @OneToMany(cascade = [CascadeType.ALL])
     var userTrails: MutableSet<UserTrail>
 ) {
     fun toUserDTO(): UserDTO {
