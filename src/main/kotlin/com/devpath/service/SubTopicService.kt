@@ -40,13 +40,13 @@ class SubTopicService(
     fun update(updateSubTopicRequest: UpdateSubTopicRequest): SubTopic {
         return subTopicRepository.findById(updateSubTopicRequest.id)
             .map {
-                subTopicRepository.saveAndFlush(
-                    SubTopic(
-                        id = it.id,
-                        name = updateSubTopicRequest.name ?: it.name,
-                        content = updateSubTopicRequest.content ?: it.content
-                    )
+                val updatedSubTopic = SubTopic(
+                    id = it.id,
+                    name = updateSubTopicRequest.name ?: it.name,
+                    content = updateSubTopicRequest.content ?: it.content
                 )
+                subTopicRepository.saveAndFlush(updatedSubTopic)
+                updatedSubTopic
             }
             .orElseThrow { NoSuchElementException(SUB_TOPIC_NOT_FOUND + updateSubTopicRequest.id) }
     }
