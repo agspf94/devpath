@@ -12,9 +12,9 @@ import com.devpath.exception.exceptions.TrailAlreadyExistsException
 import com.devpath.exception.exceptions.UserAlreadyExistsException
 import com.devpath.exception.exceptions.UserIsNotAMentorException
 import com.devpath.exception.exceptions.WrongPasswordException
-import org.springframework.http.HttpStatus.OK
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.NOT_FOUND
+import org.springframework.http.HttpStatus.OK
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice

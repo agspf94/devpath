@@ -9,7 +9,7 @@ Make sure that the application context can start
 
 @SpringBootTest
 class DevPathApplicationTests {
-	@Test
-	fun contextLoads() {
-	}
+    @Test
+    fun contextLoads() {
+    }
 }

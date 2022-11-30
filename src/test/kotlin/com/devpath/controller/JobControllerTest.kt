@@ -7,8 +7,8 @@ import com.devpath.dto.job.response.DeleteJobResponse
 import com.devpath.exception.ErrorMessage
 import com.devpath.exception.exceptions.EmptyJobListException
 import com.devpath.exception.exceptions.JobAlreadyExistsException
-import com.devpath.mock.JobMockProvider.Companion.getJob
 import com.devpath.mock.JobMockProvider.Companion.getCreateJobRequest
+import com.devpath.mock.JobMockProvider.Companion.getJob
 import com.devpath.mock.JobMockProvider.Companion.getUpdateJobRequest
 import com.devpath.service.JobService
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -22,10 +22,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -54,10 +54,11 @@ class JobControllerTest {
         `when`(jobService.create(createJobRequest)).thenReturn(job)
 
         mockMvc.perform(
-                post("/job/create")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(createJobRequest))
-                    .contentType(APPLICATION_JSON))
+            post("/job/create")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(createJobRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(job)))
@@ -73,10 +74,11 @@ class JobControllerTest {
         `when`(jobService.create(createJobRequest)).thenAnswer { throw JobAlreadyExistsException(errorMessage) }
 
         mockMvc.perform(
-                post("/job/create")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(createJobRequest))
-                    .contentType(APPLICATION_JSON))
+            post("/job/create")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(createJobRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -91,9 +93,10 @@ class JobControllerTest {
         `when`(jobService.read(job.id!!)).thenReturn(job)
 
         mockMvc.perform(
-                get("/job/${job.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/job/${job.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(job)))
@@ -109,9 +112,10 @@ class JobControllerTest {
         `when`(jobService.read(jobId)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                get("/job/$jobId")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/job/$jobId")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -126,9 +130,10 @@ class JobControllerTest {
         `when`(jobService.readAll()).thenReturn(jobsList)
 
         mockMvc.perform(
-                get("/job/all")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/job/all")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(jobsList)))
@@ -143,9 +148,10 @@ class JobControllerTest {
         `when`(jobService.readAll()).thenAnswer { throw EmptyJobListException(errorMessage) }
 
         mockMvc.perform(
-                get("/job/all")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/job/all")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -161,10 +167,11 @@ class JobControllerTest {
         `when`(jobService.update(updateJobRequest)).thenReturn(job)
 
         mockMvc.perform(
-                patch("/job/update")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(updateJobRequest))
-                    .contentType(APPLICATION_JSON))
+            patch("/job/update")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(updateJobRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(job)))
@@ -180,10 +187,11 @@ class JobControllerTest {
         `when`(jobService.update(updateJobRequest)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                patch("/job/update")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(updateJobRequest))
-                    .contentType(APPLICATION_JSON))
+            patch("/job/update")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(updateJobRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -199,9 +207,10 @@ class JobControllerTest {
         `when`(jobService.delete(job.id!!)).thenReturn(deleteJobResponse)
 
         mockMvc.perform(
-                delete("/job/delete/${job.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            delete("/job/delete/${job.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(deleteJobResponse)))
@@ -217,9 +226,10 @@ class JobControllerTest {
         `when`(jobService.delete(jobId)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                delete("/job/delete/$jobId")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            delete("/job/delete/$jobId")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))

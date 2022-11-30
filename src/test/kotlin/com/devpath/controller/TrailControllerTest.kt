@@ -23,10 +23,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -55,10 +55,11 @@ class TrailControllerTest {
         `when`(trailService.create(createTrailRequest)).thenReturn(trail)
 
         mockMvc.perform(
-                post("/trail/create")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(createTrailRequest))
-                    .contentType(APPLICATION_JSON))
+            post("/trail/create")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(createTrailRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(trail)))
@@ -74,10 +75,11 @@ class TrailControllerTest {
         `when`(trailService.create(createTrailRequest)).thenAnswer { throw TrailAlreadyExistsException(errorMessage) }
 
         mockMvc.perform(
-                post("/trail/create")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(createTrailRequest))
-                    .contentType(APPLICATION_JSON))
+            post("/trail/create")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(createTrailRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -92,9 +94,10 @@ class TrailControllerTest {
         `when`(trailService.read(trail.id!!)).thenReturn(trail)
 
         mockMvc.perform(
-                get("/trail/${trail.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/trail/${trail.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(trail)))
@@ -112,7 +115,8 @@ class TrailControllerTest {
         mockMvc.perform(
             get("/trail/${trail.id!!}")
                 .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -127,9 +131,10 @@ class TrailControllerTest {
         `when`(trailService.readAll()).thenReturn(trailsList)
 
         mockMvc.perform(
-                get("/trail/all")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/trail/all")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(trailsList)))
@@ -144,9 +149,10 @@ class TrailControllerTest {
         `when`(trailService.readAll()).thenAnswer { throw EmptyTrailListException(errorMessage) }
 
         mockMvc.perform(
-                get("/trail/all")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/trail/all")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -162,10 +168,11 @@ class TrailControllerTest {
         `when`(trailService.update(updateTrailRequest)).thenReturn(trail)
 
         mockMvc.perform(
-                patch("/trail/update")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(updateTrailRequest))
-                    .contentType(APPLICATION_JSON))
+            patch("/trail/update")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(updateTrailRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(trail)))
@@ -181,10 +188,11 @@ class TrailControllerTest {
         `when`(trailService.update(updateTrailRequest)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                patch("/trail/update")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(updateTrailRequest))
-                    .contentType(APPLICATION_JSON))
+            patch("/trail/update")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(updateTrailRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -200,9 +208,10 @@ class TrailControllerTest {
         `when`(trailService.delete(trail.id!!)).thenReturn(deleteTrailResponse)
 
         mockMvc.perform(
-                delete("/trail/delete/${trail.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            delete("/trail/delete/${trail.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(deleteTrailResponse)))
@@ -218,9 +227,10 @@ class TrailControllerTest {
         `when`(trailService.delete(trail.id!!)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                delete("/trail/delete/${trail.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            delete("/trail/delete/${trail.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))

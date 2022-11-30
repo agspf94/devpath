@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/topic")
 class TopicController(
     private val topicService: TopicService
-){
+) {
     @PostMapping("/create")
     fun create(@RequestBody createTopicRequest: CreateTopicRequest): Topic {
         return topicService.create(createTopicRequest)

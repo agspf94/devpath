@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/sub-topic")
 class SubTopicController(
     private val subTopicService: SubTopicService
-){
+) {
     @PostMapping("/create")
     fun create(@RequestBody createSubTopicRequest: CreateSubTopicRequest): SubTopic {
         return subTopicService.create(createSubTopicRequest)

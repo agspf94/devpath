@@ -16,8 +16,8 @@ import com.devpath.exception.exceptions.UserAlreadyExistsException
 import com.devpath.mock.TrailMockProvider.Companion.getTrail
 import com.devpath.mock.UserMockProvider.Companion.getCreateUserRequest
 import com.devpath.mock.UserMockProvider.Companion.getUpdateTrailStatusRequest
-import com.devpath.mock.UserMockProvider.Companion.getUser
 import com.devpath.mock.UserMockProvider.Companion.getUpdateUserRequest
+import com.devpath.mock.UserMockProvider.Companion.getUser
 import com.devpath.service.UserService
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -30,10 +30,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -62,10 +62,11 @@ class UserControllerTest {
         `when`(userService.create(createUserRequest)).thenReturn(user)
 
         mockMvc.perform(
-                post("/user/create")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(createUserRequest))
-                    .contentType(APPLICATION_JSON))
+            post("/user/create")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(createUserRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(user.toUserDTO())))
@@ -81,10 +82,11 @@ class UserControllerTest {
         `when`(userService.create(createUserRequest)).thenAnswer { throw UserAlreadyExistsException(errorMessage) }
 
         mockMvc.perform(
-                post("/user/create")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(createUserRequest))
-                    .contentType(APPLICATION_JSON))
+            post("/user/create")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(createUserRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -99,9 +101,10 @@ class UserControllerTest {
         `when`(userService.read(user.email)).thenReturn(user)
 
         mockMvc.perform(
-                get("/user/${user.email}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/user/${user.email}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(user.toUserDTO())))
@@ -119,7 +122,8 @@ class UserControllerTest {
         mockMvc.perform(
             get("/user/${user.email}")
                 .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -135,10 +139,11 @@ class UserControllerTest {
         `when`(userService.update(updateUserRequest)).thenReturn(user)
 
         mockMvc.perform(
-                patch("/user/update")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(updateUserRequest))
-                    .contentType(APPLICATION_JSON))
+            patch("/user/update")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(updateUserRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(user.toUserDTO())))
@@ -154,10 +159,11 @@ class UserControllerTest {
         `when`(userService.update(updateUserRequest)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                patch("/user/update")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(updateUserRequest))
-                    .contentType(APPLICATION_JSON))
+            patch("/user/update")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(updateUserRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -173,16 +179,17 @@ class UserControllerTest {
         `when`(userService.delete(user.email)).thenReturn(deleteUserResponse)
 
         mockMvc.perform(
-                delete("/user/delete/${user.email}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            delete("/user/delete/${user.email}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(deleteUserResponse)))
 
         verify(userService, times(1)).delete(user.email)
     }
-    
+
     @Test
     fun `Should fail while deleting an user that doesn't exist`() {
         val user = getUser(id = 1)
@@ -191,9 +198,10 @@ class UserControllerTest {
         `when`(userService.delete(user.email)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                delete("/user/delete/${user.email}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            delete("/user/delete/${user.email}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -212,7 +220,8 @@ class UserControllerTest {
         mockMvc.perform(
             post("/user/${user.email}/add-trail/${trail.id}")
                 .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(user.toUserDTO())))
@@ -231,7 +240,8 @@ class UserControllerTest {
         mockMvc.perform(
             post("/user/${user.email}/add-trail/${trail.id}")
                 .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -250,7 +260,8 @@ class UserControllerTest {
         mockMvc.perform(
             post("/user/${user.email}/add-trail/${trail.id}")
                 .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -269,7 +280,8 @@ class UserControllerTest {
             patch("/user/update-trail")
                 .accept(APPLICATION_JSON)
                 .content(jacksonObjectMapper().writeValueAsString(updateTrailStatusRequest))
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(user.toUserDTO())))
@@ -288,7 +300,8 @@ class UserControllerTest {
             patch("/user/update-trail")
                 .accept(APPLICATION_JSON)
                 .content(jacksonObjectMapper().writeValueAsString(updateTrailStatusRequest))
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -307,7 +320,8 @@ class UserControllerTest {
             patch("/user/update-trail")
                 .accept(APPLICATION_JSON)
                 .content(jacksonObjectMapper().writeValueAsString(updateTrailStatusRequest))
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -326,7 +340,8 @@ class UserControllerTest {
             patch("/user/update-trail")
                 .accept(APPLICATION_JSON)
                 .content(jacksonObjectMapper().writeValueAsString(updateTrailStatusRequest))
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -345,7 +360,8 @@ class UserControllerTest {
             patch("/user/update-trail")
                 .accept(APPLICATION_JSON)
                 .content(jacksonObjectMapper().writeValueAsString(updateTrailStatusRequest))
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -362,9 +378,10 @@ class UserControllerTest {
         `when`(userService.deleteTrail(user.email, trailId)).thenReturn(deleteUserTrailResponse)
 
         mockMvc.perform(
-            delete("/user/${user.email}/delete-trail/${trailId}")
+            delete("/user/${user.email}/delete-trail/$trailId")
                 .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(deleteUserTrailResponse)))
@@ -381,9 +398,10 @@ class UserControllerTest {
         `when`(userService.deleteTrail(user.email, trailId)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-            delete("/user/${user.email}/delete-trail/${trailId}")
+            delete("/user/${user.email}/delete-trail/$trailId")
                 .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -400,9 +418,10 @@ class UserControllerTest {
         `when`(userService.deleteTrail(user.email, trailId)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-            delete("/user/${user.email}/delete-trail/${trailId}")
+            delete("/user/${user.email}/delete-trail/$trailId")
                 .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))

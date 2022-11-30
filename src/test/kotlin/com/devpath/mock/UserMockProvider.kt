@@ -18,6 +18,17 @@ class UserMockProvider {
             )
         }
 
+        fun getMentorUser(id: Int): User {
+            return User(
+                id = id,
+                name = "name",
+                email = "email",
+                password = "password",
+                isMentor = true,
+                userTrails = mutableSetOf()
+            )
+        }
+
         fun getCreateUserRequest(): CreateUserRequest {
             return CreateUserRequest(
                 name = "name",

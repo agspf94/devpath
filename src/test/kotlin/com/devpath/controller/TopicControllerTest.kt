@@ -24,10 +24,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -56,10 +56,11 @@ class TopicControllerTest {
         `when`(topicService.create(createTopicRequest)).thenReturn(topic)
 
         mockMvc.perform(
-                post("/topic/create")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(createTopicRequest))
-                    .contentType(APPLICATION_JSON))
+            post("/topic/create")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(createTopicRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(topic)))
@@ -75,10 +76,11 @@ class TopicControllerTest {
         `when`(topicService.create(createTopicRequest)).thenAnswer { throw TopicAlreadyExistsException(errorMessage) }
 
         mockMvc.perform(
-                post("/topic/create")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(createTopicRequest))
-                    .contentType(APPLICATION_JSON))
+            post("/topic/create")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(createTopicRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -93,9 +95,10 @@ class TopicControllerTest {
         `when`(topicService.read(topic.id!!)).thenReturn(topic)
 
         mockMvc.perform(
-                get("/topic/${topic.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/topic/${topic.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(topic)))
@@ -113,7 +116,8 @@ class TopicControllerTest {
         mockMvc.perform(
             get("/topic/${topic.id!!}")
                 .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -128,9 +132,10 @@ class TopicControllerTest {
         `when`(topicService.readAll()).thenReturn(topicsList)
 
         mockMvc.perform(
-                get("/topic/all")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/topic/all")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(topicsList)))
@@ -145,9 +150,10 @@ class TopicControllerTest {
         `when`(topicService.readAll()).thenAnswer { throw EmptyTopicListException(errorMessage) }
 
         mockMvc.perform(
-                get("/topic/all")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/topic/all")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -163,10 +169,11 @@ class TopicControllerTest {
         `when`(topicService.update(updateTopicRequest)).thenReturn(topic)
 
         mockMvc.perform(
-                patch("/topic/update")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(updateTopicRequest))
-                    .contentType(APPLICATION_JSON))
+            patch("/topic/update")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(updateTopicRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(topic)))
@@ -182,10 +189,11 @@ class TopicControllerTest {
         `when`(topicService.update(updateTopicRequest)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                patch("/topic/update")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(updateTopicRequest))
-                    .contentType(APPLICATION_JSON))
+            patch("/topic/update")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(updateTopicRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -201,9 +209,10 @@ class TopicControllerTest {
         `when`(topicService.delete(topic.id!!)).thenReturn(deleteTopicResponse)
 
         mockMvc.perform(
-                delete("/topic/delete/${topic.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            delete("/topic/delete/${topic.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(deleteTopicResponse)))
@@ -219,9 +228,10 @@ class TopicControllerTest {
         `when`(topicService.delete(topic.id!!)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                delete("/topic/delete/${topic.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            delete("/topic/delete/${topic.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))

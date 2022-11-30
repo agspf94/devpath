@@ -22,10 +22,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -54,10 +54,11 @@ class SubTopicControllerTest {
         `when`(subTopicService.create(createSubTopicRequest)).thenReturn(subTopic)
 
         mockMvc.perform(
-                post("/sub-topic/create")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(createSubTopicRequest))
-                    .contentType(APPLICATION_JSON))
+            post("/sub-topic/create")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(createSubTopicRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(subTopic)))
@@ -73,10 +74,11 @@ class SubTopicControllerTest {
         `when`(subTopicService.create(createSubTopicRequest)).thenAnswer { throw SubTopicAlreadyExistsException(errorMessage) }
 
         mockMvc.perform(
-                post("/sub-topic/create")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(createSubTopicRequest))
-                    .contentType(APPLICATION_JSON))
+            post("/sub-topic/create")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(createSubTopicRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -91,9 +93,10 @@ class SubTopicControllerTest {
         `when`(subTopicService.read(subTopic.id!!)).thenReturn(subTopic)
 
         mockMvc.perform(
-                get("/sub-topic/${subTopic.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/sub-topic/${subTopic.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(subTopic)))
@@ -111,7 +114,8 @@ class SubTopicControllerTest {
         mockMvc.perform(
             get("/sub-topic/${subTopic.id!!}")
                 .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -126,9 +130,10 @@ class SubTopicControllerTest {
         `when`(subTopicService.readAll()).thenReturn(subTopicsList)
 
         mockMvc.perform(
-                get("/sub-topic/all")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/sub-topic/all")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(subTopicsList)))
@@ -143,9 +148,10 @@ class SubTopicControllerTest {
         `when`(subTopicService.readAll()).thenAnswer { throw EmptySubTopicListException(errorMessage) }
 
         mockMvc.perform(
-                get("/sub-topic/all")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            get("/sub-topic/all")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -161,10 +167,11 @@ class SubTopicControllerTest {
         `when`(subTopicService.update(updateSubTopicRequest)).thenReturn(subTopic)
 
         mockMvc.perform(
-                patch("/sub-topic/update")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(updateSubTopicRequest))
-                    .contentType(APPLICATION_JSON))
+            patch("/sub-topic/update")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(updateSubTopicRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(subTopic)))
@@ -180,10 +187,11 @@ class SubTopicControllerTest {
         `when`(subTopicService.update(updateSubTopicRequest)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                patch("/sub-topic/update")
-                    .accept(APPLICATION_JSON)
-                    .content(jacksonObjectMapper().writeValueAsString(updateSubTopicRequest))
-                    .contentType(APPLICATION_JSON))
+            patch("/sub-topic/update")
+                .accept(APPLICATION_JSON)
+                .content(jacksonObjectMapper().writeValueAsString(updateSubTopicRequest))
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
@@ -199,9 +207,10 @@ class SubTopicControllerTest {
         `when`(subTopicService.delete(subTopic.id!!)).thenReturn(deleteSubTopicResponse)
 
         mockMvc.perform(
-                delete("/sub-topic/delete/${subTopic.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            delete("/sub-topic/delete/${subTopic.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(deleteSubTopicResponse)))
@@ -217,9 +226,10 @@ class SubTopicControllerTest {
         `when`(subTopicService.delete(subTopic.id!!)).thenAnswer { throw NoSuchElementException(errorMessage) }
 
         mockMvc.perform(
-                delete("/sub-topic/delete/${subTopic.id!!}")
-                    .accept(APPLICATION_JSON)
-                    .contentType(APPLICATION_JSON))
+            delete("/sub-topic/delete/${subTopic.id!!}")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
             .andDo(print())
             .andExpect(status().is4xxClientError)
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))

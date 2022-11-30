@@ -1,8 +1,8 @@
 package com.devpath.controller
 
 import com.devpath.dto.job.request.CreateJobRequest
-import com.devpath.dto.job.response.DeleteJobResponse
 import com.devpath.dto.job.request.UpdateJobRequest
+import com.devpath.dto.job.response.DeleteJobResponse
 import com.devpath.entity.Job
 import com.devpath.service.JobService
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/job")
 class JobController(
     private val jobService: JobService
-){
+) {
     @PostMapping("/create")
     fun create(@RequestBody createJobRequest: CreateJobRequest): Job {
         return jobService.create(createJobRequest)
