@@ -130,7 +130,11 @@ class JobServiceTests {
 
         val updatedJob = jobService.update(updateJobRequest)
 
-        assertAttributes(job, updatedJob)
+        assertEquals(updateJobRequest.title, updatedJob.title)
+        assertEquals(updateJobRequest.location, updatedJob.location)
+        assertEquals(updateJobRequest.period, updatedJob.period)
+        assertEquals(updateJobRequest.role, updatedJob.role)
+        assertEquals(updateJobRequest.link, updatedJob.link)
 
         verify(jobRepository, times(1)).findById(job.id!!)
         verify(jobRepository, times(1)).saveAndFlush(any())

@@ -40,16 +40,16 @@ class JobService(
     fun update(updateJobRequest: UpdateJobRequest): Job {
         return jobRepository.findById(updateJobRequest.id)
             .map {
-                jobRepository.saveAndFlush(
-                    Job(
-                        id = it.id,
-                        title = updateJobRequest.title ?: it.title,
-                        location = updateJobRequest.location ?: it.location,
-                        period = updateJobRequest.period ?: it.period,
-                        role = updateJobRequest.role ?: it.role,
-                        link = updateJobRequest.link ?: it.link
-                    )
+                val updatedJob = Job(
+                    id = it.id,
+                    title = updateJobRequest.title ?: it.title,
+                    location = updateJobRequest.location ?: it.location,
+                    period = updateJobRequest.period ?: it.period,
+                    role = updateJobRequest.role ?: it.role,
+                    link = updateJobRequest.link ?: it.link
                 )
+                jobRepository.saveAndFlush(updatedJob)
+                updatedJob
             }
             .orElseThrow { NoSuchElementException(JOB_NOT_FOUND + updateJobRequest.id) }
     }
