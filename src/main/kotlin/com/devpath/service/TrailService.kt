@@ -1,5 +1,7 @@
 package com.devpath.service
 
+import com.devpath.constants.Constants.Companion.EMPTY_WORDS_LIST
+import com.devpath.constants.Constants.Companion.NO_TRAILS_WERE_FOUND
 import com.devpath.constants.Constants.Companion.TRAIL_ALREADY_EXISTS
 import com.devpath.constants.Constants.Companion.TRAIL_DELETED
 import com.devpath.constants.Constants.Companion.TRAIL_LIST_IS_EMPTY
@@ -11,6 +13,8 @@ import com.devpath.entity.Job
 import com.devpath.entity.Topic
 import com.devpath.entity.Trail
 import com.devpath.exception.exceptions.EmptyTrailListException
+import com.devpath.exception.exceptions.EmptyWordsListException
+import com.devpath.exception.exceptions.NoTrailsWereFoundException
 import com.devpath.exception.exceptions.TrailAlreadyExistsException
 import com.devpath.repository.TrailRepository
 import org.springframework.stereotype.Service
@@ -66,6 +70,26 @@ class TrailService(
                 DeleteTrailResponse(it, TRAIL_DELETED)
             }
             .orElseThrow { NoSuchElementException(TRAIL_NOT_FOUND + id) }
+    }
+
+    fun search(words: String): Set<Trail> {
+        if (words.isBlank()) {
+            throw EmptyWordsListException(EMPTY_WORDS_LIST)
+        }
+        val wordsList = words.split(" ")
+        val trailList = readAll()
+        val searchList = mutableSetOf<Trail>()
+        for (trail in trailList) {
+            for (word in wordsList) {
+                if (trail.name.contains(word, ignoreCase = true)) {
+                    searchList.add(trail)
+                }
+            }
+        }
+        if (searchList.isEmpty()) {
+            throw NoTrailsWereFoundException(NO_TRAILS_WERE_FOUND)
+        }
+        return searchList
     }
 
     private fun updateJobs(trail: Trail, updateTrailRequest: UpdateTrailRequest): MutableSet<Job> {

@@ -43,4 +43,9 @@ class TrailController(
     fun delete(@PathVariable id: Int): DeleteTrailResponse {
         return trailService.delete(id)
     }
+
+    @GetMapping("/search/{words}")
+    fun search(@PathVariable words: String): Set<Trail> {
+        return trailService.search(words)
+    }
 }

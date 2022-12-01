@@ -30,6 +30,8 @@ class Constants {
         const val TRAIL_NOT_FOUND = "No trail was found with the given id: "
         const val TRAIL_LIST_IS_EMPTY = "No trails have been created yet"
         const val TRAIL_DELETED = "Trail deleted successfully"
+        const val EMPTY_WORDS_LIST = "The given list of words is empty"
+        const val NO_TRAILS_WERE_FOUND = "No trails were found"
 
         // Topic
         const val TOPIC_ALREADY_EXISTS = "There is already a topic with the given name: "

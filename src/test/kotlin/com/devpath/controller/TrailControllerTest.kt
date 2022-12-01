@@ -1,12 +1,16 @@
 package com.devpath.controller
 
 import com.devpath.constants.Constants
+import com.devpath.constants.Constants.Companion.EMPTY_WORDS_LIST
+import com.devpath.constants.Constants.Companion.NO_TRAILS_WERE_FOUND
 import com.devpath.constants.Constants.Companion.TRAIL_ALREADY_EXISTS
 import com.devpath.constants.Constants.Companion.TRAIL_DELETED
 import com.devpath.constants.Constants.Companion.TRAIL_NOT_FOUND
 import com.devpath.dto.trail.response.DeleteTrailResponse
 import com.devpath.exception.ErrorMessage
 import com.devpath.exception.exceptions.EmptyTrailListException
+import com.devpath.exception.exceptions.EmptyWordsListException
+import com.devpath.exception.exceptions.NoTrailsWereFoundException
 import com.devpath.exception.exceptions.TrailAlreadyExistsException
 import com.devpath.mock.TrailMockProvider.Companion.getCreateTrailRequest
 import com.devpath.mock.TrailMockProvider.Companion.getTrail
@@ -236,5 +240,64 @@ class TrailControllerTest {
             .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
 
         verify(trailService, times(1)).delete(trail.id!!)
+    }
+
+    @Test
+    fun `Search should return all trails matching the words list`() {
+        val trail1 = getTrail(id = 1, name = "name1")
+        val trail2 = getTrail(id = 2, name = "name2")
+        val trailsList = mutableSetOf(trail1, trail2)
+        val words = "name1 name2"
+
+        `when`(trailService.search(words)).thenReturn(trailsList)
+
+        mockMvc.perform(
+            get("/trail/search/$words")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
+            .andDo(print())
+            .andExpect(status().isOk)
+            .andExpect(content().json(jacksonObjectMapper().writeValueAsString(trailsList)))
+
+        verify(trailService, times(1)).search(words)
+    }
+
+    @Test
+    fun `Search should throw an exception when the words list is empty`() {
+        val words = " "
+        val errorMessage = EMPTY_WORDS_LIST
+
+        `when`(trailService.search(words)).thenAnswer { throw EmptyWordsListException(errorMessage) }
+
+        mockMvc.perform(
+            get("/trail/search/$words")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
+            .andDo(print())
+            .andExpect(status().is4xxClientError)
+            .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
+
+        verify(trailService, times(1)).search(words)
+    }
+
+    @Test
+    fun `Search should throw an exception when the trails list is empty`() {
+        val words = "java"
+        val errorMessage = NO_TRAILS_WERE_FOUND
+
+        `when`(trailService.search(words)).thenAnswer { throw NoTrailsWereFoundException(errorMessage) }
+
+        mockMvc.perform(
+            get("/trail/search/$words")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+        )
+            .andDo(print())
+            .andExpect(status().is4xxClientError)
+            .andExpect(content().json(jacksonObjectMapper().writeValueAsString(ErrorMessage(errorMessage))))
+
+        verify(trailService, times(1)).search(words)
     }
 }

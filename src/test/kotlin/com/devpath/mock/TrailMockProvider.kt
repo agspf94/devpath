@@ -6,10 +6,10 @@ import com.devpath.entity.Trail
 
 class TrailMockProvider {
     companion object {
-        fun getTrail(id: Int): Trail {
+        fun getTrail(id: Int, name: String = "name"): Trail {
             return Trail(
                 id = id,
-                name = "name",
+                name = name,
                 duration = 0,
                 description = "description",
                 averageSalary = "averageSalary",

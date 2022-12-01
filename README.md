@@ -1,47 +1,8 @@
-DevPath
+# DevPath Backend
 
-Slogan: Find your dev path
+## How to develop a new feature
 
-Pages:
-
-    home
-    account
-        login
-        create
-        profile
-        edit
-    find your path
-        home
-        web
-            frontend
-            backend
-            full stack
-        mobile
-            android
-            iOS
-        data science
-    mentoring
-        application
-        define your schedules
-        find your mentor
-            mentor profile
-            scheduling
-        meeting
-
-Backend:
-
-    account
-        login
-        get
-        create
-        edit
-        delete
-
-    mentoring
-        application
-        get all mentors
-        get mentor
-        get sulchedes
-        schedule
-        get meetings
-
+After developing the feature and the tests, do the following:
+- `./gradlew ktlintFormat`
+- `./gradlew clean build`
+- Run tests using Intellij coverage to make sure your new code is covered by your tests
