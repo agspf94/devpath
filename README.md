@@ -1,5 +1,7 @@
 # DevPath Backend
 
+Check the collections to see the avaliable features
+
 ## How to develop a new feature
 
 After developing the feature and the tests, do the following:
