@@ -3,6 +3,7 @@ package com.devpath.controller
 import com.devpath.dto.mentor.request.UpdateMentorRequest
 import com.devpath.dto.mentor.response.DeleteMentorResponse
 import com.devpath.entity.Mentor
+import com.devpath.entity.User
 import com.devpath.service.MentorService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,7 +20,7 @@ class MentorController(
     private val mentorService: MentorService
 ) {
     @PostMapping("/become-mentor/{userId}")
-    fun becomeMentor(@PathVariable userId: Int): Mentor {
+    fun becomeMentor(@PathVariable userId: Int): User {
         return mentorService.becomeMentor(userId)
     }
 

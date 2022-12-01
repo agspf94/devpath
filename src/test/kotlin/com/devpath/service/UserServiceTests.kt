@@ -167,7 +167,7 @@ class UserServiceTests {
         assertEquals(updateUserRequest.name, updatedUser.name)
         assertEquals(updateUserRequest.email, updatedUser.email)
         assertEquals(updateUserRequest.password, updatedUser.password)
-        assertEquals(updateUserRequest.isMentor, updatedUser.isMentor)
+        assertEquals(updateUserRequest.mentorStatus, updatedUser.mentorStatus)
 
         verify(userRepository, times(1)).findById(updateUserRequest.id)
         verify(userRepository, times(1)).saveAndFlush(any())
@@ -396,7 +396,7 @@ class UserServiceTests {
         assertEquals(expectedUser.name, savedUser.name)
         assertEquals(expectedUser.email, savedUser.email)
         assertEquals(expectedUser.password, savedUser.password)
-        assertEquals(expectedUser.isMentor, savedUser.isMentor)
+        assertEquals(expectedUser.mentorStatus, savedUser.mentorStatus)
         assertEquals(expectedUser.userTrails, savedUser.userTrails)
     }
 }

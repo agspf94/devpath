@@ -8,8 +8,9 @@ import com.devpath.dto.mentor.response.DeleteMentorResponse
 import com.devpath.exception.ErrorMessage
 import com.devpath.exception.exceptions.EmptyMentorListException
 import com.devpath.exception.exceptions.UserIsNotAMentorException
-import com.devpath.mock.MentorMockProvider.Companion.getMentor
+import com.devpath.mock.MentorMockProvider.Companion.getPendingMentor
 import com.devpath.mock.MentorMockProvider.Companion.getUpdateMentorRequest
+import com.devpath.mock.UserMockProvider.Companion.getMentorPendingUser
 import com.devpath.mock.UserMockProvider.Companion.getUser
 import com.devpath.service.MentorService
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -49,10 +50,9 @@ class MentorControllerTest {
 
     @Test
     fun `Should become a mentor successfully`() {
-        val user = getUser(id = 1)
-        val mentor = getMentor(id = 1, user = user)
+        val user = getMentorPendingUser(id = 1)
 
-        `when`(mentorService.becomeMentor(user.id!!)).thenReturn(mentor)
+        `when`(mentorService.becomeMentor(user.id!!)).thenReturn(user)
 
         mockMvc.perform(
             post("/mentor/become-mentor/${user.id!!}")
@@ -61,7 +61,7 @@ class MentorControllerTest {
         )
             .andDo(print())
             .andExpect(status().isOk)
-            .andExpect(content().json(jacksonObjectMapper().writeValueAsString(mentor)))
+            .andExpect(content().json(jacksonObjectMapper().writeValueAsString(user)))
 
         verify(mentorService, times(1)).becomeMentor(user.id!!)
     }
@@ -88,7 +88,7 @@ class MentorControllerTest {
     @Test
     fun `Should read a mentor successfully`() {
         val user = getUser(id = 1)
-        val mentor = getMentor(id = 1, user = user)
+        val mentor = getPendingMentor(id = 1, user = user)
 
         `when`(mentorService.read(user.id!!)).thenReturn(mentor)
 
@@ -146,7 +146,7 @@ class MentorControllerTest {
     fun `Should read all mentors list successfully`() {
         val user1 = getUser(id = 1)
         val user2 = getUser(id = 2)
-        val mentorsList = listOf(getMentor(id = 1, user = user1), getMentor(id = 2, user = user2))
+        val mentorsList = listOf(getPendingMentor(id = 1, user = user1), getPendingMentor(id = 2, user = user2))
 
         `when`(mentorService.readAll()).thenReturn(mentorsList)
 
@@ -184,7 +184,7 @@ class MentorControllerTest {
     fun `Should update a mentor successfully`() {
         val user = getUser(id = 1)
         val updateMentorRequest = getUpdateMentorRequest(userId = user.id!!)
-        val mentor = getMentor(id = 1, user = user)
+        val mentor = getPendingMentor(id = 1, user = user)
 
         `when`(mentorService.update(updateMentorRequest)).thenReturn(mentor)
 

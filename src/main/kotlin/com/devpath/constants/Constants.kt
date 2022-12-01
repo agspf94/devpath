@@ -19,6 +19,12 @@ class Constants {
         const val MENTOR_LIST_IS_EMPTY = "There are no mentors yet"
         const val MENTOR_DELETED = "This user is no longer a mentor"
 
+        const val MENTOR_STATUS_ACTIVE = "ACTIVE"
+        const val MENTOR_STATUS_PENDING = "PENDING"
+        const val MENTOR_STATUS_INACTIVE = "INACTIVE"
+
+        const val USER_DIDNT_REQUEST_TO_BECOME_A_MENTOR = "The given user didn't request to become a mentor"
+
         // Trail
         const val TRAIL_ALREADY_EXISTS = "There is already a trail with the given name: "
         const val TRAIL_NOT_FOUND = "No trail was found with the given id: "

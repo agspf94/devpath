@@ -67,7 +67,7 @@ class UserRepositoryTests {
         assertEquals(actualUser.name, expectedUser.name)
         assertEquals(actualUser.email, expectedUser.email)
         assertEquals(actualUser.password, expectedUser.password)
-        assertEquals(actualUser.isMentor, expectedUser.isMentor)
+        assertEquals(actualUser.mentorStatus, expectedUser.mentorStatus)
         assertEquals(actualUser.userTrails, expectedUser.userTrails)
     }
 }

@@ -1,5 +1,8 @@
 package com.devpath.mock
 
+import com.devpath.constants.Constants.Companion.MENTOR_STATUS_ACTIVE
+import com.devpath.constants.Constants.Companion.MENTOR_STATUS_INACTIVE
+import com.devpath.constants.Constants.Companion.MENTOR_STATUS_PENDING
 import com.devpath.dto.user.request.CreateUserRequest
 import com.devpath.dto.user.request.UpdateTrailStatusRequest
 import com.devpath.dto.user.request.UpdateUserRequest
@@ -13,7 +16,18 @@ class UserMockProvider {
                 name = "name",
                 email = "email",
                 password = "password",
-                isMentor = false,
+                mentorStatus = MENTOR_STATUS_INACTIVE,
+                userTrails = mutableSetOf()
+            )
+        }
+
+        fun getMentorPendingUser(id: Int): User {
+            return User(
+                id = id,
+                name = "name",
+                email = "email",
+                password = "password",
+                mentorStatus = MENTOR_STATUS_PENDING,
                 userTrails = mutableSetOf()
             )
         }
@@ -24,7 +38,7 @@ class UserMockProvider {
                 name = "name",
                 email = "email",
                 password = "password",
-                isMentor = true,
+                mentorStatus = MENTOR_STATUS_ACTIVE,
                 userTrails = mutableSetOf()
             )
         }
@@ -34,7 +48,7 @@ class UserMockProvider {
                 name = "name",
                 email = "email",
                 password = "password",
-                isMentor = false
+                mentorStatus = MENTOR_STATUS_INACTIVE
             )
         }
 
@@ -44,7 +58,7 @@ class UserMockProvider {
                 name = "name",
                 email = "email",
                 password = "password",
-                isMentor = false
+                mentorStatus = MENTOR_STATUS_INACTIVE
             )
         }
 
@@ -63,7 +77,7 @@ class UserMockProvider {
                 name = "name",
                 email = "email",
                 password = "password",
-                isMentor = false,
+                mentorStatus = MENTOR_STATUS_INACTIVE,
                 userTrails = mutableSetOf()
             )
         }

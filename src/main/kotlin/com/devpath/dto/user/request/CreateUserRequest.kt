@@ -6,14 +6,14 @@ data class CreateUserRequest(
     val name: String,
     val email: String,
     val password: String,
-    val isMentor: Boolean
+    val mentorStatus: String
 ) {
     fun toUser(): User {
         return User(
             name = name,
             email = email,
             password = password,
-            isMentor = isMentor,
+            mentorStatus = mentorStatus,
             userTrails = mutableSetOf()
         )
     }

@@ -1,7 +1,7 @@
 package com.devpath.repository
 
 import com.devpath.entity.Mentor
-import com.devpath.mock.MentorMockProvider.Companion.getMentor
+import com.devpath.mock.MentorMockProvider.Companion.getPendingMentor
 import com.devpath.mock.UserMockProvider.Companion.getUserWithoutId
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -26,7 +26,7 @@ class MentorRepositoryTests {
     fun `Mentor repository should be able to save a new mentor`() {
         val user = getUserWithoutId()
         entityManager.persistAndFlush(user)
-        val mentor = getMentor(id = 1, user = user)
+        val mentor = getPendingMentor(id = 1, user = user)
 
         mentorRepository.saveAndFlush(mentor)
 
@@ -39,7 +39,7 @@ class MentorRepositoryTests {
     fun `Mentor repository should be able to find a mentor by id`() {
         val user = getUserWithoutId()
         entityManager.persistAndFlush(user)
-        val mentor = getMentor(id = 1, user = user)
+        val mentor = getPendingMentor(id = 1, user = user)
         entityManager.persistAndFlush(mentor)
 
         val foundedMentor = mentorRepository.findById(1).get()
@@ -51,12 +51,12 @@ class MentorRepositoryTests {
     fun `Mentor repository should be able to find all mentors`() {
         val user1 = getUserWithoutId()
         entityManager.persistAndFlush(user1)
-        val mentor1 = getMentor(id = 1, user = user1)
+        val mentor1 = getPendingMentor(id = 1, user = user1)
         entityManager.persistAndFlush(mentor1)
 
         val user2 = getUserWithoutId()
         entityManager.persistAndFlush(user2)
-        val mentor2 = getMentor(id = 2, user = user2)
+        val mentor2 = getPendingMentor(id = 2, user = user2)
         entityManager.persistAndFlush(mentor2)
 
         val mentorsList = mentorRepository.findAll()
@@ -76,7 +76,7 @@ class MentorRepositoryTests {
     fun `Mentor repository should be able to find a mentor by user`() {
         val user = getUserWithoutId()
         entityManager.persistAndFlush(user)
-        val mentor = getMentor(id = 1, user = user)
+        val mentor = getPendingMentor(id = 1, user = user)
         entityManager.persistAndFlush(mentor)
 
         val foundedMentor = mentorRepository.findByUser(user).get()
@@ -88,7 +88,7 @@ class MentorRepositoryTests {
     fun `Mentor repository should be able to delete a mentor by id`() {
         val user = getUserWithoutId()
         entityManager.persistAndFlush(user)
-        val mentor = getMentor(id = 1, user = user)
+        val mentor = getPendingMentor(id = 1, user = user)
         entityManager.persistAndFlush(mentor)
 
         mentorRepository.deleteById(mentor.id!!)

@@ -68,7 +68,7 @@ class UserService(
                     name = updateUserRequest.name ?: it.name,
                     email = updateUserRequest.email ?: it.email,
                     password = updateUserRequest.password ?: it.password,
-                    isMentor = updateUserRequest.isMentor ?: it.isMentor,
+                    mentorStatus = updateUserRequest.mentorStatus ?: it.mentorStatus,
                     userTrails = it.userTrails
                 )
                 userRepository.saveAndFlush(updatedUser)

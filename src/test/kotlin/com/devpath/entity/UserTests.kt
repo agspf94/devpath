@@ -17,7 +17,7 @@ class UserTests {
         assertEquals(user.name, userDTO.name)
         assertEquals(user.email, userDTO.email)
         assertEquals(user.password, userDTO.password)
-        assertEquals(user.isMentor, userDTO.isMentor)
+        assertEquals(user.mentorStatus, userDTO.mentorStatus)
         assertEquals(emptySet<TrailDTO>(), userDTO.trails)
     }
 }

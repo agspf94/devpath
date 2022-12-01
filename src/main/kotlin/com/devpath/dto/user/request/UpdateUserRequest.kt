@@ -5,5 +5,5 @@ data class UpdateUserRequest(
     var name: String? = null,
     var email: String? = null,
     var password: String? = null,
-    var isMentor: Boolean? = null
+    var mentorStatus: String? = null
 )

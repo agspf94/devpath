@@ -16,7 +16,7 @@ class CreateUserRequestTest {
         assertEquals(createUserRequest.name, user.name)
         assertEquals(createUserRequest.email, user.email)
         assertEquals(createUserRequest.password, user.password)
-        assertEquals(createUserRequest.isMentor, user.isMentor)
+        assertEquals(createUserRequest.mentorStatus, user.mentorStatus)
         assertEquals(emptySet<UserTrail>(), user.userTrails)
     }
 }

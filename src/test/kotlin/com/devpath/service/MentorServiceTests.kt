@@ -1,14 +1,19 @@
 package com.devpath.service
 
+import com.devpath.constants.Constants
 import com.devpath.constants.Constants.Companion.MENTOR_DELETED
 import com.devpath.constants.Constants.Companion.MENTOR_LIST_IS_EMPTY
+import com.devpath.constants.Constants.Companion.MENTOR_STATUS_ACTIVE
 import com.devpath.constants.Constants.Companion.USER_IS_NOT_A_MENTOR
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_ID
 import com.devpath.entity.Mentor
+import com.devpath.entity.User
 import com.devpath.exception.exceptions.EmptyMentorListException
+import com.devpath.exception.exceptions.UserDidntRequestToBecomeAMentorException
 import com.devpath.exception.exceptions.UserIsNotAMentorException
-import com.devpath.mock.MentorMockProvider.Companion.getMentor
+import com.devpath.mock.MentorMockProvider.Companion.getApprovedMentor
 import com.devpath.mock.MentorMockProvider.Companion.getUpdateMentorRequest
+import com.devpath.mock.UserMockProvider.Companion.getMentorPendingUser
 import com.devpath.mock.UserMockProvider.Companion.getMentorUser
 import com.devpath.mock.UserMockProvider.Companion.getUser
 import com.devpath.repository.MentorRepository
@@ -45,21 +50,19 @@ class MentorServiceTests {
     }
 
     @Test
-    fun `Become mentor should return the new mentor`() {
+    fun `Become mentor should return a user with mentor status of pending`() {
         val user = getUser(id = 1)
-        val mentor = getMentor(id = 1, user = user)
+        val mentorPendingUser = getMentorPendingUser(id = 1)
 
         `when`(userRepository.findById(user.id!!)).thenReturn(Optional.of(user))
-        `when`(userRepository.saveAndFlush(any())).thenReturn(user)
-        `when`(mentorRepository.saveAndFlush(any())).thenReturn(mentor)
+        `when`(userRepository.saveAndFlush(any())).thenReturn(mentorPendingUser)
 
-        val savedMentor = mentorService.becomeMentor(user.id!!)
+        val savedUser = mentorService.becomeMentor(user.id!!)
 
-        assertAttributes(mentor, savedMentor)
+        assertAttributes(mentorPendingUser, savedUser)
 
         verify(userRepository, times(1)).findById(user.id!!)
         verify(userRepository, times(1)).saveAndFlush(any())
-        verify(mentorRepository, times(1)).saveAndFlush(any())
     }
 
     @Test
@@ -73,13 +76,12 @@ class MentorServiceTests {
 
         verify(userRepository, times(1)).findById(user.id!!)
         verify(userRepository, times(0)).saveAndFlush(any())
-        verify(mentorRepository, times(0)).saveAndFlush(any())
     }
 
     @Test
     fun `Read should return the desired mentor when the user is a mentor`() {
         val user = getMentorUser(id = 1)
-        val mentor = getMentor(id = 1, user = user)
+        val mentor = getApprovedMentor(id = 1, user = user)
 
         `when`(userRepository.findById(user.id!!)).thenReturn(Optional.of(user))
         `when`(mentorRepository.findById(user.id!!)).thenReturn(Optional.of(mentor))
@@ -122,9 +124,9 @@ class MentorServiceTests {
     @Test
     fun `Read all should return all mentors list`() {
         val user1 = getMentorUser(id = 1)
-        val mentor1 = getMentor(id = 1, user = user1)
+        val mentor1 = getApprovedMentor(id = 1, user = user1)
         val user2 = getMentorUser(id = 1)
-        val mentor2 = getMentor(id = 2, user = user2)
+        val mentor2 = getApprovedMentor(id = 2, user = user2)
 
         `when`(mentorRepository.findAll()).thenReturn(listOf(mentor1, mentor2))
 
@@ -151,7 +153,7 @@ class MentorServiceTests {
     fun `Update should update the mentor and return it updated`() {
         val updateMentorRequest = getUpdateMentorRequest(userId = 1)
         val user = getUser(id = 1)
-        val mentor = getMentor(id = 1, user = user)
+        val mentor = getApprovedMentor(id = 1, user = user)
 
         `when`(userRepository.findById(updateMentorRequest.userId)).thenReturn(Optional.of(user))
         `when`(mentorRepository.findById(user.id!!)).thenReturn(Optional.of(mentor))
@@ -202,21 +204,22 @@ class MentorServiceTests {
 
     @Test
     fun `Delete should make the user not a mentor anymore`() {
-        val user = getMentorUser(id = 1)
-        val mentor = getMentor(id = 1, user = user)
+        val mentorUser = getMentorUser(id = 1)
+        val mentor = getApprovedMentor(id = 1, user = mentorUser)
+        val user = getUser(id = 1)
 
-        `when`(userRepository.findById(user.id!!)).thenReturn(Optional.of(user))
-        `when`(mentorRepository.findByUser(user)).thenReturn(Optional.of(mentor))
+        `when`(userRepository.findById(mentorUser.id!!)).thenReturn(Optional.of(mentorUser))
+        `when`(mentorRepository.findByUser(mentorUser)).thenReturn(Optional.of(mentor))
         doNothing().`when`(mentorRepository).deleteById(mentor.id!!)
-        `when`(userRepository.saveAndFlush(any())).thenReturn(user)
+        `when`(userRepository.saveAndFlush(any())).thenReturn(mentorUser)
 
-        val deleteMentorResponse = mentorService.delete(user.id!!)
+        val deleteMentorResponse = mentorService.delete(mentorUser.id!!)
 
         assertEquals(user, deleteMentorResponse.user)
         assertEquals(MENTOR_DELETED, deleteMentorResponse.message)
 
-        verify(userRepository, times(1)).findById(user.id!!)
-        verify(mentorRepository, times(1)).findByUser(user)
+        verify(userRepository, times(1)).findById(mentorUser.id!!)
+        verify(mentorRepository, times(1)).findByUser(mentorUser)
         verify(mentorRepository, times(1)).deleteById(mentor.id!!)
         verify(userRepository, times(1)).saveAndFlush(any())
     }
@@ -252,9 +255,65 @@ class MentorServiceTests {
         verify(userRepository, times(0)).saveAndFlush(any())
     }
 
+    @Test
+    fun `Approve mentor should return the approved mentor`() {
+        val user = getMentorPendingUser(id = 1)
+        val mentorUser = getMentorUser(id = 1)
+        val mentor = getApprovedMentor(id = 1, getMentorPendingUser(id = 1))
+
+        `when`(userRepository.findById(user.id!!)).thenReturn(Optional.of(user))
+        `when`(userRepository.saveAndFlush(any())).thenReturn(mentorUser)
+        `when`(mentorRepository.saveAndFlush(any())).thenReturn(any())
+
+        val approvedMentor = mentorService.approveMentor(user.id!!)
+
+        assertAttributes(mentor, approvedMentor)
+
+        verify(userRepository, times(1)).findById(user.id!!)
+        verify(userRepository, times(1)).saveAndFlush(any())
+        verify(mentorRepository, times(1)).saveAndFlush(any())
+    }
+
+    @Test
+    fun `Approve mentor should throw an exception when the user didn't request to become a mentor`() {
+        val user = getUser(id = 1)
+
+        `when`(userRepository.findById(user.id!!)).thenReturn(Optional.of(user))
+
+        val exception = assertThrows<UserDidntRequestToBecomeAMentorException> { mentorService.approveMentor(user.id!!) }
+        assertEquals(Constants.USER_DIDNT_REQUEST_TO_BECOME_A_MENTOR, exception.message)
+
+        verify(userRepository, times(1)).findById(user.id!!)
+        verify(userRepository, times(0)).saveAndFlush(any())
+        verify(mentorRepository, times(0)).saveAndFlush(any())
+    }
+
+    @Test
+    fun `Approve mentor should throw an exception when the user doesn't exist`() {
+        val user = getUser(id = 1)
+
+        `when`(userRepository.findById(user.id!!)).thenReturn(Optional.empty())
+
+        val exception = assertThrows<NoSuchElementException> { mentorService.approveMentor(user.id!!) }
+        assertEquals(USER_NOT_FOUND_ID + user.id, exception.message)
+
+        verify(userRepository, times(1)).findById(user.id!!)
+        verify(userRepository, times(0)).saveAndFlush(any())
+        verify(mentorRepository, times(0)).saveAndFlush(any())
+    }
+
+    private fun assertAttributes(expectedUser: User, savedUser: User) {
+        assertNotNull(expectedUser.id)
+        assertEquals(expectedUser.name, savedUser.name)
+        assertEquals(expectedUser.email, savedUser.email)
+        assertEquals(expectedUser.password, savedUser.password)
+        assertEquals(expectedUser.mentorStatus, savedUser.mentorStatus)
+        assertEquals(expectedUser.userTrails, savedUser.userTrails)
+    }
+
     private fun assertAttributes(expectedMentor: Mentor, savedMentor: Mentor) {
         assertNotNull(expectedMentor.id)
-        assertEquals(true, savedMentor.user.isMentor)
+        assertEquals(MENTOR_STATUS_ACTIVE, savedMentor.user.mentorStatus)
         assertEquals(expectedMentor.user, savedMentor.user)
         assertEquals(expectedMentor.role, savedMentor.role)
         assertEquals(expectedMentor.yearsOfExperience, savedMentor.yearsOfExperience)

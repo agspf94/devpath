@@ -7,6 +7,6 @@ data class UserDTO(
     val name: String,
     val email: String,
     val password: String,
-    var isMentor: Boolean,
+    var mentorStatus: String,
     var trails: MutableSet<TrailDTO>
 )
