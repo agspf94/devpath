@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Anderson\",\n    \"email\": \"anderson@gmail.com\",\n    \"password\": \"password\",\n    \"isMentor\": \"false\"\n}",
+							"raw": "{\n    \"name\": \"Anderson2\",\n    \"email\": \"anderson@gmail.com\",\n    \"password\": \"password\",\n    \"mentorStatus\": \"INACTIVE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -230,6 +230,130 @@
 			]
 		},
 		{
+			"name": "Mentor Controller",
+			"item": [
+				{
+					"name": "Become Mentor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/become-mentor/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"become-mentor",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/all",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1,\n    \"role\": \"I am a Java Backend Software Engineer\",\n    \"yearsOfExperience\": 2,\n    \"hourCost\": \"100\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/mentor/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/delete/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"delete",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Trail Controller",
 			"item": [
 				{
@@ -347,6 +471,31 @@
 								{
 									"key": "id",
 									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/trail/search/:words",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"trail",
+								"search",
+								":words"
+							],
+							"variable": [
+								{
+									"key": "words",
+									"value": "python"
 								}
 							]
 						}
@@ -734,115 +883,21 @@
 			]
 		},
 		{
-			"name": "Mentor Controller",
+			"name": "Admin Controller",
 			"item": [
 				{
-					"name": "Become Mentor",
+					"name": "Approve Mentor",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/mentor/become-mentor/:userId",
+							"raw": "{{url}}/admin/approve-mentor/:userId",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"mentor",
-								"become-mentor",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/mentor/:userId",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"mentor",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read All",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/mentor/all",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"mentor",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"userId\": 1,\n    \"role\": \"I am a Java Backend Software Engineer\",\n    \"yearsOfExperience\": 2,\n    \"hourCost\": \"100\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/mentor/update",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"mentor",
-								"update"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/mentor/delete/:userId",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"mentor",
-								"delete",
+								"admin",
+								"approve-mentor",
 								":userId"
 							],
 							"variable": [
