@@ -7,6 +7,7 @@ import com.devpath.exception.exceptions.EmptyTopicListException
 import com.devpath.exception.exceptions.EmptyTrailListException
 import com.devpath.exception.exceptions.EmptyWordsListException
 import com.devpath.exception.exceptions.JobAlreadyExistsException
+import com.devpath.exception.exceptions.MentorAndUserAreTheSameException
 import com.devpath.exception.exceptions.NoTrailsWereFoundException
 import com.devpath.exception.exceptions.SubTopicAlreadyExistsException
 import com.devpath.exception.exceptions.TopicAlreadyExistsException
@@ -34,7 +35,8 @@ class ExceptionControllerAdvice {
         WrongPasswordException::class,
         UserDidntRequestToBecomeAMentorException::class,
         EmptyWordsListException::class,
-        NoTrailsWereFoundException::class
+        NoTrailsWereFoundException::class,
+        MentorAndUserAreTheSameException::class
     )
     fun handleBadRequest(e: Exception): ResponseEntity<ErrorMessage> {
         return ResponseEntity(ErrorMessage(e.message), BAD_REQUEST)

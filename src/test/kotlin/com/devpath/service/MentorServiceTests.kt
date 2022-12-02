@@ -17,6 +17,7 @@ import com.devpath.mock.UserMockProvider.Companion.getMentorPendingUser
 import com.devpath.mock.UserMockProvider.Companion.getMentorUser
 import com.devpath.mock.UserMockProvider.Companion.getUser
 import com.devpath.repository.MentorRepository
+import com.devpath.repository.ScheduleRepository
 import com.devpath.repository.UserRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -40,6 +41,9 @@ class MentorServiceTests {
 
     @MockBean
     private lateinit var userRepository: UserRepository
+
+    @MockBean
+    private lateinit var scheduleRepository: ScheduleRepository
 
     @Autowired
     private lateinit var mentorService: MentorService
@@ -301,6 +305,30 @@ class MentorServiceTests {
         verify(userRepository, times(0)).saveAndFlush(any())
         verify(mentorRepository, times(0)).saveAndFlush(any())
     }
+
+//    @Test
+//    fun `Create schedule should create a schedule and return the mentor`() {
+//        val mentorUser = getMentorUser(id = 1)
+//        val mentor = getApprovedMentor(id = 1, user = mentorUser)
+//        val user = getUser(id = 1)
+//        val date = "2022-12-02 15:00"
+//
+//        `when`(userRepository.findById(mentorUser.id!!)).thenReturn(Optional.of(mentorUser))
+//        `when`(mentorRepository.findById(mentorUser.id!!)).thenReturn(Optional.of(mentor))
+//        `when`(userRepository.findById(user.id!!)).thenReturn(Optional.of(user))
+//        `when`(scheduleRepository.saveAndFlush(any())).thenReturn(any())
+//        `when`(mentorRepository.saveAndFlush(Mockito.any<Mentor>())).thenReturn(mentor)
+//
+//        val responseMentor = mentorService.createSchedule(mentor.id!!, user.id!!, date)
+//
+//        assertAttributes(mentor, responseMentor)
+//
+//        verify(userRepository, times(1)).findById(mentorUser.id!!)
+//        verify(mentorRepository, times(1)).findById(mentorUser.id!!)
+//        verify(userRepository, times(1)).findById(user.id!!)
+//        verify(scheduleRepository, times(1)).saveAndFlush(any())
+//        verify(mentorRepository, times(1)).saveAndFlush(any())
+//    }
 
     private fun assertAttributes(expectedUser: User, savedUser: User) {
         assertNotNull(expectedUser.id)

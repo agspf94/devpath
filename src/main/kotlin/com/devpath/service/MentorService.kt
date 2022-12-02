@@ -1,5 +1,6 @@
 package com.devpath.service
 
+import com.devpath.constants.Constants.Companion.MENTOR_AND_USER_ARE_THE_SAME
 import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_HOUR_COST
 import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_ROLE
 import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_YEARS_OF_EXPERIENCE
@@ -14,11 +15,14 @@ import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_ID
 import com.devpath.dto.mentor.request.UpdateMentorRequest
 import com.devpath.dto.mentor.response.DeleteMentorResponse
 import com.devpath.entity.Mentor
+import com.devpath.entity.Schedule
 import com.devpath.entity.User
 import com.devpath.exception.exceptions.EmptyMentorListException
+import com.devpath.exception.exceptions.MentorAndUserAreTheSameException
 import com.devpath.exception.exceptions.UserDidntRequestToBecomeAMentorException
 import com.devpath.exception.exceptions.UserIsNotAMentorException
 import com.devpath.repository.MentorRepository
+import com.devpath.repository.ScheduleRepository
 import com.devpath.repository.UserRepository
 import org.springframework.stereotype.Service
 import java.util.stream.Collectors
@@ -26,7 +30,8 @@ import java.util.stream.Collectors
 @Service
 class MentorService(
     private val mentorRepository: MentorRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val scheduleRepository: ScheduleRepository
 ) {
     fun becomeMentor(userId: Int): User {
         return userRepository.findById(userId)
@@ -117,5 +122,22 @@ class MentorService(
                 }
             }
             .orElseThrow { NoSuchElementException(USER_NOT_FOUND_ID + userId) }
+    }
+
+    fun createSchedule(mentorId: Int, userId: Int, date: String): Mentor {
+        val mentor = read(mentorId)
+        val user = userRepository.findById(userId)
+            .orElseThrow { NoSuchElementException(USER_NOT_FOUND_ID + userId) }
+        if (mentor.user == user) {
+            throw MentorAndUserAreTheSameException(MENTOR_AND_USER_ARE_THE_SAME)
+        }
+        val schedule = Schedule(
+            user = user,
+            date = date
+        )
+        scheduleRepository.saveAndFlush(schedule)
+        mentor.schedules.add(schedule)
+        mentorRepository.saveAndFlush(mentor)
+        return mentor
     }
 }

@@ -24,6 +24,7 @@ class Constants {
         const val MENTOR_STATUS_INACTIVE = "INACTIVE"
 
         const val USER_DIDNT_REQUEST_TO_BECOME_A_MENTOR = "The given user didn't request to become a mentor"
+        const val MENTOR_AND_USER_ARE_THE_SAME = "A mentor cannot schedule a date with himself"
 
         // Trail
         const val TRAIL_ALREADY_EXISTS = "There is already a trail with the given name: "

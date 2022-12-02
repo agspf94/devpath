@@ -43,4 +43,13 @@ class MentorController(
     fun delete(@PathVariable userId: Int): DeleteMentorResponse {
         return mentorService.delete(userId)
     }
+
+    @PostMapping("/create-schedule/{mentorId}/{userId}/{date}")
+    fun createSchedule(
+        @PathVariable mentorId: Int,
+        @PathVariable userId: Int,
+        @PathVariable date: String
+    ): Mentor {
+        return mentorService.createSchedule(mentorId, userId, date)
+    }
 }
