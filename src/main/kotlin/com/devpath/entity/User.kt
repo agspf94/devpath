@@ -24,7 +24,9 @@ data class User(
     val password: String,
     var mentorStatus: String,
     @OneToMany(cascade = [CascadeType.ALL])
-    var userTrails: MutableSet<UserTrail>
+    var userTrails: MutableSet<UserTrail> = mutableSetOf(),
+    @OneToMany(cascade = [CascadeType.ALL])
+    var schedules: MutableSet<Schedule> = mutableSetOf()
 ) {
     fun toUserDTO(): UserDTO {
         return UserDTO(
@@ -33,7 +35,8 @@ data class User(
             email = email,
             password = password,
             mentorStatus = mentorStatus,
-            trails = userTrails.map { it.toTrailDTO() }.toMutableSet()
+            trails = userTrails.map { it.toTrailDTO() }.toMutableSet(),
+            schedules = schedules
         )
     }
 }

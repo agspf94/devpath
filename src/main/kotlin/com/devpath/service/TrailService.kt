@@ -12,10 +12,10 @@ import com.devpath.dto.trail.response.DeleteTrailResponse
 import com.devpath.entity.Job
 import com.devpath.entity.Topic
 import com.devpath.entity.Trail
-import com.devpath.exception.exceptions.EmptyTrailListException
-import com.devpath.exception.exceptions.EmptyWordsListException
-import com.devpath.exception.exceptions.NoTrailsWereFoundException
-import com.devpath.exception.exceptions.TrailAlreadyExistsException
+import com.devpath.exception.exceptions.trail.EmptyTrailListException
+import com.devpath.exception.exceptions.trail.EmptyWordsListException
+import com.devpath.exception.exceptions.trail.NoTrailsWereFoundException
+import com.devpath.exception.exceptions.trail.TrailAlreadyExistsException
 import com.devpath.repository.TrailRepository
 import org.springframework.stereotype.Service
 import java.util.stream.Collectors

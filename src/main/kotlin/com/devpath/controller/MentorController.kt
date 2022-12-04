@@ -44,12 +44,28 @@ class MentorController(
         return mentorService.delete(userId)
     }
 
-    @PostMapping("/create-schedule/{mentorId}/{userId}/{date}")
+    @PostMapping("/create-schedule/{mentorId}/{date}")
     fun createSchedule(
         @PathVariable mentorId: Int,
-        @PathVariable userId: Int,
         @PathVariable date: String
     ): Mentor {
-        return mentorService.createSchedule(mentorId, userId, date)
+        return mentorService.createSchedule(mentorId, date)
+    }
+
+    @PostMapping("/reserve-schedule/{mentorId}/{scheduleId}/{userId}")
+    fun reserveSchedule(
+        @PathVariable mentorId: Int,
+        @PathVariable scheduleId: Int,
+        @PathVariable userId: Int
+    ): Mentor {
+        return mentorService.reserveSchedule(mentorId, scheduleId, userId)
+    }
+
+    @DeleteMapping("/cancel-schedule/{mentorId}/{scheduleId}")
+    fun cancelSchedule(
+        @PathVariable mentorId: Int,
+        @PathVariable scheduleId: Int
+    ): Mentor {
+        return mentorService.cancelSchedule(mentorId, scheduleId)
     }
 }

@@ -5,8 +5,8 @@ import com.devpath.constants.Constants.Companion.JOB_LIST_IS_EMPTY
 import com.devpath.constants.Constants.Companion.JOB_NOT_FOUND
 import com.devpath.dto.job.response.DeleteJobResponse
 import com.devpath.exception.ErrorMessage
-import com.devpath.exception.exceptions.EmptyJobListException
-import com.devpath.exception.exceptions.JobAlreadyExistsException
+import com.devpath.exception.exceptions.job.EmptyJobListException
+import com.devpath.exception.exceptions.job.JobAlreadyExistsException
 import com.devpath.mock.JobMockProvider.Companion.getCreateJobRequest
 import com.devpath.mock.JobMockProvider.Companion.getJob
 import com.devpath.mock.JobMockProvider.Companion.getUpdateJobRequest

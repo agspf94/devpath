@@ -8,9 +8,9 @@ import com.devpath.constants.Constants.Companion.USER_IS_NOT_A_MENTOR
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_ID
 import com.devpath.entity.Mentor
 import com.devpath.entity.User
-import com.devpath.exception.exceptions.EmptyMentorListException
-import com.devpath.exception.exceptions.UserDidntRequestToBecomeAMentorException
-import com.devpath.exception.exceptions.UserIsNotAMentorException
+import com.devpath.exception.exceptions.mentor.EmptyMentorListException
+import com.devpath.exception.exceptions.mentor.UserDidntRequestToBecomeAMentorException
+import com.devpath.exception.exceptions.mentor.UserIsNotAMentorException
 import com.devpath.mock.MentorMockProvider.Companion.getApprovedMentor
 import com.devpath.mock.MentorMockProvider.Companion.getUpdateMentorRequest
 import com.devpath.mock.UserMockProvider.Companion.getMentorPendingUser
@@ -312,12 +312,13 @@ class MentorServiceTests {
 //        val mentor = getApprovedMentor(id = 1, user = mentorUser)
 //        val user = getUser(id = 1)
 //        val date = "2022-12-02 15:00"
+//        val schedule = getSchedule(id = 1, user = user, date = date)
 //
 //        `when`(userRepository.findById(mentorUser.id!!)).thenReturn(Optional.of(mentorUser))
 //        `when`(mentorRepository.findById(mentorUser.id!!)).thenReturn(Optional.of(mentor))
 //        `when`(userRepository.findById(user.id!!)).thenReturn(Optional.of(user))
-//        `when`(scheduleRepository.saveAndFlush(any())).thenReturn(any())
-//        `when`(mentorRepository.saveAndFlush(Mockito.any<Mentor>())).thenReturn(mentor)
+//        `when`(scheduleRepository.saveAndFlush(schedule)).thenReturn(schedule)
+//        `when`(mentorRepository.saveAndFlush(mentor)).thenReturn(mentor)
 //
 //        val responseMentor = mentorService.createSchedule(mentor.id!!, user.id!!, date)
 //

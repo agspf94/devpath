@@ -10,8 +10,8 @@ import com.devpath.dto.topic.request.UpdateTopicRequest
 import com.devpath.dto.topic.response.DeleteTopicResponse
 import com.devpath.entity.SubTopic
 import com.devpath.entity.Topic
-import com.devpath.exception.exceptions.EmptyTopicListException
-import com.devpath.exception.exceptions.TopicAlreadyExistsException
+import com.devpath.exception.exceptions.topic.EmptyTopicListException
+import com.devpath.exception.exceptions.topic.TopicAlreadyExistsException
 import com.devpath.repository.TopicRepository
 import org.springframework.stereotype.Service
 import java.util.stream.Collectors

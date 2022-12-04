@@ -16,4 +16,12 @@ class AdminController(
     fun approveMentor(@PathVariable userId: Int): Mentor {
         return mentorService.approveMentor(userId)
     }
+
+    @PostMapping("/approve-schedule/{mentorId}/{scheduleId}")
+    fun approveSchedule(
+        @PathVariable mentorId: Int,
+        @PathVariable scheduleId: Int
+    ): Mentor {
+        return mentorService.approveSchedule(mentorId, scheduleId)
+    }
 }

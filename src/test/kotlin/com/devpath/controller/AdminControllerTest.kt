@@ -3,7 +3,7 @@ package com.devpath.controller
 import com.devpath.constants.Constants
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_ID
 import com.devpath.exception.ErrorMessage
-import com.devpath.exception.exceptions.UserDidntRequestToBecomeAMentorException
+import com.devpath.exception.exceptions.mentor.UserDidntRequestToBecomeAMentorException
 import com.devpath.mock.MentorMockProvider.Companion.getApprovedMentor
 import com.devpath.mock.UserMockProvider.Companion.getUser
 import com.devpath.service.MentorService

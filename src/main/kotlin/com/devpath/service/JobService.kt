@@ -8,8 +8,8 @@ import com.devpath.dto.job.request.CreateJobRequest
 import com.devpath.dto.job.request.UpdateJobRequest
 import com.devpath.dto.job.response.DeleteJobResponse
 import com.devpath.entity.Job
-import com.devpath.exception.exceptions.EmptyJobListException
-import com.devpath.exception.exceptions.JobAlreadyExistsException
+import com.devpath.exception.exceptions.job.EmptyJobListException
+import com.devpath.exception.exceptions.job.JobAlreadyExistsException
 import com.devpath.repository.JobRepository
 import org.springframework.stereotype.Service
 import java.util.stream.Collectors

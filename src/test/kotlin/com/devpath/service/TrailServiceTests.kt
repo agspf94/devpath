@@ -7,10 +7,10 @@ import com.devpath.constants.Constants.Companion.TRAIL_DELETED
 import com.devpath.constants.Constants.Companion.TRAIL_LIST_IS_EMPTY
 import com.devpath.constants.Constants.Companion.TRAIL_NOT_FOUND
 import com.devpath.entity.Trail
-import com.devpath.exception.exceptions.EmptyTrailListException
-import com.devpath.exception.exceptions.EmptyWordsListException
-import com.devpath.exception.exceptions.NoTrailsWereFoundException
-import com.devpath.exception.exceptions.TrailAlreadyExistsException
+import com.devpath.exception.exceptions.trail.EmptyTrailListException
+import com.devpath.exception.exceptions.trail.EmptyWordsListException
+import com.devpath.exception.exceptions.trail.NoTrailsWereFoundException
+import com.devpath.exception.exceptions.trail.TrailAlreadyExistsException
 import com.devpath.mock.TrailMockProvider.Companion.getCreateTrailRequest
 import com.devpath.mock.TrailMockProvider.Companion.getTrail
 import com.devpath.mock.TrailMockProvider.Companion.getUpdateTrailRequest

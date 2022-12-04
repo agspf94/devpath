@@ -13,8 +13,8 @@ import com.devpath.dto.user.response.DeleteUserResponse
 import com.devpath.dto.user.response.DeleteUserTrailResponse
 import com.devpath.entity.UserTrail
 import com.devpath.exception.ErrorMessage
-import com.devpath.exception.exceptions.UserAlreadyExistsException
-import com.devpath.exception.exceptions.WrongPasswordException
+import com.devpath.exception.exceptions.user.UserAlreadyExistsException
+import com.devpath.exception.exceptions.user.WrongPasswordException
 import com.devpath.mock.TrailMockProvider.Companion.getTrail
 import com.devpath.mock.UserMockProvider.Companion.getCreateUserRequest
 import com.devpath.mock.UserMockProvider.Companion.getUpdateTrailStatusRequest

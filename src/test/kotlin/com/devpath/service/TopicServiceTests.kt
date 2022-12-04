@@ -6,8 +6,8 @@ import com.devpath.constants.Constants.Companion.TOPIC_LIST_IS_EMPTY
 import com.devpath.constants.Constants.Companion.TOPIC_NOT_FOUND_ID
 import com.devpath.constants.Constants.Companion.TOPIC_NOT_FOUND_NAME
 import com.devpath.entity.Topic
-import com.devpath.exception.exceptions.EmptyTopicListException
-import com.devpath.exception.exceptions.TopicAlreadyExistsException
+import com.devpath.exception.exceptions.topic.EmptyTopicListException
+import com.devpath.exception.exceptions.topic.TopicAlreadyExistsException
 import com.devpath.mock.TopicMockProvider.Companion.getCreateTopicRequest
 import com.devpath.mock.TopicMockProvider.Companion.getTopic
 import com.devpath.mock.TopicMockProvider.Companion.getUpdateTopicRequest

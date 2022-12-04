@@ -21,9 +21,9 @@ import com.devpath.entity.User
 import com.devpath.entity.UserSubTopic
 import com.devpath.entity.UserTopic
 import com.devpath.entity.UserTrail
-import com.devpath.exception.exceptions.TrailAlreadyExistsException
-import com.devpath.exception.exceptions.UserAlreadyExistsException
-import com.devpath.exception.exceptions.WrongPasswordException
+import com.devpath.exception.exceptions.trail.TrailAlreadyExistsException
+import com.devpath.exception.exceptions.user.UserAlreadyExistsException
+import com.devpath.exception.exceptions.user.WrongPasswordException
 import com.devpath.repository.UserRepository
 import com.devpath.repository.UserTrailRepository
 import org.springframework.stereotype.Service

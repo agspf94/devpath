@@ -26,6 +26,17 @@ class Constants {
         const val USER_DIDNT_REQUEST_TO_BECOME_A_MENTOR = "The given user didn't request to become a mentor"
         const val MENTOR_AND_USER_ARE_THE_SAME = "A mentor cannot schedule a date with himself"
 
+        // Schedule
+        const val SCHEDULE_AVAILABLE = "AVAILABLE"
+        const val SCHEDULE_PENDING = "PENDING"
+        const val SCHEDULE_RESERVED = "RESERVED"
+        const val SCHEDULE_CANCELLED = "CANCELLED"
+
+        const val SCHEDULE_NOT_FOUND = "No schedule was found with the given id: "
+        const val SCHEDULE_NOT_AVAILABLE = "This schedule is not available to be reserved"
+        const val SCHEDULE_NOT_PENDING = "This schedule is cannot be approved because it is not pending"
+        const val CAN_ONLY_CANCEL_SCHEDULE_AVAILABLE = "Only available schedules can be cancelled"
+
         // Trail
         const val TRAIL_ALREADY_EXISTS = "There is already a trail with the given name: "
         const val TRAIL_NOT_FOUND = "No trail was found with the given id: "

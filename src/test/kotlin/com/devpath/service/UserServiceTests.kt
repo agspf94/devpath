@@ -11,9 +11,9 @@ import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_ID
 import com.devpath.constants.Constants.Companion.USER_TRAIL_DELETED
 import com.devpath.constants.Constants.Companion.USER_WRONG_PASSWORD
 import com.devpath.entity.User
-import com.devpath.exception.exceptions.TrailAlreadyExistsException
-import com.devpath.exception.exceptions.UserAlreadyExistsException
-import com.devpath.exception.exceptions.WrongPasswordException
+import com.devpath.exception.exceptions.trail.TrailAlreadyExistsException
+import com.devpath.exception.exceptions.user.UserAlreadyExistsException
+import com.devpath.exception.exceptions.user.WrongPasswordException
 import com.devpath.mock.TrailMockProvider.Companion.getTrail
 import com.devpath.mock.UserMockProvider.Companion.getCreateUserRequest
 import com.devpath.mock.UserMockProvider.Companion.getUpdateTrailStatusRequest

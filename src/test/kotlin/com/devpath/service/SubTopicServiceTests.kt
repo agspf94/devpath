@@ -5,8 +5,8 @@ import com.devpath.constants.Constants.Companion.SUB_TOPIC_ALREADY_EXISTS
 import com.devpath.constants.Constants.Companion.SUB_TOPIC_LIST_IS_EMPTY
 import com.devpath.constants.Constants.Companion.SUB_TOPIC_NOT_FOUND
 import com.devpath.entity.SubTopic
-import com.devpath.exception.exceptions.EmptySubTopicListException
-import com.devpath.exception.exceptions.SubTopicAlreadyExistsException
+import com.devpath.exception.exceptions.subtopic.EmptySubTopicListException
+import com.devpath.exception.exceptions.subtopic.SubTopicAlreadyExistsException
 import com.devpath.mock.SubTopicMockProvider.Companion.getCreateSubTopicRequest
 import com.devpath.mock.SubTopicMockProvider.Companion.getSubTopic
 import com.devpath.mock.SubTopicMockProvider.Companion.getUpdateSubTopicRequest

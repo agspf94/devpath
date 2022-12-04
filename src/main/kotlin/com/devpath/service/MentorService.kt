@@ -1,5 +1,6 @@
 package com.devpath.service
 
+import com.devpath.constants.Constants.Companion.CAN_ONLY_CANCEL_SCHEDULE_AVAILABLE
 import com.devpath.constants.Constants.Companion.MENTOR_AND_USER_ARE_THE_SAME
 import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_HOUR_COST
 import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_ROLE
@@ -9,6 +10,13 @@ import com.devpath.constants.Constants.Companion.MENTOR_LIST_IS_EMPTY
 import com.devpath.constants.Constants.Companion.MENTOR_STATUS_ACTIVE
 import com.devpath.constants.Constants.Companion.MENTOR_STATUS_INACTIVE
 import com.devpath.constants.Constants.Companion.MENTOR_STATUS_PENDING
+import com.devpath.constants.Constants.Companion.SCHEDULE_AVAILABLE
+import com.devpath.constants.Constants.Companion.SCHEDULE_CANCELLED
+import com.devpath.constants.Constants.Companion.SCHEDULE_NOT_AVAILABLE
+import com.devpath.constants.Constants.Companion.SCHEDULE_NOT_FOUND
+import com.devpath.constants.Constants.Companion.SCHEDULE_NOT_PENDING
+import com.devpath.constants.Constants.Companion.SCHEDULE_PENDING
+import com.devpath.constants.Constants.Companion.SCHEDULE_RESERVED
 import com.devpath.constants.Constants.Companion.USER_DIDNT_REQUEST_TO_BECOME_A_MENTOR
 import com.devpath.constants.Constants.Companion.USER_IS_NOT_A_MENTOR
 import com.devpath.constants.Constants.Companion.USER_NOT_FOUND_ID
@@ -17,10 +25,14 @@ import com.devpath.dto.mentor.response.DeleteMentorResponse
 import com.devpath.entity.Mentor
 import com.devpath.entity.Schedule
 import com.devpath.entity.User
-import com.devpath.exception.exceptions.EmptyMentorListException
-import com.devpath.exception.exceptions.MentorAndUserAreTheSameException
-import com.devpath.exception.exceptions.UserDidntRequestToBecomeAMentorException
-import com.devpath.exception.exceptions.UserIsNotAMentorException
+import com.devpath.exception.exceptions.mentor.EmptyMentorListException
+import com.devpath.exception.exceptions.mentor.MentorAndUserAreTheSameException
+import com.devpath.exception.exceptions.mentor.UserDidntRequestToBecomeAMentorException
+import com.devpath.exception.exceptions.mentor.UserIsNotAMentorException
+import com.devpath.exception.exceptions.schedule.CanOnlyCancelScheduleAvailableException
+import com.devpath.exception.exceptions.schedule.ScheduleNotAvailableException
+import com.devpath.exception.exceptions.schedule.ScheduleNotFoundException
+import com.devpath.exception.exceptions.schedule.ScheduleNotPendingException
 import com.devpath.repository.MentorRepository
 import com.devpath.repository.ScheduleRepository
 import com.devpath.repository.UserRepository
@@ -124,20 +136,63 @@ class MentorService(
             .orElseThrow { NoSuchElementException(USER_NOT_FOUND_ID + userId) }
     }
 
-    fun createSchedule(mentorId: Int, userId: Int, date: String): Mentor {
+    fun createSchedule(mentorId: Int, date: String): Mentor {
         val mentor = read(mentorId)
-        val user = userRepository.findById(userId)
-            .orElseThrow { NoSuchElementException(USER_NOT_FOUND_ID + userId) }
-        if (mentor.user == user) {
-            throw MentorAndUserAreTheSameException(MENTOR_AND_USER_ARE_THE_SAME)
-        }
         val schedule = Schedule(
-            user = user,
-            date = date
+            mentorEmail = mentor.user.email,
+            date = date,
+            status = SCHEDULE_AVAILABLE
         )
         scheduleRepository.saveAndFlush(schedule)
         mentor.schedules.add(schedule)
         mentorRepository.saveAndFlush(mentor)
         return mentor
+    }
+
+    fun reserveSchedule(mentorId: Int, scheduleId: Int, userId: Int): Mentor {
+        val mentor = read(mentorId)
+        val user = userRepository.findById(userId)
+            .orElseThrow { NoSuchElementException(USER_NOT_FOUND_ID + userId) }
+        validateUserEqualsMentor(mentor, user)
+        val schedule = mentor.schedules.firstOrNull { it.id == scheduleId } ?: throw ScheduleNotFoundException(SCHEDULE_NOT_FOUND + scheduleId)
+        if (schedule.status == SCHEDULE_AVAILABLE) {
+            schedule.status = SCHEDULE_PENDING
+            schedule.userEmail = user.email
+            user.schedules.add(schedule)
+        } else {
+            throw ScheduleNotAvailableException(SCHEDULE_NOT_AVAILABLE)
+        }
+        scheduleRepository.saveAndFlush(schedule)
+        userRepository.saveAndFlush(user)
+        return mentorRepository.saveAndFlush(mentor)
+    }
+
+    fun cancelSchedule(mentorId: Int, scheduleId: Int): Mentor {
+        val mentor = read(mentorId)
+        val schedule = mentor.schedules.firstOrNull { it.id == scheduleId } ?: throw ScheduleNotFoundException(SCHEDULE_NOT_FOUND + scheduleId)
+        if (schedule.status == SCHEDULE_AVAILABLE) {
+            schedule.status = SCHEDULE_CANCELLED
+        } else {
+            throw CanOnlyCancelScheduleAvailableException(CAN_ONLY_CANCEL_SCHEDULE_AVAILABLE)
+        }
+        scheduleRepository.saveAndFlush(schedule)
+        return mentorRepository.saveAndFlush(mentor)
+    }
+
+    fun approveSchedule(mentorId: Int, scheduleId: Int): Mentor {
+        val mentor = read(mentorId)
+        val schedule = mentor.schedules.firstOrNull { it.id == scheduleId } ?: throw ScheduleNotFoundException(SCHEDULE_NOT_FOUND + scheduleId)
+        if (schedule.status == SCHEDULE_PENDING) {
+            schedule.status = SCHEDULE_RESERVED
+        } else {
+            throw ScheduleNotPendingException(SCHEDULE_NOT_PENDING)
+        }
+        return mentorRepository.saveAndFlush(mentor)
+    }
+
+    private fun validateUserEqualsMentor(mentor: Mentor, user: User) {
+        if (mentor.user == user) {
+            throw MentorAndUserAreTheSameException(MENTOR_AND_USER_ARE_THE_SAME)
+        }
     }
 }

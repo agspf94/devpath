@@ -8,8 +8,8 @@ import com.devpath.dto.subtopic.request.CreateSubTopicRequest
 import com.devpath.dto.subtopic.request.UpdateSubTopicRequest
 import com.devpath.dto.subtopic.response.DeleteSubTopicResponse
 import com.devpath.entity.SubTopic
-import com.devpath.exception.exceptions.EmptySubTopicListException
-import com.devpath.exception.exceptions.SubTopicAlreadyExistsException
+import com.devpath.exception.exceptions.subtopic.EmptySubTopicListException
+import com.devpath.exception.exceptions.subtopic.SubTopicAlreadyExistsException
 import com.devpath.repository.SubTopicRepository
 import org.springframework.stereotype.Service
 import java.util.stream.Collectors
