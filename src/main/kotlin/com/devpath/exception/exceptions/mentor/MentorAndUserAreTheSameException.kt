@@ -1,4 +1,4 @@
-package com.devpath.exception.exceptions
+package com.devpath.exception.exceptions.mentor
 
 class MentorAndUserAreTheSameException(
     override val message: String?

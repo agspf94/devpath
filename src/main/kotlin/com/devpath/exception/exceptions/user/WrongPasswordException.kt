@@ -1,4 +1,4 @@
-package com.devpath.exception.exceptions
+package com.devpath.exception.exceptions.user
 
 class WrongPasswordException(
     override val message: String?

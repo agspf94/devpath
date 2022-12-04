@@ -1,4 +1,4 @@
-package com.devpath.exception.exceptions
+package com.devpath.exception.exceptions.mentor
 
 import com.devpath.entity.User
 

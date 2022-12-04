@@ -1,4 +1,4 @@
-package com.devpath.exception.exceptions
+package com.devpath.exception.exceptions.subtopic
 
 class EmptySubTopicListException(
     override val message: String?

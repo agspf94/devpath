@@ -1,4 +1,4 @@
-package com.devpath.exception.exceptions
+package com.devpath.exception.exceptions.mentor
 
 class EmptyMentorListException(
     override val message: String?

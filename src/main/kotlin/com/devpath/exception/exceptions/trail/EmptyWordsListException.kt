@@ -1,4 +1,4 @@
-package com.devpath.exception.exceptions
+package com.devpath.exception.exceptions.trail
 
 class EmptyWordsListException(
     override val message: String?
