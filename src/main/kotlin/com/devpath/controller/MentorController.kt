@@ -68,4 +68,9 @@ class MentorController(
     ): Mentor {
         return mentorService.cancelSchedule(mentorId, scheduleId)
     }
+
+    @GetMapping("/search/{words}")
+    fun search(@PathVariable words: String): Set<Mentor> {
+        return mentorService.search(words)
+    }
 }

@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Anderson2\",\n    \"email\": \"anderson@gmail.com\",\n    \"password\": \"password\",\n    \"mentorStatus\": \"INACTIVE\"\n}",
+							"raw": "{\n    \"name\": \"Anderson\",\n    \"email\": \"anderson@gmail.com\",\n    \"password\": \"password\",\n    \"mentorStatus\": \"INACTIVE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -345,6 +345,126 @@
 								{
 									"key": "userId",
 									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Schedule",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/create-schedule/:mentorId/:date",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"create-schedule",
+								":mentorId",
+								":date"
+							],
+							"variable": [
+								{
+									"key": "mentorId",
+									"value": "1"
+								},
+								{
+									"key": "date",
+									"value": "2022-12-02 15:00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reserve Schedule",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/reserve-schedule/:mentorId/:scheduleId/:userId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"reserve-schedule",
+								":mentorId",
+								":scheduleId",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "mentorId",
+									"value": "1"
+								},
+								{
+									"key": "scheduleId",
+									"value": "1"
+								},
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Schedule",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/cancel-schedule/:mentorId/:scheduleId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"cancel-schedule",
+								":mentorId",
+								":scheduleId"
+							],
+							"variable": [
+								{
+									"key": "mentorId",
+									"value": "1"
+								},
+								{
+									"key": "scheduleId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/mentor/search/:words",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mentor",
+								"search",
+								":words"
+							],
+							"variable": [
+								{
+									"key": "words",
+									"value": "Anderson"
 								}
 							]
 						}
@@ -903,6 +1023,36 @@
 							"variable": [
 								{
 									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Schedule",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/admin/approve-schedule/:mentorId/:scheduleId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"admin",
+								"approve-schedule",
+								":mentorId",
+								":scheduleId"
+							],
+							"variable": [
+								{
+									"key": "mentorId",
+									"value": "1"
+								},
+								{
+									"key": "scheduleId",
 									"value": "1"
 								}
 							]

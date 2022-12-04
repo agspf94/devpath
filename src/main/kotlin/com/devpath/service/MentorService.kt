@@ -1,6 +1,7 @@
 package com.devpath.service
 
 import com.devpath.constants.Constants.Companion.CAN_ONLY_CANCEL_SCHEDULE_AVAILABLE
+import com.devpath.constants.Constants.Companion.EMPTY_WORDS_LIST
 import com.devpath.constants.Constants.Companion.MENTOR_AND_USER_ARE_THE_SAME
 import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_HOUR_COST
 import com.devpath.constants.Constants.Companion.MENTOR_DEFAULT_ROLE
@@ -10,6 +11,7 @@ import com.devpath.constants.Constants.Companion.MENTOR_LIST_IS_EMPTY
 import com.devpath.constants.Constants.Companion.MENTOR_STATUS_ACTIVE
 import com.devpath.constants.Constants.Companion.MENTOR_STATUS_INACTIVE
 import com.devpath.constants.Constants.Companion.MENTOR_STATUS_PENDING
+import com.devpath.constants.Constants.Companion.NO_MENTORS_WERE_FOUND
 import com.devpath.constants.Constants.Companion.SCHEDULE_AVAILABLE
 import com.devpath.constants.Constants.Companion.SCHEDULE_CANCELLED
 import com.devpath.constants.Constants.Companion.SCHEDULE_NOT_AVAILABLE
@@ -27,12 +29,14 @@ import com.devpath.entity.Schedule
 import com.devpath.entity.User
 import com.devpath.exception.exceptions.mentor.EmptyMentorListException
 import com.devpath.exception.exceptions.mentor.MentorAndUserAreTheSameException
+import com.devpath.exception.exceptions.mentor.NoMentorsWereFoundException
 import com.devpath.exception.exceptions.mentor.UserDidntRequestToBecomeAMentorException
 import com.devpath.exception.exceptions.mentor.UserIsNotAMentorException
 import com.devpath.exception.exceptions.schedule.CanOnlyCancelScheduleAvailableException
 import com.devpath.exception.exceptions.schedule.ScheduleNotAvailableException
 import com.devpath.exception.exceptions.schedule.ScheduleNotFoundException
 import com.devpath.exception.exceptions.schedule.ScheduleNotPendingException
+import com.devpath.exception.exceptions.trail.EmptyWordsListException
 import com.devpath.repository.MentorRepository
 import com.devpath.repository.ScheduleRepository
 import com.devpath.repository.UserRepository
@@ -188,6 +192,26 @@ class MentorService(
             throw ScheduleNotPendingException(SCHEDULE_NOT_PENDING)
         }
         return mentorRepository.saveAndFlush(mentor)
+    }
+
+    fun search(words: String): Set<Mentor> {
+        if (words.isBlank()) {
+            throw EmptyWordsListException(EMPTY_WORDS_LIST)
+        }
+        val wordsList = words.split(" ")
+        val mentorsList = readAll()
+        val searchList = mutableSetOf<Mentor>()
+        for (mentor in mentorsList) {
+            for (word in wordsList) {
+                if (mentor.user.name.contains(word, ignoreCase = true)) {
+                    searchList.add(mentor)
+                }
+            }
+        }
+        if (searchList.isEmpty()) {
+            throw NoMentorsWereFoundException(NO_MENTORS_WERE_FOUND)
+        }
+        return searchList
     }
 
     private fun validateUserEqualsMentor(mentor: Mentor, user: User) {

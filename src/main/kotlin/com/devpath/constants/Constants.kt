@@ -25,6 +25,7 @@ class Constants {
 
         const val USER_DIDNT_REQUEST_TO_BECOME_A_MENTOR = "The given user didn't request to become a mentor"
         const val MENTOR_AND_USER_ARE_THE_SAME = "A mentor cannot schedule a date with himself"
+        const val NO_MENTORS_WERE_FOUND = "No mentors were found"
 
         // Schedule
         const val SCHEDULE_AVAILABLE = "AVAILABLE"
