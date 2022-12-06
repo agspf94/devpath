@@ -22,7 +22,7 @@ data class User(
     val email: String,
     @Column(length = 2048)
     val password: String,
-    var mentorStatus: String,
+    var mentorStatus: String? = null,
     @OneToMany(cascade = [CascadeType.ALL])
     var userTrails: MutableSet<UserTrail> = mutableSetOf(),
     @OneToMany(cascade = [CascadeType.ALL])
@@ -34,7 +34,7 @@ data class User(
             name = name,
             email = email,
             password = password,
-            mentorStatus = mentorStatus,
+            mentorStatus = mentorStatus!!,
             trails = userTrails.map { it.toTrailDTO() }.toMutableSet(),
             schedules = schedules
         )

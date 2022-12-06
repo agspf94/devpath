@@ -47,8 +47,7 @@ class UserMockProvider {
             return CreateUserRequest(
                 name = "name",
                 email = "email",
-                password = "password",
-                mentorStatus = MENTOR_STATUS_INACTIVE
+                password = "password"
             )
         }
 
