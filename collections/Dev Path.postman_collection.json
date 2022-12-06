@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Anderson\",\n    \"email\": \"anderson@gmail.com\",\n    \"password\": \"password\",\n    \"mentorStatus\": \"INACTIVE\"\n}",
+							"raw": "{\n    \"name\": \"Anderson\",\n    \"email\": \"anderson@gmail.com\",\n    \"password\": \"password\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
