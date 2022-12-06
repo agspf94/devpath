@@ -5,6 +5,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.OneToMany
 import jakarta.persistence.OneToOne
+import jakarta.persistence.OrderBy
 
 @Entity
 data class Mentor(
@@ -19,5 +20,6 @@ data class Mentor(
     @OneToMany
     val payments: MutableSet<Payment>,
     @OneToMany
+    @OrderBy("date ASC")
     val schedules: MutableSet<Schedule>
 )
