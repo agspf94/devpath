@@ -2,6 +2,10 @@
 
 Check the collections to see the avaliable features
 
+## How to start the project
+- `docker-compose up`
+- ./gradlew 
+
 ## How to develop a new feature
 
 After developing the feature and the tests, do the following:
