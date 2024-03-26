@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 /*
-Make sure that the application context can start
+This test makes sure that the application context can start
  */
 
 @SpringBootTest
