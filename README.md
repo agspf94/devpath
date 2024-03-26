@@ -4,7 +4,7 @@ Check the collections to see the avaliable features
 
 ## How to start the project
 - `docker-compose up`
-- ./gradlew 
+- `./gradlew bootRun`
 
 ## How to develop a new feature
 
